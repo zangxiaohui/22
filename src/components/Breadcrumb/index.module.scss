@@ -1,0 +1,35 @@
+@use "../../theme/mixin" as themeMixin;
+@use "../../theme/variables" as theme;
+
+.breadcrumb {
+  background: theme.$component-background;
+  padding: 10px 28px;
+
+  span {
+    font-size: 12px;
+    font-weight: 500;
+
+    :global {
+      .ant-breadcrumb-link {
+        cursor: pointer;
+        color: theme.$heading-color;
+
+        &:hover {
+          transition: all 0.5s;
+          color: theme.$primary-color;
+        }
+      }
+    }
+
+
+    &.active {
+      span {
+        color: theme.$heading-color;
+      }
+    }
+
+    .split {
+      padding: 0 4px;
+    }
+  }
+}

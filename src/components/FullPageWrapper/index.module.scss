@@ -1,0 +1,15 @@
+@import "../../style/themes/dark/color";
+
+.outer {
+  box-sizing: border-box;
+  padding: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.inner {
+  flex: 1 0 auto;
+  width: 100%;
+  background-color: $component-background;
+}

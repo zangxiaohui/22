@@ -1,0 +1,236 @@
+@import "../../style/themes/dark/color";
+
+.dropMenu {
+  margin-top: -3px;
+  overflow: hidden;
+  border-radius: 0;
+  padding: 0;
+  background: #1f1f1f;
+
+  .dropMenuItem {
+    font-size: 12px;
+    padding: 11px;
+
+    &:hover {
+      background: $primary-color;
+    }
+
+    .text {
+      margin-left: 10px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    :global {
+      svg {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+.container {
+  background: $body-background;
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    background: #1f1f1f;
+    height: 50px;
+    line-height: inherit;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      padding-left: 25px;
+      font-size: 16px;
+    }
+
+    .userInfoContainer {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.7);
+
+      .checkText {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .divider {
+        margin: 0 18px;
+        height: 25px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      :global {
+        .ant-switch {
+          background: $primary-color;
+
+          &.ant-switch-checked {
+            background: #576369;
+          }
+
+          .ant-switch-inner {
+            color: rgba(255, 255, 255, 0.7);
+          }
+        }
+      }
+
+      .welcomeContent {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .defaultUserIcon {
+          width: 29px;
+          height: 29px;
+          border-radius: 100%;
+          background: url("../../assets/images/avatarIcon.png") center center
+            no-repeat;
+          background-size: cover;
+        }
+
+        .dropdownContainer {
+          display: flex;
+          flex-direction: row;
+          padding-left: 8px;
+          align-items: center;
+          height: 50px;
+
+          .menuDropdown {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding-left: 5px;
+            height: 50px;
+
+            .welcomeText {
+              white-space: nowrap;
+              flex: 3;
+              display: flex;
+              align-items: center;
+              padding-right: 15px;
+            }
+          }
+        }
+
+        .dropIcon {
+          font-size: 8px;
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+
+  .breadcrumb {
+    flex-shrink: 0;
+    padding-left: 25px;
+    height: 38px;
+    background: $component-background;
+    display: flex;
+    align-items: center;
+    color: $text-color;
+
+    span {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    :global {
+      span:last-child {
+        .ant-breadcrumb-link {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      .ant-breadcrumb-separator {
+        color: rgba(255, 255, 255, 0.45);
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    margin: 20px;
+    background: $component-background;
+    padding: 45px 110px 10px 150px;
+    flex-direction: column;
+
+    .title {
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 5px;
+    }
+
+    .divider {
+      color: #fff;
+      font-weight: 600;
+
+      span {
+        padding: 0;
+        font-size: 14px;
+        width: 70px;
+        text-align: left;
+      }
+
+      &:before {
+        width: 0;
+      }
+
+      &:after {
+        width: 100%;
+        border-top: 1px solid $border-color-base;
+      }
+    }
+
+    .detail {
+      padding: 30px 3px;
+      display: flex;
+      flex-direction: column;
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+
+        .label {
+          font-weight: 400;
+          line-height: 24px;
+        }
+
+        .value {
+          margin-top: 6px;
+          margin-bottom: 6px;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.6);
+
+          .wxAvatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+          }
+
+          .wxName {
+            margin-left: 10px;
+          }
+
+          .action {
+            color: $primary-color;
+            margin-left: 20px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

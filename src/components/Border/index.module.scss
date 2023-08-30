@@ -1,0 +1,49 @@
+
+.border {
+  :global {
+    .ant-card-extra {
+      padding: 0;
+    }
+    .ant-card {
+      padding: 6px 10px;
+      min-height: 100px;
+      margin-bottom: 10px;
+    }
+    .ant-card-head {
+      min-height: 40px;
+      line-height: 40px;
+      padding: 0 24px;
+      margin: 0 6px;
+      color: #C0FFFD;
+      font-size: 18px;
+      border-radius: 0;
+      background: linear-gradient(270deg, rgba(15, 255, 255, 0) 0%, rgba(15, 255, 255, 0.17) 48%, rgba(15, 255, 255, 0) 100%);
+      border: 1px solid;
+      border-image: linear-gradient(270deg, rgba(15, 255, 255, 0), rgba(15, 255, 255, 1), rgba(15, 255, 255, 0)) 1 1;
+
+      position: relative;
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 17px;
+        background-color: #00fff6;
+      }
+      &:before {
+        left: 0;
+      }
+      &:after {
+        right: 0;
+      }
+      .ant-card-head-title {
+        padding: 0;
+      }
+    }
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+}

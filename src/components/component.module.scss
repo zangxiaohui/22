@@ -1,0 +1,42 @@
+@use "../theme/mixin" as themeMixin;
+@use "../theme/variables" as theme;
+
+@mixin radio {
+  :global {
+    .ant-radio-button-wrapper {
+      &:not(.ant-radio-button-wrapper-checked) {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
+}
+
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@mixin tableFilter {
+  :global {
+    .ant-space-item {
+      display: flex;
+    }
+  }
+
+  label, input, button, a, span {
+    font-size: 12px;
+  }
+}
+
+@mixin smallSize {
+  font-size: 12px;
+}

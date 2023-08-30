@@ -1,0 +1,264 @@
+@use "../../theme/variables" as theme;
+
+.header {
+  height: 70px;
+  line-height: 50px;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/images/head-bg.png');
+  background-position: 50% 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+
+  .titleWrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .title {
+    color: #56FFF8;
+    font-family: "Microsoft YaHei";
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+}
+
+.userInfoContainer {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+
+  .checkText {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .divider {
+    margin: 0 18px;
+    height: 25px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  :global {
+    .ant-switch {
+      background: theme.$primary-color;
+
+      &.ant-switch-checked {
+        background: #576369;
+      }
+
+      .ant-switch-inner {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  .welcomeContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .avatarImg {
+      width: 29px;
+      height: 29px;
+      border-radius: 100%;
+      background-size: cover;
+    }
+
+    .defaultUserIcon {
+      width: 29px;
+      height: 29px;
+      border-radius: 100%;
+      background: url("../../assets/images/avatarIcon.png") center center
+      no-repeat;
+      background-size: cover;
+    }
+
+    .dropdownContainer {
+      display: flex;
+      flex-direction: row;
+      padding-left: 8px;
+      align-items: center;
+      height: 50px;
+
+      .menuDropdown {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        padding-left: 5px;
+        height: 50px;
+
+        .welcomeText {
+          white-space: nowrap;
+          flex: 3;
+          display: flex;
+          align-items: center;
+        }
+
+        .projectDropdown {
+          flex: 2;
+          font-size: 12px;
+
+          .projectName {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+
+    .dropIcon {
+      font-size: 8px;
+      margin: 0 10px;
+    }
+  }
+}
+
+.dropMenu {
+  margin-top: -3px;
+  overflow: hidden;
+  border-radius: 0;
+  padding: 0;
+  background: #1f1f1f;
+
+  .dropMenuItem {
+    font-size: 12px;
+    padding: 11px;
+
+    &:hover {
+      background: theme.$primary-color;
+    }
+
+    .text {
+      margin-left: 10px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    :global {
+      svg {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+.loading {
+  overflow: hidden;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 2560px) {
+  html,
+  body {
+    font-size: 20px !important;
+  }
+  .header {
+    height: 3.5rem;
+  }
+  .userLogo {
+    .imgStyle {
+      max-height: 3.5rem;
+      max-width: 12.6rem;
+    }
+    .siteLogo {
+      height: 3.5rem;
+      width: 12.6rem;
+    }
+  }
+  .menu {
+    font-size: 1rem;
+  }
+  .themeSwitch {
+    transform: scale(1.5);
+    margin: 0 0.8rem;
+  }
+  .projectDropdown {
+    font-size: 0.9rem !important;
+  }
+  .dropMenuItem {
+    font-size: 0.9rem !important;
+  }
+  .projectDropdownMenu {
+    font-size: 0.9rem;
+  }
+  .defaultUserIcon,
+  .avatarImg {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  .dropIcon {
+    font-size: 0.5rem !important;
+  }
+  .menuDropdown {
+    height: 3.5rem !important;
+  }
+  :global {
+    .ant-checkbox {
+      transform: scale(1.2);
+    }
+    .ant-menu-submenu-title,
+    .ant-checkbox-wrapper {
+      font-size: 1rem !important;
+    }
+    .ant-menu-item {
+      font-size: 0.9rem !important;
+    }
+    .ant-menu-vertical > .ant-menu-item {
+      height: 2.5rem;
+      line-height: 2.5rem;
+    }
+  }
+}
+
+@media only screen and (min-width: 3840px) {
+  html,
+  body {
+    font-size: 30px !important;
+  }
+  .themeSwitch {
+    transform: scale(2.2);
+  }
+  :global {
+    .ant-checkbox {
+      transform: scale(1.8);
+      margin-right: 0.3rem;
+    }
+  }
+}
+
+.back {
+  display: block;
+}
+
+.projectWrap {
+  width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: MicrosoftYaHeiUI;
+  padding-left: 10px;
+  .label {
+    color: #C0FFFD;
+  }
+  .project {
+    color: #6DD400
+  }
+}
+
+.fullScreenCtrl {
+  height: 60px;
+  padding-right: 10px;
+  align-items: center;
+  display: flex;
+}

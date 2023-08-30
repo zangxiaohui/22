@@ -1,0 +1,11 @@
+@mixin paging {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  :global .total {
+    margin-right: 20px;
+    color: $text-color-secondary;
+  }
+}
