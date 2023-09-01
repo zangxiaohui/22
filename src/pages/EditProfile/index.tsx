@@ -1,6 +1,5 @@
 import { Button, Divider, Form, Input } from "antd";
 import React, { useState } from "react";
-import Helmet from "react-helmet";
 import FullPageWrapper from "../../components/FullPageWrapper";
 import { useAsync, useBeforeUnload, useSubmission } from "../../lib/hooks";
 import {
@@ -43,9 +42,6 @@ const EditProfile: React.FC = () => {
   return (
     <FullPageWrapper>
       <div className={styles.wrapper}>
-        <Helmet>
-          <title>人员信息</title>
-        </Helmet>
         <h1 className={styles.title}>编辑人员</h1>
         <Divider />
         {user && (

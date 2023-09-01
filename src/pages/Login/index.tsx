@@ -1,14 +1,10 @@
 import React from "react";
-import Helmet from "react-helmet";
 import LoginForm from "./LoginForm";
 import styles from "./index.module.scss";
 
 const Login: React.FC = () => {
   return (
     <div className={styles.loginPage}>
-      <Helmet>
-        <title>登录</title>
-      </Helmet>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.wrapper}>

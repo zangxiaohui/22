@@ -107,13 +107,16 @@ const Login: React.FC = () => {
   );
 
   const onPassFinish = (values: LoginParams) => {
-    if (remeber) {
-      localStorage.setItem(rememberUserNamekey, "true");
-      localStorage.setItem(userNameKey, values.username);
-    } else {
-      localStorage.setItem(rememberUserNamekey, "false");
-      localStorage.removeItem(userNameKey);
-    }
+    // window.location.replace("/dashboard");
+    // setAuthority("admin");
+
+    // if (remeber) {
+    //   localStorage.setItem(rememberUserNamekey, "true");
+    //   localStorage.setItem(userNameKey, values.username);
+    // } else {
+    //   localStorage.setItem(rememberUserNamekey, "false");
+    //   localStorage.removeItem(userNameKey);
+    // }
 
     login({
       ...values,

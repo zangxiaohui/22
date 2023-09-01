@@ -1,6 +1,5 @@
 import { Alert, Button, Col, Form, Input, Row } from "antd";
 import React, { useCallback, useState } from "react";
-import Helmet from "react-helmet";
 import { useSMSToken } from "../../components/SendSMSToken";
 import { useSubmission } from "../../lib/hooks";
 import { goBackByQueryParam } from "../../lib/util";
@@ -41,9 +40,6 @@ const Activation: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Helmet>
-        <title>安全认证</title>
-      </Helmet>
       <Alert
         message="请注意，基于安全的原因，您需要重新设置密码&emsp;"
         type="warning"

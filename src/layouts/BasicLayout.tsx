@@ -1,71 +1,76 @@
-import { Spin } from "antd";
-import classNames from "classnames";
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-import { Redirect, useLocation } from "react-router-dom";
-import GlobalFooter from "../components/GlobalFooter";
-import GlobalHeader from "../components/GlobalHeader";
-import Authorized from "../utils/Authorized";
-import styles from "./BasicLayout.module.scss";
-import { SubViewContext } from "./SubviewContext";
+/**
+ * Ant Design Pro v4 use `@ant-design/pro-layout` to handle Layout.
+ * You can view component api by:
+ * https://github.com/ant-design/ant-design-pro-layout
+ */
 
-interface BasicLayoutProps {}
+import { HeartTwoTone } from "@ant-design/icons";
+import ProLayout, {
+  DefaultFooter,
+  MenuDataItem,
+  BasicLayoutProps as ProLayoutProps,
+  Settings,
+} from "@ant-design/pro-layout";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import logo from "../assets/images/logo.svg";
+import defaultSettings from "../config/defaultSetting";
 
-const BasicLayout: React.FC<PropsWithChildren<BasicLayoutProps>> = ({
-  children,
-}) => {
-  const [x, forceUpdate] = useReducer((x) => x + 1, 1);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [customerUser, setCustomerUser] = useState<any>();
-  const [currentProject, setCurrentProject] = useState<string>();
-  const { pathname } = useLocation();
+export interface BasicLayoutProps extends ProLayoutProps {
+  breadcrumbNameMap: {
+    [path: string]: MenuDataItem;
+  };
+}
+export type BasicLayoutContext = { [K in "location"]: BasicLayoutProps[K] } & {
+  breadcrumbNameMap: {
+    [path: string]: MenuDataItem;
+  };
+};
 
-  useEffect(() => {
-    setLoading(true);
-  }, [x]);
-
-  useEffect(() => {
-    let interval: number = 0;
-    interval = window.setInterval(() => {}, 1000 * 60);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    document.oncontextmenu = function (e) {
-      return false;
-    };
-  }, []);
-
-  useEffect(() => {}, []);
-
-  if (!customerUser || loading) {
-    return <Spin className={styles.spinContainer} />;
-  }
+const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
+  const [collapsed, handleMenuCollapse] = useState<boolean>(false);
+  const [settings, setSettings] = useState<Partial<Settings>>({
+    ...defaultSettings,
+    fixSiderbar: true,
+  });
+  const history = useHistory();
   return (
-    <Authorized authority={["admin"]} noMatch={<Redirect to="/login" />}>
-      <SubViewContext.Provider
-        value={{
-          user: customerUser,
-          projectName: currentProject,
-        }}
-      >
-        <div
-          className={classNames(styles.container, {
-            [styles.homePage]: pathname === "/home",
-          })}
-        >
-          <GlobalHeader userData={customerUser} forceUpdate={forceUpdate} />
-          <div className={styles.content}>{children}</div>
-          <div className={styles.footer}>
-            <GlobalFooter />
-          </div>
-        </div>
-      </SubViewContext.Provider>
-    </Authorized>
+    <ProLayout
+      logo={logo}
+      menuHeaderRender={(logoDom, titleDom) => (
+        <Link to="/">
+          {logoDom}
+          {titleDom}
+        </Link>
+      )}
+      links={[
+        <>
+          <HeartTwoTone />
+          <span>name</span>
+        </>,
+      ]}
+      onCollapse={handleMenuCollapse}
+      menuItemRender={(menuItemProps, defaultDom) =>
+        menuItemProps.isUrl ? (
+          defaultDom
+        ) : (
+          <Link className="qixian-menuItem" to={menuItemProps.path || "/"}>
+            {defaultDom}
+          </Link>
+        )
+      }
+      rightContentRender={() => [<span />]}
+      collapsed={collapsed}
+      onMenuHeaderClick={() => history.push("/")}
+      footerRender={() => <DefaultFooter />}
+      {...props}
+      {...settings}
+      menu={{
+        defaultOpenAll: true,
+      }}
+    >
+      {props.children}
+    </ProLayout>
   );
 };
 

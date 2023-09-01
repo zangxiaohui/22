@@ -145,7 +145,8 @@ export interface LoginParams {
 
 export async function login(params: LoginParams): Promise<void> {
   const search = window.location.search;
-  const parseSearch: { service: string } = qs.parse(search.replace("?", ""));
+  const parseSearch: any = qs.parse(search.replace("?", ""));
+  console.log("parseSearch :>> ", parseSearch);
   const response = await window.fetch(`/CusApi/ComData/userlogin`, {
     method: "POST",
     headers: {
@@ -155,6 +156,8 @@ export async function login(params: LoginParams): Promise<void> {
       ...params,
     }),
   });
+
+  console.log("response :>> ", response);
 
   if (response.status !== 200) {
     throw response;
@@ -166,12 +169,7 @@ export async function login(params: LoginParams): Promise<void> {
   // const ticket = await ticketRes.text();
   // const url = new URL(parseSearch.service);
   // const parseRedirectSearch = qs.parse(url.search, { ignoreQueryPrefix: true });
-  // window.location.replace(
-  //   `${url.origin}${url.pathname}?${qs.stringify({
-  //     ...parseRedirectSearch,
-  //     ticket,
-  //   })}`
-  // );
+  window.location.replace("/");
 }
 
 // export async function postLogin1(params: PostLoginRequest): Promise<void> {

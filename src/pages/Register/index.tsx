@@ -1,14 +1,10 @@
 import React from "react";
-import Helmet from "react-helmet";
 import RegisterForm from "./RegisterForm";
 import styles from "./index.module.scss";
 
 const Register: React.FC = () => {
   return (
     <div className={styles.container}>
-      <Helmet>
-        <title>注册</title>
-      </Helmet>
       <div className={styles.content}>
         <div className={styles.mod}>
           <div className={styles.hd}>

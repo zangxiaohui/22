@@ -1,38 +1,47 @@
 {
-  "name": "baichuan-bidding-client-ui-v2",
+  "name": "baichuan-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "^4.1.0",
+    "@ant-design/icons": "^4.7.0",
+    "@ant-design/pro-layout": "^6.38.22",
+    "@craco/craco": "^6.1.2",
+    "@dealmore/craco-plugin-babel-include": "^1.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.37",
-    "@types/qs": "^6.9.1",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "@types/react-helmet": "^5.0.16",
-    "@types/react-router-dom": "^5.1.5",
-    "antd": "^4.6.1",
-    "classnames": "^2.3.2",
-    "http-proxy-middleware": "^1.0.3",
-    "lodash": "^4.17.21",
-    "qs": "^6.9.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^5.2.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "sass": "^1.26.5",
-    "typescript": "^3.9.3"
+    "@types/lodash-es": "^4.17.4",
+    "@types/node": "^12.20.15",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^17.0.18",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-mentions": "^4.1.5",
+    "@types/react-router-dom": "^5.1.8",
+    "@types/uuid": "^8.3.1",
+    "antd": "4.18.8",
+    "classnames": "^2.3.1",
+    "echarts": "^5.1.2",
+    "echarts-for-react": "^3.0.1",
+    "http-proxy-middleware": "^2.0.1",
+    "lodash-es": "^4.17.21",
+    "qs": "^6.10.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-flip-toolkit": "^7.0.13",
+    "react-mentions": "^4.3.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "sass": "^1.35.1",
+    "typescript": "^4.4.3",
+    "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "docker": "./build-docker.sh build",
     "dockerPush": "./build-docker.sh push",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,6 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "4.14.186"
+    "@types/react-beautiful-dnd": "^13.1.0"
   }
 }
