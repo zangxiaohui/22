@@ -2,6 +2,7 @@
   "name": "baichuan-ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/client/",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-layout": "^6.38.22",
