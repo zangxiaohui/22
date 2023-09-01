@@ -9,9 +9,13 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Login} />
-          <Route exact path="/" render={() => <Redirect to="/login" />} />
+          <Route path="/client/login" exact component={Login} />
+          <Route path="/client/register" exact component={Login} />
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to="/client/login" />}
+          />
 
           <Route path="/">
             <Switch>
@@ -20,7 +24,7 @@ const App: React.FC = () => {
                   path="/"
                   render={() => <Redirect to="/dashboard" />}
                 /> */}
-              <Route path="/login" exact component={Dashboard} />
+              <Route path="/client/dashboard" exact component={Dashboard} />
             </Switch>
           </Route>
         </Switch>
