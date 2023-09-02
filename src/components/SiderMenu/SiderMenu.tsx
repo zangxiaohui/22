@@ -5,6 +5,7 @@ import classNames from "classnames";
 import type { CSSProperties } from "react";
 import React, { useMemo } from "react";
 import type { WithFalse } from "../../utils/typings";
+import { defaultRenderLogo } from "../AppsLogoComponents";
 import { CollapsedIcon } from "../CollapsedIcon";
 import type { BaseMenuProps } from "./BaseMenu";
 import { BaseMenu } from "./BaseMenu";
@@ -35,8 +36,16 @@ export const renderLogoAndTitle = (
   if (renderFunction === false) {
     return null;
   }
-  const logoDom = <div>logo</div>;
-  const titleDom = <h1>{title ?? "Ant Design Pro"}</h1>;
+  const logoDom = defaultRenderLogo(logo);
+  // const titleDom = <h1>{title ?? "Ant Design Pro"}</h1>;
+  const titleDom = (
+    <div className="site-title">
+      <div className="cn-title">
+        <span>百川·</span>招标系统
+      </div>
+      <div className="en-title">BAICHUAN INVITE TENDERS</div>
+    </div>
+  );
 
   if (renderFunction) {
     // when collapsed, no render title
@@ -155,7 +164,6 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
     collapsed,
     originCollapsed,
     fixSiderbar,
-    menuFooterRender,
     onCollapse,
     theme,
     siderWidth,
@@ -171,9 +179,10 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
     rightContentRender,
     actionsRender,
     onOpenChange,
-    stylish,
     logoStyle,
+    headerHeight,
   } = props;
+
   const showSiderExtraDom = useMemo(() => {
     if (isMobile) return false;
     if (layout === "mix") return false;
@@ -193,7 +202,6 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
     [`${baseClassName}-layout-${layout}`]: layout && !isMobile,
     [`${baseClassName}-light`]: theme !== "dark",
     [`${baseClassName}-mix`]: layout === "mix" && !isMobile,
-    [`${baseClassName}-stylish`]: !!stylish,
   });
 
   const headerDom = renderLogoAndTitle(props);
@@ -311,8 +319,6 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
     return null;
   }, [baseClassName, collapsed, props?.menu?.hideMenuWhenCollapsed]);
 
-  const menuFooterDom = menuFooterRender && menuFooterRender?.(props);
-
   const menuDomItems = (
     <>
       {headerDom && (
@@ -354,16 +360,6 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
             ) : null}
           </>
         )}
-        {menuFooterDom && (
-          <div
-            className={classNames([
-              `${baseClassName}-footer`,
-              { [`${baseClassName}-footer-collapsed`]: collapsed },
-            ])}
-          >
-            {menuFooterDom}
-          </div>
-        )}
       </SiderContext.Provider>
     </>
   );
@@ -388,12 +384,17 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
         collapsible
         trigger={null}
         collapsed={collapsed}
+        // breakpoint={breakpoint === false ? undefined : breakpoint}
         onCollapse={(collapse) => {
           if (isMobile) return;
           onCollapse?.(collapse);
         }}
         collapsedWidth={collapsedWidth}
-        style={style}
+        style={{
+          overflow: "hidden",
+          paddingTop: layout === "mix" && !isMobile ? headerHeight : undefined,
+          ...style,
+        }}
         theme={theme}
         width={siderWidth}
         className={classNames(siderClassName, hideMenuWhenCollapsedClassName)}

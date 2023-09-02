@@ -8,11 +8,6 @@ export type RenderSetting = {
   menuHeaderRender?: false;
 };
 export type PureSettings = {
-  /**
-   * @name theme for nav menu
-   *
-   * @type  'realDark' | 'light' | undefined
-   */
   navTheme?: "realDark" | "light" | undefined;
 
   /**
@@ -103,15 +98,6 @@ export type PureSettings = {
    */
   title?: string | false;
   /**
-   * Your custom iconfont Symbol script Url eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js
-   * 注意：如果需要图标多色，Iconfont 图标项目里要进行批量去色处理 Usage: https://github.com/ant-design/ant-design-pro/pull/3517
-   */
-  iconfontUrl?: string;
-  /** @name 主色，需要配合 umi 使用 */
-  colorPrimary?: string;
-  /** @name 全局增加滤镜 */
-  colorWeak?: boolean;
-  /**
    * 只在 mix 模式下生效
    *
    * @name 切割菜单
@@ -125,6 +111,11 @@ export type PureSettings = {
    * 侧边菜单模式
    */
   siderMenuType?: "sub" | "group";
+  /**
+   * @name customize header height
+   * @example 顶栏高度修改为64 headerHeight={64}
+   */
+  headerHeight?: number;
 };
 
 export type ProSettings = PureSettings & RenderSetting;
@@ -133,10 +124,9 @@ const defaultSettings: ProSettings = {
   navTheme: "light",
   layout: "mix",
   contentWidth: "Fluid",
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
-  iconfontUrl: "",
-  colorPrimary: "#1677FF",
   splitMenus: false,
+  headerHeight: 90,
 };
 export { defaultSettings };

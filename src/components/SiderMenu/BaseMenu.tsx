@@ -260,18 +260,7 @@ const BaseMenu: React.FC<BaseMenuProps & PrivateSiderMenuProps> = (props) => {
   if (finallyData && finallyData?.length < 1) {
     return null;
   }
-  const xx = menuUtils.getNavMenuItems(finallyData, 0);
-  console.log("xx :>> ", xx);
-
-  const items = [
-    { label: "菜单项一", key: "item-1" }, // 菜单项务必填写 key
-    { label: "菜单项二", key: "item-2" },
-    {
-      label: "子菜单",
-      key: "submenu",
-      children: [{ label: "子菜单项", key: "submenu-item-1" }],
-    },
-  ];
+  const items = menuUtils.getNavMenuItems(finallyData, 0);
 
   return (
     <Menu

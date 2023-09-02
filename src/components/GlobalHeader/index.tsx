@@ -5,6 +5,8 @@ import classNames from "classnames";
 import React, { useContext } from "react";
 import type { WithFalse } from "../../utils/typings";
 import { clearMenuItem } from "../../utils/utils";
+// import { AppsLogoComponents, defaultRenderLogo } from "../AppsLogoComponents";
+import { defaultRenderLogo } from "../AppsLogoComponents";
 import type { HeaderViewProps } from "../Header";
 import type { SiderMenuProps } from "../SiderMenu/SiderMenu";
 import { renderLogoAndTitle } from "../SiderMenu/SiderMenu";
@@ -102,10 +104,10 @@ const GlobalHeader: React.FC<any> = (props) => {
     menuData,
     prefixCls,
   } = props;
+
   const { getPrefixCls, direction } = useContext(ConfigProvider.ConfigContext);
   const baseClassName = `${prefixCls || getPrefixCls("pro")}-global-header`;
-
-  const className = classNames(propClassName, baseClassName);
+  const className = classNames(propClassName, baseClassName, "zzzz");
 
   if (layout === "mix" && !isMobile && splitMenus) {
     const noChildrenMenuData = (menuData || []).map((item) => ({
@@ -132,14 +134,15 @@ const GlobalHeader: React.FC<any> = (props) => {
 
   const logoDom = (
     <span className={logoClassNames} key="logo">
-      <a>logo</a>
+      <a>{defaultRenderLogo(logo)}</a>
     </span>
   );
+
   return (
     <div className={className} style={{ ...style }}>
       {isMobile && (
         <span
-          className={`${baseClassName}-collapsed-button`.trim()}
+          className={`${baseClassName}-collapsed-button`}
           onClick={() => {
             onCollapse?.(!collapsed);
           }}
@@ -150,6 +153,7 @@ const GlobalHeader: React.FC<any> = (props) => {
       {isMobile && renderLogo(menuHeaderRender, logoDom)}
       {layout === "mix" && !isMobile && (
         <>
+          {/* <AppsLogoComponents {...props} /> */}
           <div className={logoClassNames} onClick={onMenuHeaderClick}>
             {renderLogoAndTitle(
               { ...props, collapsed: false },
@@ -160,7 +164,7 @@ const GlobalHeader: React.FC<any> = (props) => {
       )}
       <div style={{ flex: 1 }}>{children}</div>
       {(rightContentRender || props.actionsRender || props.avatarProps) && (
-        <ActionsContent rightContentRender={rightContentRender} {...props} />
+        <ActionsContent {...props} />
       )}
     </div>
   );

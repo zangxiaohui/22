@@ -42,9 +42,11 @@ const DefaultHeader: React.FC<any> = (props) => {
     layout,
     headerRender,
     headerContentRender,
+    headerHeight,
   } = props;
 
   const needFixedHeader = fixedHeader || layout === "mix";
+  console.log("headerContentRender :>> ", headerContentRender);
 
   const renderContent = useCallback(() => {
     const isTop = layout === "top";
@@ -72,20 +74,40 @@ const DefaultHeader: React.FC<any> = (props) => {
   }, [headerContentRender, headerRender, isMobile, layout, onCollapse, props]);
 
   const isTop = layout === "top";
-  const baseClassName = `${prefixCls}-layout-header`;
 
-  const className = classNames(propsClassName, baseClassName, {
-    [`${baseClassName}-fixed-header`]: needFixedHeader,
-    [`${baseClassName}-mix`]: layout === "mix",
-    [`${baseClassName}-fixed-header-action`]: !collapsed,
-    [`${baseClassName}-top-menu`]: isTop,
-    [`${baseClassName}-header`]: true,
+  const className = classNames(propsClassName, {
+    [`${prefixCls}-fixed-header`]: needFixedHeader,
+    [`${prefixCls}-fixed-header-action`]: !collapsed,
+    [`${prefixCls}-top-menu`]: isTop,
   });
 
+  const right = needFixedHeader ? 0 : undefined;
+
   if (layout === "side" && !isMobile) return null;
+
   return (
     <>
-      <Header className={className} style={style}>
+      {needFixedHeader && (
+        <Header
+          style={{
+            height: headerHeight,
+            lineHeight: `${headerHeight}px`,
+            backgroundColor: "transparent",
+            zIndex: 19,
+            ...style,
+          }}
+        />
+      )}
+      <Header
+        className={className}
+        style={{
+          height: headerHeight,
+          lineHeight: `${headerHeight}px`,
+          zIndex: layout === "mix" ? 100 : 19,
+          right,
+          ...style,
+        }}
+      >
         {renderContent()}
       </Header>
     </>
