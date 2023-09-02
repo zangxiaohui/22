@@ -7378,7 +7378,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-dropdown-menu-dark,
 .ant-dropdown-menu-dark .ant-dropdown-menu {
-  background: #001529;
+  background: #fff;
 }
 .ant-dropdown-menu-dark .ant-dropdown-menu-item,
 .ant-dropdown-menu-dark .ant-dropdown-menu-submenu-title,
@@ -15351,17 +15351,17 @@ textarea.ant-input-number {
   flex: 0 0 auto;
 }
 .ant-layout-header {
-  height: 64px;
-  padding: 0 50px;
+  height: 90px;
+  padding: 0 44px;
   color: #555555;
-  line-height: 64px;
-  background: #001529;
+  line-height: 90px;
+  background: #fff;
 }
 .ant-layout-footer {
   padding: 24px 50px;
   color: #555555;
   font-size: 14px;
-  background: #f0f2f5;
+  background: #fff;
 }
 .ant-layout-content {
   flex: auto;
@@ -15372,7 +15372,7 @@ textarea.ant-input-number {
   position: relative;
   /* fix firefox can't set width smaller than content on flex item */
   min-width: 0;
-  background: #001529;
+  background: #2a598f;
   transition: all 0.2s;
 }
 .ant-layout-sider-children {
@@ -15406,7 +15406,7 @@ textarea.ant-input-number {
 }
 .ant-layout-sider-zero-width-trigger {
   position: absolute;
-  top: 64px;
+  top: 90px;
   right: -36px;
   z-index: 1;
   width: 36px;
@@ -15415,7 +15415,7 @@ textarea.ant-input-number {
   font-size: 18px;
   line-height: 42px;
   text-align: center;
-  background: #001529;
+  background: #2a598f;
   border-radius: 0 2px 2px 0;
   cursor: pointer;
   transition: background 0.3s ease;
@@ -16691,7 +16691,7 @@ textarea.ant-mentions {
 .ant-menu-dark .ant-menu-sub,
 .ant-menu.ant-menu-dark .ant-menu-sub {
   color: rgba(255, 255, 255, 0.65);
-  background: #001529;
+  background: #fff;
 }
 .ant-menu.ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow,
 .ant-menu-dark .ant-menu-sub .ant-menu-submenu-title .ant-menu-submenu-arrow,
@@ -16721,7 +16721,7 @@ textarea.ant-mentions {
   top: 0;
   margin-top: 0;
   padding: 0 20px;
-  border-color: #001529;
+  border-color: #fff;
   border-bottom: 0;
 }
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {

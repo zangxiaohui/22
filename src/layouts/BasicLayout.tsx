@@ -6,7 +6,8 @@ import useMergedState from "rc-util/lib/hooks/useMergedState";
 import type { CSSProperties } from "react";
 import React, { useContext, useEffect, useMemo } from "react";
 import companyLogo from "../assets/images/logo-blue.svg";
-import { DefaultHeader as Header } from "../components/Header";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
 import { getMenuData } from "../utils/getMenuData";
@@ -217,7 +218,7 @@ const BasicLayout: React.FC<any> = (props) => {
   const { fixSiderbar, layout: propsLayout } = {
     ...props,
     ...currentMenuLayoutProps,
-  };
+  } as any;
 
   const colSize = useBreakpoint();
   const isMobile = useMemo(() => {
@@ -345,6 +346,7 @@ const BasicLayout: React.FC<any> = (props) => {
               <Layout.Content>
                 {loading ? <PageLoading /> : children}
               </Layout.Content>
+              <Footer {...props} />
             </div>
           </Layout>
         </div>

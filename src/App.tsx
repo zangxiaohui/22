@@ -1,4 +1,4 @@
-import "antd/dist/antd.less";
+// import "antd/dist/antd.less";
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./App.scss";

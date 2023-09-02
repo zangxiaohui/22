@@ -39,7 +39,7 @@ export const renderLogoAndTitle = (
   const logoDom = defaultRenderLogo(logo);
   // const titleDom = <h1>{title ?? "Ant Design Pro"}</h1>;
   const titleDom = (
-    <div className="site-title">
+    <div className="logo-title">
       <div className="cn-title">
         <span>百川·</span>招标系统
       </div>
@@ -159,13 +159,12 @@ export type PrivateSiderMenuProps = {
   menuRenderType?: "header" | "sider";
 };
 
-const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
+const SiderMenu: React.FC<any> = (props) => {
   const {
     collapsed,
     originCollapsed,
     fixSiderbar,
     onCollapse,
-    theme,
     siderWidth,
     isMobile,
     onMenuHeaderClick,
@@ -182,6 +181,8 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
     logoStyle,
     headerHeight,
   } = props;
+
+  const theme = "dark";
 
   const showSiderExtraDom = useMemo(() => {
     if (isMobile) return false;
@@ -252,7 +253,7 @@ const SiderMenu: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (props) => {
             collapsed && `${baseClassName}-actions-list-collapsed`,
           ])}
         >
-          {actionsRender?.(props).map((item, index) => {
+          {actionsRender?.(props).map((item: any, index: number) => {
             return (
               <div key={index} className={`${baseClassName}-actions-list-item`}>
                 {item}

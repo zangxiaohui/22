@@ -114,4 +114,4 @@ const DefaultHeader: React.FC<any> = (props) => {
   );
 };
 
-export { DefaultHeader };
+export default DefaultHeader;

@@ -93,7 +93,6 @@ const GlobalHeader: React.FC<any> = (props) => {
     logo,
     collapsed,
     onCollapse,
-    rightContentRender,
     menuHeaderRender,
     onMenuHeaderClick,
     className: propClassName,
@@ -110,7 +109,7 @@ const GlobalHeader: React.FC<any> = (props) => {
   const className = classNames(propClassName, baseClassName, "zzzz");
 
   if (layout === "mix" && !isMobile && splitMenus) {
-    const noChildrenMenuData = (menuData || []).map((item) => ({
+    const noChildrenMenuData = (menuData || []).map((item: any) => ({
       ...item,
       children: undefined,
       routes: undefined,
@@ -162,10 +161,9 @@ const GlobalHeader: React.FC<any> = (props) => {
           </div>
         </>
       )}
+      {/* <div style={{ flex: 1 }}>{children}</div> */}
       <div style={{ flex: 1 }}>{children}</div>
-      {(rightContentRender || props.actionsRender || props.avatarProps) && (
-        <ActionsContent {...props} />
-      )}
+      <ActionsContent {...props} />
     </div>
   );
 };

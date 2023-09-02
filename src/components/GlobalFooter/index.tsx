@@ -1,33 +1,25 @@
-import { CopyrightCircleOutlined } from "@ant-design/icons";
-import type { WithFalse } from "../../utils/typings";
-import styles from "./index.module.scss";
+/* eslint-disable import/no-anonymous-default-export */
+import { ConfigProvider } from "antd";
+import classNames from "classnames";
+import React, { useContext } from "react";
+import "./index.less";
 
-export type HeaderViewProps = GlobalHeaderProps & {
-  isMobile?: boolean;
-  logo?: React.ReactNode;
-  headerRender?: WithFalse<
-    (props: HeaderViewProps, defaultDom: React.ReactNode) => React.ReactNode
-  >;
-  headerTitleRender?: WithFalse<
-    (
-      logo: React.ReactNode,
-      title: React.ReactNode,
-      props: HeaderViewProps
-    ) => React.ReactNode
-  >;
-  headerContentRender?: WithFalse<
-    (props: HeaderViewProps, defaultDom: React.ReactNode) => React.ReactNode
-  >;
-  siderWidth?: number;
-  hasSiderMenu?: boolean;
+export type GlobalFooterProps = {
+  style?: React.CSSProperties;
+  prefixCls?: string;
+  className?: string;
 };
 
-const GlobalFooter: React.FC = () => {
+export default ({ className, prefixCls, style }: GlobalFooterProps) => {
+  const context = useContext(ConfigProvider.ConfigContext);
+  const baseClassName = context.getPrefixCls(prefixCls || "pro-global-footer");
+
+  const clsString = classNames(baseClassName, className);
   return (
-    <div className={styles.footer}>
-      <CopyrightCircleOutlined /> xxxx~{new Date().getFullYear()}{" "}
+    <div className={clsString} style={style}>
+      <div className={`${baseClassName}-copyright`}>
+        Copyright © 2023 百川股份 All Rights Reserved.
+      </div>
     </div>
   );
 };
-
-export default GlobalFooter;

@@ -59,6 +59,7 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
         height: "100%",
       }}
     >
+      123123
       <div
         style={{
           height: "100%",

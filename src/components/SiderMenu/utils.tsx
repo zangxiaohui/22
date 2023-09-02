@@ -1,9 +1,7 @@
-import { createFromIconfontCN } from "@ant-design/icons";
 import { isImg, isUrl } from "@ant-design/pro-utils";
 import { Tooltip } from "antd";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
-import { defaultSettings } from "../../layouts/defaultSettings";
 import type { MenuDataItem } from "../../utils/typings";
 import { BaseMenuProps } from "./BaseMenu";
 import "./index.less";
@@ -49,10 +47,6 @@ const MenuItemTooltip = (props: {
   );
 };
 
-let IconFont = createFromIconfontCN({
-  scriptUrl: defaultSettings.iconfontUrl,
-});
-
 // Allow menu.js config icon as string or ReactNode
 //   icon: 'setting',
 //   icon: 'icon-geren' #For Iconfont ,
@@ -77,7 +71,7 @@ const getIcon = (
       );
     }
     if (icon.startsWith(iconPrefixes)) {
-      return <IconFont type={icon} />;
+      return <span>123</span>;
     }
   }
   return icon;
@@ -92,14 +86,7 @@ const getMenuTitleSymbol = (title: React.ReactNode) => {
 };
 
 class MenuUtil {
-  constructor(
-    props: BaseMenuProps & {
-      token?: ProTokenType;
-      menuRenderType?: "header" | "sider";
-      baseClassName: string;
-      hashId: string;
-    }
-  ) {
+  constructor(props: any) {
     this.props = props;
   }
 
