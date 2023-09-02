@@ -5,7 +5,7 @@ import styles from "./index.module.scss";
 const { useForm } = Form;
 
 const Dashboard: React.FC = () => {
-  return <div className={styles.wrapper}>1233</div>;
+  return <div className={styles.wrapper}>home</div>;
 };
 
 export default Dashboard;
