@@ -1,12 +1,12 @@
 import { Breadcrumb, Button, Form, Input } from "antd";
 import React, { useState } from "react";
 import FullPageWrapper from "../../components/FullPageWrapper";
-import { useAsync, useBeforeUnload, useSubmission } from "../../lib/hooks";
+import { useBeforeUnload, useSubmission } from "../../lib/hooks";
 import {
   forwardOrRefreshByQueryParam,
   redirectByQueryParam,
 } from "../../lib/util";
-import { getCurrentUserInfo, updateCurrentUser } from "../../services/login";
+import { updateCurrentUser } from "../../services/login";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -21,8 +21,7 @@ const tailLayout = {
 
 const EditProfile: React.FC = () => {
   const [modified, setModified] = useState(false);
-
-  const user1 = useAsync(getCurrentUserInfo);
+  // const user1 = useAsync(getCurrentUserInfo);
 
   const user = {
     Name: "BC230001-001",
@@ -65,6 +64,7 @@ const EditProfile: React.FC = () => {
 
       <div className={styles.wrapper}>
         <h1 className={styles.title}>信息管理</h1>
+
         <div className={styles.formWrapper}>
           {user && (
             <Form

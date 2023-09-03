@@ -263,6 +263,7 @@ class MenuUtil {
   getMenuItemPath = (item: MenuDataItem, level: number) => {
     const itemPath = this.conversionPath(item.path || "/");
     const { iconPrefixes } = this.props;
+    console.log("itemPath :>> ", itemPath);
 
     // if local is true formatMessage all name。
     const menuItemTitle = this.getIntlName(item);

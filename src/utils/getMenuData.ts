@@ -5,6 +5,7 @@ const data: MenuDataItem[] = [
     name: "招标须知",
     key: "1",
     icon: "1223",
+    path: "/xx/edit-profile3",
   },
   {
     name: "招标竞价",
@@ -39,10 +40,29 @@ const data: MenuDataItem[] = [
   {
     name: "我的",
     key: "4",
+    children: [
+      {
+        name: "我的招标",
+        key: "41",
+        path: "/client/edit-profile3",
+      },
+      {
+        name: "个人信息管理",
+        key: "42",
+        path: "/client/edit-profile",
+      },
+      {
+        name: "企业信息管理",
+        key: "43",
+        path: "edit-profile2",
+      },
+    ],
   },
+
   {
     name: "联系我们",
     key: "5",
+    path: "contact",
   },
 ];
 
