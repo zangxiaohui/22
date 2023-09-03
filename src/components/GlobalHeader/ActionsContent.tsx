@@ -1,6 +1,5 @@
 import { useDebounceFn } from "@ant-design/pro-utils";
 import { Avatar, ConfigProvider } from "antd";
-import ResizeObserver from "rc-resize-observer";
 import React, { useContext, useMemo, useState } from "react";
 import type { GlobalHeaderProps } from ".";
 /**
@@ -59,36 +58,7 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
         height: "100%",
       }}
     >
-      123123
-      <div
-        style={{
-          height: "100%",
-        }}
-      >
-        <ResizeObserver
-          onResize={({ width }: { width: number }) => {
-            setRightSizeDebounceFn.run(width);
-          }}
-        >
-          {contentRender ? (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "100%",
-                justifyContent: "flex-end",
-              }}
-            >
-              {contentRender({
-                ...props,
-                // 测试专用
-                //@ts-ignore
-                rightContentSize: rightSize,
-              })}
-            </div>
-          ) : null}
-        </ResizeObserver>
-      </div>
+      用户名
     </div>
   );
 };

@@ -341,7 +341,10 @@ const BasicLayout: React.FC<any> = (props) => {
             }}
           >
             {siderMenuDom}
-            <div style={genLayoutStyle}>
+            <div
+              style={genLayoutStyle}
+              className={context.getPrefixCls("layout")}
+            >
               {headerDom}
               <Layout.Content>
                 {loading ? <PageLoading /> : children}

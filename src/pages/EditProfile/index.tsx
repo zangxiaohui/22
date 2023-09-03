@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Input } from "antd";
+import { Breadcrumb, Button, Form, Input } from "antd";
 import React, { useState } from "react";
 import FullPageWrapper from "../../components/FullPageWrapper";
 import { useAsync, useBeforeUnload, useSubmission } from "../../lib/hooks";
@@ -11,10 +11,26 @@ import styles from "./index.module.scss";
 
 const { useForm } = Form;
 
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
 const EditProfile: React.FC = () => {
   const [modified, setModified] = useState(false);
 
-  const user = useAsync(getCurrentUserInfo);
+  const user1 = useAsync(getCurrentUserInfo);
+
+  const user = {
+    Name: "BC230001-001",
+    RealName: "张三",
+    Phone: "18168871151",
+    Email: "12524051@qq.com",
+    Address: "江苏省无锡市中山路288号",
+  };
   const [form] = useForm();
   const [doSubmit, submitting] = useSubmission();
 
@@ -41,36 +57,77 @@ const EditProfile: React.FC = () => {
 
   return (
     <FullPageWrapper>
+      <Breadcrumb>
+        <Breadcrumb.Item>首页</Breadcrumb.Item>
+        <Breadcrumb.Item>我的</Breadcrumb.Item>
+        <Breadcrumb.Item>个人信息管理</Breadcrumb.Item>
+      </Breadcrumb>
+
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>编辑人员</h1>
-        <Divider />
-        {user && (
-          <Form
-            layout="vertical"
-            form={form}
-            onFinish={onSubmit}
-            onValuesChange={() => setModified(true)}
-            initialValues={{
-              name: user.name,
-              cellphone: user.cellphone,
-            }}
-          >
-            <div className={styles.formWrapper}>
-              <Form.Item required label="账号">
-                <Input disabled value={user.username} />
-              </Form.Item>
+        <h1 className={styles.title}>信息管理</h1>
+        <div className={styles.formWrapper}>
+          {user && (
+            <Form
+              {...layout}
+              form={form}
+              onFinish={onSubmit}
+              onValuesChange={() => setModified(true)}
+              initialValues={user}
+            >
               <Form.Item
-                label="人员姓名"
-                name="name"
-                rules={[
-                  { required: true, message: "人员姓名不能为空" },
-                  { whitespace: true, message: "人员姓名不能为空字符" },
-                  { max: 50, message: "人员姓名不能超过50个字符" },
-                ]}
+                label="个人编号"
+                name="Name"
+                rules={[{ required: true, message: "个人编号不能为空" }]}
               >
-                <Input placeholder="请输入联系人名称" autoComplete="name" />
+                <Input placeholder="请输入" autoComplete="name" />
               </Form.Item>
               <Form.Item
+                label="姓名"
+                name="RealName"
+                rules={[{ required: true, message: "姓名不能为空" }]}
+              >
+                <Input placeholder="请输入" />
+              </Form.Item>
+              <Form.Item
+                label="公司"
+                name="Con"
+                rules={[{ required: true, message: "公司不能为空" }]}
+              >
+                <Input placeholder="请输入" />
+              </Form.Item>
+              <Form.Item
+                label="电话"
+                name="Phone"
+                rules={[{ required: true, message: "电话不能为空" }]}
+              >
+                <Input placeholder="请输入" />
+              </Form.Item>
+              <Form.Item
+                label="邮箱"
+                name="Email"
+                rules={[{ required: true, message: "邮箱不能为空" }]}
+              >
+                <Input placeholder="请输入" />
+              </Form.Item>
+              <Form.Item
+                label="地址"
+                name="Address"
+                rules={[{ required: true, message: "地址不能为空" }]}
+              >
+                <Input placeholder="请输入" />
+              </Form.Item>
+              <Form.Item {...tailLayout}>
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={submitting}
+                  disabled={submitting}
+                  block
+                >
+                  修改
+                </Button>
+              </Form.Item>
+              {/* <Form.Item
                 label="手机号码"
                 name="cellphone"
                 rules={[
@@ -79,23 +136,10 @@ const EditProfile: React.FC = () => {
                 ]}
               >
                 <Input placeholder="请输入联系人电话" autoComplete="tel" />
-              </Form.Item>
-            </div>
-            <Divider />
-            <div className={styles.formWrapper}>
-              <Button
-                htmlType="submit"
-                type="primary"
-                loading={submitting}
-                disabled={submitting}
-              >
-                保存
-              </Button>
-              &emsp;
-              <Button onClick={onCancel}>取消</Button>
-            </div>
-          </Form>
-        )}
+              </Form.Item> */}
+            </Form>
+          )}
+        </div>
       </div>
     </FullPageWrapper>
   );
