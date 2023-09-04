@@ -18,31 +18,13 @@ interface CodeParams {
 
 const Login: React.FC = () => {
   const [form] = useForm();
-  const [formCode] = useForm();
-  const [userName, setUserName] = useState<string>("");
-  const [remeber, setRemeber] = useState<boolean>(false);
   const [err, setErr] = useState<string>("");
   // const history = useHistory();
 
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useLoginSMSToken();
 
-  useEffect(() => {
-    const rememberUserName = localStorage.getItem(rememberUserNamekey);
-    if (rememberUserName === null) {
-      setRemeber(true);
-    } else if (rememberUserName === "true") {
-      const userName = localStorage.getItem(userNameKey) || "";
-      setUserName(userName);
-      setRemeber(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    form.setFieldsValue({
-      username: userName,
-    });
-  }, [form, userName]);
+  useEffect(() => {}, []);
 
   const errorHandler = useCallback(
     (e: Response | any, defaultDesc = "请输入正确的账号或手机号和密码。") => {
@@ -85,26 +67,9 @@ const Login: React.FC = () => {
   );
 
   const onPassFinish = (values: LoginParams) => {
-    if (remeber) {
-      localStorage.setItem(rememberUserNamekey, "true");
-      localStorage.setItem(userNameKey, values.username);
-    } else {
-      localStorage.setItem(rememberUserNamekey, "false");
-      localStorage.removeItem(userNameKey);
-    }
     login(values).catch((e) => {
       errorHandler(e);
     });
-  };
-
-  const onCodeFinish = (value: CodeParams) => {
-    // const codeValue: LoginParams = {
-    //   username: `OTP_SMS/${value.cellphone}`,
-    //   password: value.code,
-    // };
-    // login(codeValue).catch((e) => {
-    //   errorHandler(e, "验证码不正确");
-    // });
   };
 
   return (
@@ -122,7 +87,6 @@ const Login: React.FC = () => {
                   message: "请输入正确的手机号",
                 },
                 { required: true, message: "手机号不能为空" },
-                { whitespace: true, message: "手机号不能为空字符" },
               ]}
             >
               <Input
@@ -135,10 +99,10 @@ const Login: React.FC = () => {
             <Form.Item
               label="手机验证  *必填"
               name="code"
-              rules={[
-                { required: true, message: "验证码不能为空" },
-                { whitespace: true, message: "验证码不能为空字符" },
-              ]}
+              // rules={[
+              //   { required: true, message: "验证码不能为空" },
+              //   { whitespace: true, message: "验证码不能为空字符" },
+              // ]}
             >
               <Input
                 placeholder="输入验证码"
@@ -171,7 +135,6 @@ const Login: React.FC = () => {
             >
               <Input.Password placeholder="密码" size="large" />
             </Form.Item>
-
             <Form.Item
               label="确认密码  *必填"
               name="passwordRepeat"
@@ -201,37 +164,37 @@ const Login: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-              name="username"
+              name="realname"
               label="姓名  *必填"
-              rules={[{ required: true, message: "账号不能为空" }]}
+              rules={[{ required: true, message: "姓名不能为空" }]}
             >
-              <Input placeholder="账号/手机号" size="large" />
+              <Input placeholder="请输入姓名" size="large" />
             </Form.Item>
 
             <Form.Item
-              name="username"
+              name="email"
               label="邮箱  *必填"
-              rules={[{ required: true, message: "账号不能为空" }]}
+              rules={[{ required: true, message: "邮箱不能为空" }]}
             >
-              <Input placeholder="账号/手机号" size="large" />
+              <Input placeholder="请输入邮箱" size="large" />
             </Form.Item>
           </div>
         </Col>
         <Col span={9} offset={1}>
           <div className={styles.cardFormTitle}>企业信息</div>
           <Form.Item
-            name="username"
+            name="company"
             label="公司名称  *必填"
-            rules={[{ required: true, message: "账号不能为空" }]}
+            rules={[{ required: true, message: "公司名称不能为空" }]}
           >
-            <Input placeholder="账号/手机号" size="large" />
+            <Input placeholder="请输入公司名称" size="large" />
           </Form.Item>
           <Form.Item
-            name="username"
+            name="nsrsbh"
             label="纳税人识别号  *必填"
-            rules={[{ required: true, message: "账号不能为空" }]}
+            rules={[{ required: true, message: "纳税人识别号不能为空" }]}
           >
-            <Input placeholder="账号/手机号" size="large" />
+            <Input placeholder="请输入纳税人识别号" size="large" />
           </Form.Item>
           <Form.Item>
             <Button

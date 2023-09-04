@@ -8,6 +8,7 @@ import BidDetail from "./pages/Bid/Detail";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const App: React.FC = () => {
           <Route path="/client">
             <Switch>
               <Route path="/client/login" exact component={Login} />
-              <Route path="/client/login" exact component={Login} />
+              <Route path="/client/register" exact component={Register} />
               <BasicLayout>
                 <Switch>
                   <Route path="/client/home" exact component={Home} />
