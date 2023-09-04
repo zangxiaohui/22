@@ -1,5 +1,5 @@
 import { Button, Card, List } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import { getBidList } from "../../services/bid";
 import "./index.less";
@@ -25,20 +25,29 @@ const routes = [
   },
 ];
 
-const Home: React.FC = () => {
+const BidList: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<any[]>();
+
   useEffect(() => {
+    setLoading(true);
     getBidList({
       state: 0,
       pagesize: 10,
       page: 0,
     }).then((res) => {
+      setLoading(false);
+      setData(res?.data);
       console.log("res bidList :>> ", res);
     });
   }, []);
 
+  console.log("da :>> ", data);
+
   return (
     <PageContainer routes={routes} className="bid">
       <List
+        loading={loading}
         grid={{ gutter: 18, column: 2 }}
         dataSource={data}
         renderItem={(item) => (
@@ -66,4 +75,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default BidList;
