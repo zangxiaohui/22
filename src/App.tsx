@@ -28,7 +28,7 @@ const App: React.FC = () => {
                   />
                   <Route path="/client/bid" exact component={Bid} />
                   <Route
-                    path="/client/bid-detail"
+                    path="/client/bid/detail/:id"
                     exact
                     component={BidDetail}
                   />

@@ -1,24 +1,42 @@
 import { Button, Col, Form, InputNumber, Row, Statistic, Tabs } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
+import { getBidDetail } from "../../../services/bid";
 import "./index.less";
 
 const { Countdown } = Statistic;
 
-const Home: React.FC = () => {
+const routes = [
+  {
+    breadcrumbName: "首页",
+  },
+  {
+    breadcrumbName: "招标的产品",
+  },
+  {
+    breadcrumbName: "拍品详情",
+  },
+];
+
+const BidDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<any[]>();
+
   const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
-  const routes = [
-    {
-      breadcrumbName: "首页",
-    },
-    {
-      breadcrumbName: "招标的产品",
-    },
-    {
-      breadcrumbName: "拍品详情",
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    getBidDetail({
+      id,
+    }).then((res) => {
+      setLoading(false);
+      setData(res?.data);
+    });
+  }, [id]);
+
+  console.log("data :>> 1223 ", data);
 
   const onChange = (key: string) => {
     console.log(key);
@@ -84,4 +102,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default BidDetail;

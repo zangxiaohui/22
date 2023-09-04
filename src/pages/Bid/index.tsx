@@ -1,5 +1,6 @@
 import { Button, Card, List } from "antd";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import { getBidList } from "../../services/bid";
 import "./index.less";
@@ -41,39 +42,41 @@ const BidList: React.FC = () => {
         renderItem={(item) => (
           <List.Item>
             <Card title={item?.Propm_Title} className="bid-card">
-              <div>
-                <div className="item">
-                  <span className="label">当前价</span>
-                  <span className="desc h">
-                    ¥
-                    <span className="price">
-                      {item?.Propm_CurPrice ?? "--"}
+              <Link to={`/client/bid/detail/${item?.Propm_Id}`}>
+                <div>
+                  <div className="item">
+                    <span className="label">当前价</span>
+                    <span className="desc h">
+                      ¥
+                      <span className="price">
+                        {item?.Propm_CurPrice ?? "--"}
+                      </span>
                     </span>
-                  </span>
+                  </div>
+                  <div className="item">
+                    <span className="label">起拍价</span>
+                    <span className="desc">
+                      ¥{item?.Propm_StartPrice ?? "--"}
+                    </span>
+                  </div>
+                  <div className="item">
+                    <span className="label">预&nbsp;&nbsp;&nbsp;&nbsp;计</span>
+                    <span className="desc">{item?.Propm_Remark ?? "--"}</span>
+                  </div>
+                  <div className="item">
+                    <span className="label">备&nbsp;&nbsp;&nbsp;&nbsp;注</span>
+                    <span className="desc">{item?.Propm_Remark ?? "--"}</span>
+                  </div>
                 </div>
-                <div className="item">
-                  <span className="label">起拍价</span>
-                  <span className="desc">
-                    ¥{item?.Propm_StartPrice ?? "--"}
-                  </span>
+                <div className="bid-action">
+                  <Button type="primary" block>
+                    {item?.StateName ?? "--"}
+                  </Button>
+                  <Button type="primary" block>
+                    参加人数 {item?.Cyrs ?? 0}
+                  </Button>
                 </div>
-                <div className="item">
-                  <span className="label">预&nbsp;&nbsp;&nbsp;&nbsp;计</span>
-                  <span className="desc">{item?.Propm_Remark ?? "--"}</span>
-                </div>
-                <div className="item">
-                  <span className="label">备&nbsp;&nbsp;&nbsp;&nbsp;注</span>
-                  <span className="desc">{item?.Propm_Remark ?? "--"}</span>
-                </div>
-              </div>
-              <div className="bid-action">
-                <Button type="primary" block>
-                  {item?.StateName ?? "--"}
-                </Button>
-                <Button type="primary" block>
-                  参加人数 {item?.Cyrs ?? 0}
-                </Button>
-              </div>
+              </Link>
             </Card>
           </List.Item>
         )}
