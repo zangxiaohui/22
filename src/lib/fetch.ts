@@ -2,6 +2,8 @@ export async function fetch<T>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<T> {
+  const openid = localStorage.getItem("baichuan_openid");
+  const curtoken = localStorage.getItem("baichuan_curtoken");
   const compoundInit: RequestInit = {
     credentials: "include",
     ...init,
@@ -17,9 +19,17 @@ export async function fetch<T>(
         "application/json;charset=UTF-8"
       );
     }
+    if (openid) {
+      compoundInit.headers.set("openid", openid);
+    }
+    if (curtoken) {
+      compoundInit.headers.set("curtoken", curtoken);
+    }
   } else {
     const defaultHeaders: { [key: string]: string } = {
       Accept: "application/json",
+      curtoken,
+      openid,
     };
     if (init?.body) {
       defaultHeaders["Content-Type"] = "application/json;charset=UTF-8";

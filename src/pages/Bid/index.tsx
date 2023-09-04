@@ -1,6 +1,7 @@
 import { Button, Card, List } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import PageContainer from "../../components/PageContainer";
+import { getBidList } from "../../services/bid";
 import "./index.less";
 
 const data = [
@@ -12,18 +13,28 @@ const data = [
   },
 ];
 
+const routes = [
+  {
+    breadcrumbName: "首页",
+  },
+  {
+    breadcrumbName: "招标的产品",
+  },
+  {
+    breadcrumbName: "全部产品",
+  },
+];
+
 const Home: React.FC = () => {
-  const routes = [
-    {
-      breadcrumbName: "首页",
-    },
-    {
-      breadcrumbName: "招标的产品",
-    },
-    {
-      breadcrumbName: "全部产品",
-    },
-  ];
+  useEffect(() => {
+    getBidList({
+      state: 0,
+      pagesize: 10,
+      page: 0,
+    }).then((res) => {
+      console.log("res bidList :>> ", res);
+    });
+  }, []);
 
   return (
     <PageContainer routes={routes} className="bid">

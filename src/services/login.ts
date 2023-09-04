@@ -143,7 +143,7 @@ export interface LoginParams {
   uid: string;
 }
 
-export async function login(params: LoginParams): Promise<void> {
+export async function login(params: LoginParams): Promise<any> {
   const search = window.location.search;
   const parseSearch: any = qs.parse(search.replace("?", ""));
 
@@ -161,6 +161,10 @@ export async function login(params: LoginParams): Promise<void> {
 
   if (response.status !== 200) {
     throw response;
+  }
+  const text = await response.text();
+  if (text) {
+    return JSON.parse(text);
   }
 
   // if (ticketRes.status !== 200) {

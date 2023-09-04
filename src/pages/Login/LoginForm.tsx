@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, Modal } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import lock from "../../assets/images/lock.svg";
 import user from "../../assets/images/user.svg";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   const [remeber, setRemeber] = useState<boolean>(false);
 
   const [err, setErr] = useState<string>("");
-  // const history = useHistory();
+  const history = useHistory();
 
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useLoginSMSToken();
@@ -121,9 +121,17 @@ const Login: React.FC = () => {
     login({
       ...values,
       uid,
-    }).catch((e) => {
-      errorHandler(e);
-    });
+    })
+      .then((res: any) => {
+        const { openid, curtoken } = res?.data || {};
+        localStorage.setItem("baichuan_openid", openid);
+        localStorage.setItem("baichuan_curtoken", curtoken);
+        // setAuthority("admin");
+        history.push("/client/bid");
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
   };
 
   return (
