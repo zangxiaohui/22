@@ -4,15 +4,6 @@ import PageContainer from "../../components/PageContainer";
 import { getBidList } from "../../services/bid";
 import "./index.less";
 
-const data = [
-  {
-    title: "这里显示产品名称，这里显示产品名称，100吨",
-  },
-  {
-    title: "这里显示产品名称，这里显示产品名称，100吨",
-  },
-];
-
 const routes = [
   {
     breadcrumbName: "首页",
@@ -38,11 +29,8 @@ const BidList: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      console.log("res bidList :>> ", res);
     });
   }, []);
-
-  console.log("da :>> ", data);
 
   return (
     <PageContainer routes={routes} className="bid">
@@ -52,19 +40,38 @@ const BidList: React.FC = () => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
-            <Card title={item.title} className="bid-card">
+            <Card title={item?.Propm_Title} className="bid-card">
               <div>
-                <div> 当前价8888.88万</div>
-                <div> 起拍价8888.88万</div>
-                <div> 当前价8888.88万</div>
-                <div> 当前价8888.88万</div>
+                <div className="item">
+                  <span className="label">当前价</span>
+                  <span className="desc h">
+                    ¥
+                    <span className="price">
+                      {item?.Propm_CurPrice ?? "--"}
+                    </span>
+                  </span>
+                </div>
+                <div className="item">
+                  <span className="label">起拍价</span>
+                  <span className="desc">
+                    ¥{item?.Propm_StartPrice ?? "--"}
+                  </span>
+                </div>
+                <div className="item">
+                  <span className="label">预&nbsp;&nbsp;&nbsp;&nbsp;计</span>
+                  <span className="desc">{item?.Propm_Remark ?? "--"}</span>
+                </div>
+                <div className="item">
+                  <span className="label">备&nbsp;&nbsp;&nbsp;&nbsp;注</span>
+                  <span className="desc">{item?.Propm_Remark ?? "--"}</span>
+                </div>
               </div>
               <div className="bid-action">
                 <Button type="primary" block>
-                  正在进行中
+                  {item?.StateName ?? "--"}
                 </Button>
                 <Button type="primary" block>
-                  参加人数
+                  参加人数 {item?.Cyrs ?? 0}
                 </Button>
               </div>
             </Card>
