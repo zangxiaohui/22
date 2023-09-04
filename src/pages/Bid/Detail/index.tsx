@@ -1,7 +1,18 @@
-import { Button, Col, Form, InputNumber, Row, Statistic, Tabs } from "antd";
+import {
+  Button,
+  Col,
+  Descriptions,
+  Form,
+  InputNumber,
+  Row,
+  Statistic,
+  Tabs,
+} from "antd";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
+import PageLoading from "../../../components/PageLoading";
 import { getBidDetail } from "../../../services/bid";
 import "./index.less";
 
@@ -22,11 +33,9 @@ const routes = [
 const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>({
-    content: "<div>123233</div>",
-  });
+  const [data, setData] = useState<any>();
 
-  const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
+  const deadline = moment(data?.Propm_EndTime);
 
   useEffect(() => {
     setLoading(true);
@@ -53,6 +62,12 @@ const BidDetail: React.FC = () => {
     console.log("changed", value);
   };
 
+  const step = data?.Propm_StepPrice;
+
+  if (!data) {
+    return <PageLoading />;
+  }
+
   return (
     <PageContainer routes={routes}>
       <div className="bid-row1">
@@ -60,7 +75,7 @@ const BidDetail: React.FC = () => {
         <div className="statistic-wrap">
           <Countdown
             title="距结束"
-            value={deadline}
+            value={deadline as any}
             format="D 天 H 时 m 分 s 秒"
           />
           <Statistic title="当前价" value={data?.Propm_CurPrice} prefix="￥" />
@@ -88,7 +103,22 @@ const BidDetail: React.FC = () => {
             </Form.Item>
           </Form>
         </Col>
+
         <Col flex="auto">
+          <Descriptions column={2}>
+            <Descriptions.Item label="我司出价">
+              ￥{data?.MyPrice}
+            </Descriptions.Item>
+            <Descriptions.Item label="加价幅度">
+              ￥{data?.Propm_StepPrice}
+            </Descriptions.Item>
+            <Descriptions.Item label="起拍价">
+              ￥{data?.Propm_StartPrice}
+            </Descriptions.Item>
+            <Descriptions.Item label="顺延周期">
+              {data?.Propm_AddType}
+            </Descriptions.Item>
+          </Descriptions>
           <Button type="link">我司历史出价记录</Button>
         </Col>
       </Row>
