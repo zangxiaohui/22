@@ -1,3 +1,4 @@
+import qs from "qs";
 import { fetch } from "../lib/fetch";
 
 export enum AFSErrorCode {
@@ -31,17 +32,21 @@ interface GetBidListRequest extends PagedRequest {
 }
 
 /** 获取招标竞价列表 */
-export function getBidList(query: GetBidListRequest): Promise<any> {
+export function getBidList(params: GetBidListRequest): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjlist`, {
     method: "POST",
-    body: JSON.stringify(query),
+    body: qs.stringify({
+      ...params,
+    }),
   });
 }
 
 /** 获取招标竞价产品详情 */
-export function getBidDetail(query: { Id: number }): Promise<any> {
+export function getBidDetail(params: { Id: number }): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjprodetails`, {
     method: "POST",
-    body: JSON.stringify(query),
+    body: qs.stringify({
+      ...params,
+    }),
   });
 }

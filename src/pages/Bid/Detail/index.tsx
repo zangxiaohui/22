@@ -22,7 +22,9 @@ const routes = [
 const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<any>({
+    content: "<div>123233</div>",
+  });
 
   const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
@@ -43,8 +45,8 @@ const BidDetail: React.FC = () => {
   };
 
   const items = [
-    { label: "拍品详情", key: "item-1", children: "内容 1 ￥" },
-    { label: "招标公告", key: "item-2", children: "内容 2" },
+    { label: "拍品详情", key: "item-1" },
+    { label: "招标公告", key: "item-2" },
   ];
 
   const onChange2 = (value: any) => {
@@ -98,6 +100,10 @@ const BidDetail: React.FC = () => {
           <div className="h">有疑问请立即咨询 4008-888-8888</div>
         }
       />
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      ></div>
     </PageContainer>
   );
 };

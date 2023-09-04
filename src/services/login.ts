@@ -194,10 +194,7 @@ export function getToken(): Promise<any> {
 }
 
 export async function register(params: LoginParams): Promise<any> {
-  const search = window.location.search;
-  const parseSearch: any = qs.parse(search.replace("?", ""));
-
-  const response = await window.fetch(`/CusApi/ComData/userlogin`, {
+  const response = await window.fetch(`/CusApi/ComData/register`, {
     method: "POST",
     headers: {
       "Content-type": "Application/x-www-form-urlencoded",
@@ -206,20 +203,8 @@ export async function register(params: LoginParams): Promise<any> {
       ...params,
     }),
   });
-
   if (response.status !== 200) {
     throw response;
   }
-  const text = await response.text();
-  if (text) {
-    return JSON.parse(text);
-  }
-
-  // if (ticketRes.status !== 200) {
-  //   throw ticketRes;
-  // }
-  // const ticket = await ticketRes.text();
-  // const url = new URL(parseSearch.service);
-  // const parseRedirectSearch = qs.parse(url.search, { ignoreQueryPrefix: true });
-  // window.location.replace("/");
+  return response;
 }

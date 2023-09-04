@@ -16,7 +16,7 @@ export async function fetch<T>(
     if (!compoundInit.headers.has("Content-Type") && init?.body) {
       compoundInit.headers.set(
         "Content-Type",
-        "Application/x-www-form-urlencoded"
+        "application/json;charset=UTF-8"
       );
     }
     if (openid) {
@@ -36,7 +36,7 @@ export async function fetch<T>(
       defaultHeaders.openid = openid;
     }
     if (init?.body) {
-      defaultHeaders["Content-Type"] = "Application/x-www-form-urlencoded";
+      defaultHeaders["Content-Type"] = "application/json;charset=UTF-8";
     }
     compoundInit.headers = {
       ...defaultHeaders,

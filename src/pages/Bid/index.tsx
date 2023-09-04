@@ -26,7 +26,7 @@ const BidList: React.FC = () => {
     getBidList({
       state: 0,
       pagesize: 10,
-      page: 0,
+      page: 1,
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
@@ -41,8 +41,8 @@ const BidList: React.FC = () => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
-            <Card title={item?.Propm_Title} className="bid-card">
-              <Link to={`/client/bid/detail/${item?.Propm_Id}`}>
+            <Link to={`/client/bid/detail/${item?.Propm_Id}`}>
+              <Card title={item?.Propm_Title} className="bid-card">
                 <div>
                   <div className="item">
                     <span className="label">当前价</span>
@@ -76,8 +76,8 @@ const BidList: React.FC = () => {
                     参加人数 {item?.Cyrs ?? 0}
                   </Button>
                 </div>
-              </Link>
-            </Card>
+              </Card>
+            </Link>
           </List.Item>
         )}
       />

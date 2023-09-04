@@ -1,7 +1,8 @@
-import { Button, Col, Form, Input, Modal, Row } from "antd";
+import { Button, Col, Form, Input, Modal, Row, message } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
-import { LoginParams, login } from "../../services/login";
+import { register } from "../../services/login";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -19,7 +20,7 @@ interface CodeParams {
 const Login: React.FC = () => {
   const [form] = useForm();
   const [err, setErr] = useState<string>("");
-  // const history = useHistory();
+  const history = useHistory();
 
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useLoginSMSToken();
@@ -66,14 +67,43 @@ const Login: React.FC = () => {
     []
   );
 
-  const onPassFinish = (values: LoginParams) => {
-    login(values).catch((e) => {
-      errorHandler(e);
-    });
+  const onPassFinish = (values: any) => {
+    const { cellphone, password, code, ...rest } = values;
+    console.log(values);
+
+    register({
+      phone: cellphone,
+      // SMSCode: code,
+      pwd: password,
+      ...rest,
+    })
+      .then((res) => {
+        console.log("res :>> ", res);
+        message.success("注册成功！");
+        // history.push({
+        //   pathname: "/client/login",
+        // });
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
   };
 
   return (
-    <Form layout="vertical" form={form} onFinish={onPassFinish}>
+    <Form
+      layout="vertical"
+      form={form}
+      onFinish={onPassFinish}
+      initialValues={{
+        cellphone: "18066666666",
+        company: "波波公司",
+        email: "12524051@qq.com",
+        nsrsbh: "456",
+        password: "123",
+        passwordRepeat: "123",
+        realname: "贾宝玉",
+      }}
+    >
       <Row>
         <Col span={14} className={styles.colLeft}>
           <div className={styles.cardFormTitle}>个人信息</div>
@@ -143,7 +173,7 @@ const Login: React.FC = () => {
               rules={[
                 { required: true, message: "请输入确认密码" },
                 (form) => {
-                  const pwd = form.getFieldValue("newPassword");
+                  const pwd = form.getFieldValue("password");
                   return {
                     type: "string",
                     validator: (rule, value) =>
