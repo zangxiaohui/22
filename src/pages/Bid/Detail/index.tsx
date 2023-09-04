@@ -34,6 +34,7 @@ const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
+  const { currentPrice, setCurrentPrice } = useState();
 
   const deadline = moment(data?.Propm_EndTime);
 
@@ -53,10 +54,7 @@ const BidDetail: React.FC = () => {
     console.log(key);
   };
 
-  const items = [
-    { label: "拍品详情", key: "item-1" },
-    { label: "招标公告", key: "item-2" },
-  ];
+  const items = [{ label: "拍品详情", key: "item-1" }];
 
   const onChange2 = (value: any) => {
     console.log("changed", value);

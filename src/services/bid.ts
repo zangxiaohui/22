@@ -50,3 +50,23 @@ export function getBidDetail(params: { Id: number }): Promise<any> {
     }),
   });
 }
+
+/** 竞价当前价格获取 */
+export function getBidCurrentPrice(params: { Id: number }): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjprocurprice`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+/** 我司出价历史 */
+export function getBidHistory(params: { Id: number }): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjprobjlist`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
