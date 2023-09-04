@@ -1,6 +1,6 @@
-import { Breadcrumb, Button, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
-import FullPageWrapper from "../../components/FullPageWrapper";
+import PageContainer from "../../components/PageContainer";
 import { useBeforeUnload, useSubmission } from "../../lib/hooks";
 import {
   forwardOrRefreshByQueryParam,
@@ -54,14 +54,20 @@ const EditProfile: React.FC = () => {
     forwardOrRefreshByQueryParam("redirect");
   };
 
-  return (
-    <FullPageWrapper>
-      <Breadcrumb>
-        <Breadcrumb.Item>首页</Breadcrumb.Item>
-        <Breadcrumb.Item>我的</Breadcrumb.Item>
-        <Breadcrumb.Item>个人信息管理</Breadcrumb.Item>
-      </Breadcrumb>
+  const routes = [
+    {
+      breadcrumbName: "首页",
+    },
+    {
+      breadcrumbName: "我的",
+    },
+    {
+      breadcrumbName: "个人信息管理",
+    },
+  ];
 
+  return (
+    <PageContainer routes={routes}>
       <div className={styles.wrapper}>
         <h1 className={styles.title}>信息管理</h1>
 
@@ -79,7 +85,7 @@ const EditProfile: React.FC = () => {
                 name="Name"
                 rules={[{ required: true, message: "个人编号不能为空" }]}
               >
-                <Input placeholder="请输入" autoComplete="name" />
+                <Input placeholder="请输入" autoComplete="name" disabled />
               </Form.Item>
               <Form.Item
                 label="姓名"
@@ -93,14 +99,14 @@ const EditProfile: React.FC = () => {
                 name="Con"
                 rules={[{ required: true, message: "公司不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" disabled />
               </Form.Item>
               <Form.Item
                 label="电话"
                 name="Phone"
                 rules={[{ required: true, message: "电话不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" disabled />
               </Form.Item>
               <Form.Item
                 label="邮箱"
@@ -141,7 +147,7 @@ const EditProfile: React.FC = () => {
           )}
         </div>
       </div>
-    </FullPageWrapper>
+    </PageContainer>
   );
 };
 

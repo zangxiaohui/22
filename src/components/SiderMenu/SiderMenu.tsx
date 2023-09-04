@@ -28,7 +28,8 @@ export type HeaderRenderKey = "menuHeaderRender" | "headerTitleRender";
  * @returns
  */
 export const renderLogoAndTitle = (
-  props: SiderMenuProps,
+  // props: SiderMenuProps,
+  props: any,
   renderKey: HeaderRenderKey = "menuHeaderRender"
 ): React.ReactNode => {
   const { logo, title, layout } = props;

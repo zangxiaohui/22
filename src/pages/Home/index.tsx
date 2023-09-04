@@ -1,15 +1,27 @@
-import { Button, Form } from "antd";
 import React from "react";
-import styles from "./index.module.scss";
+import PageContainer from "../../components/PageContainer";
+import "./index.less";
 
-const { useForm } = Form;
+const Home: React.FC = () => {
+  const routes = [
+    {
+      path: "/client",
+      breadcrumbName: "首页",
+    },
+    {
+      path: "first",
+      breadcrumbName: "招标须知",
+    },
+  ];
 
-const Dashboard: React.FC = () => {
   return (
-    <div className={styles.wrapper}>
-      <Button type="primary">22</Button>
-    </div>
+    <PageContainer routes={routes}>
+      <div>
+        这个区域可以通过后台录入图片，文字，表格等内容
+        内容过多时，可以滚动向下翻页
+      </div>
+    </PageContainer>
   );
 };
 
-export default Dashboard;
+export default Home;
