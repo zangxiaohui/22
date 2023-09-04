@@ -22,14 +22,14 @@ const routes = [
 const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any[]>();
+  const [data, setData] = useState<any>({});
 
   const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
   useEffect(() => {
     setLoading(true);
     getBidDetail({
-      id,
+      Id: Number(id),
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
@@ -54,14 +54,14 @@ const BidDetail: React.FC = () => {
   return (
     <PageContainer routes={routes}>
       <div className="bid-row1">
-        <h1>这里显示产品名称，这里显示产品名称，100吨</h1>
+        <h1>{data?.Propm_Title}</h1>
         <div className="statistic-wrap">
           <Countdown
             title="距结束"
             value={deadline}
             format="D 天 H 时 m 分 s 秒"
           />
-          <Statistic title="当前价" value={9999999} prefix="￥" />
+          <Statistic title="当前价" value={data?.Propm_CurPrice} prefix="￥" />
         </div>
       </div>
       <Row className="bid-row2">

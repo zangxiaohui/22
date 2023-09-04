@@ -39,7 +39,7 @@ export function getBidList(query: GetBidListRequest): Promise<any> {
 }
 
 /** 获取招标竞价产品详情 */
-export function getBidDetail(query: { id: string }): Promise<any> {
+export function getBidDetail(query: { Id: number }): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjprodetails`, {
     method: "POST",
     body: JSON.stringify(query),
