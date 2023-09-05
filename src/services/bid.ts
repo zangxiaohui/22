@@ -30,6 +30,14 @@ export const BidTypeLabel = {
   [BidType.TERMINATED]: "已终止",
 };
 
+export const BidTypeColor = {
+  [BidType.ALL]: "gray",
+  [BidType.IN_PREPARATION]: "green",
+  [BidType.IN_PROGRESS]: "red",
+  [BidType.FINISHED]: "gray",
+  [BidType.TERMINATED]: "gray",
+};
+
 export interface PagedRequest {
   pagesize?: number;
   page?: number;

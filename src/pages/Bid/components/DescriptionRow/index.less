@@ -1,0 +1,32 @@
+@red-base: #cf2b2b;
+@green-base: #00b58c;
+@orange-base: #ee9400;
+@gray-base: #777777;
+
+.bid-description-row {
+  margin-bottom: 4px;
+  font-size: 16px;
+  .label {
+    padding-right: 20px;
+  }
+  &.colorful {
+    .desc-red {
+      color: @red-base;
+    }
+    .desc-green {
+      color: @green-base;
+    }
+    .desc-gray {
+      color: @gray-base;
+    }
+  }
+  .prefix {
+    margin-right: -3px;
+  }
+
+  &.font-size-lg {
+    .cont {
+      font-size: 24px;
+    }
+  }
+}

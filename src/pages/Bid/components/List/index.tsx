@@ -1,8 +1,15 @@
 import { Button, Card, List } from "antd";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageContainer from "../../../../components/PageContainer";
-import { BidType, BidTypeLabel, getBidList } from "../../../../services/bid";
+import {
+  BidType,
+  BidTypeColor,
+  BidTypeLabel,
+  getBidList,
+} from "../../../../services/bid";
+import Row from "../DescriptionRow";
 import "./index.less";
 
 interface BidListProps {
@@ -47,34 +54,69 @@ const BidList: React.FC<BidListProps> = (props) => {
         renderItem={(item) => (
           <List.Item>
             <Link to={`/client/bid/detail/${item?.Propm_Id}`}>
-              <Card title={item?.Propm_Title} className="bid-card">
+              <Card
+                title={item?.Propm_Title}
+                className="bid-card"
+                hoverable
+                bordered={false}
+              >
                 <div>
-                  <div className="item">
-                    <span className="label">当前价</span>
-                    <span className="desc h">
-                      ¥
-                      <span className="price">
-                        {item?.Propm_CurPrice ?? "--"}
-                      </span>
-                    </span>
-                  </div>
-                  <div className="item">
-                    <span className="label">起拍价</span>
-                    <span className="desc">
-                      ¥{item?.Propm_StartPrice ?? "--"}
-                    </span>
-                  </div>
-                  <div className="item">
-                    <span className="label">预&nbsp;&nbsp;&nbsp;&nbsp;计</span>
-                    <span className="desc">{item?.Propm_Remark ?? "--"}</span>
-                  </div>
-                  <div className="item">
-                    <span className="label">备&nbsp;&nbsp;&nbsp;&nbsp;注</span>
-                    <span className="desc">{item?.Propm_Remark ?? "--"}</span>
-                  </div>
+                  {(item?.State === BidType.IN_PROGRESS ||
+                    item?.State === BidType.TERMINATED) && (
+                    <Row
+                      status={item?.State}
+                      label="当前价"
+                      prefix="¥"
+                      desc={item?.Propm_CurPrice}
+                      className="font-size-lg colorful"
+                    />
+                  )}
+
+                  {item?.State === BidType.FINISHED && (
+                    <Row
+                      status={item?.State}
+                      label="成交价"
+                      prefix="¥"
+                      desc={item?.Propm_CurPrice}
+                      className="font-size-lg colorful"
+                    />
+                  )}
+                  <Row
+                    status={item?.State}
+                    label="起拍价"
+                    prefix="¥"
+                    desc={item?.Propm_StartPrice}
+                    className={
+                      item?.State === BidType.IN_PREPARATION
+                        ? "font-size-lg colorful"
+                        : ""
+                    }
+                  />
+
+                  <Row
+                    status={item?.State}
+                    label="结&nbsp;&nbsp;&nbsp;&nbsp;束"
+                    desc={
+                      item?.Propm_EndTime
+                        ? moment(item?.Propm_EndTime).format(
+                            "YYYY-MM-DD HH:mm:ss"
+                          )
+                        : undefined
+                    }
+                  />
+
+                  <Row
+                    status={item?.State}
+                    label="备&nbsp;&nbsp;&nbsp;&nbsp;注"
+                    desc={item?.Propm_Remark}
+                  />
                 </div>
                 <div className="bid-action">
-                  <Button type="primary" block>
+                  <Button
+                    type="primary"
+                    block
+                    className={`btn-${BidTypeColor[item?.State as BidType]}`}
+                  >
                     {item?.StateName ?? "--"}
                   </Button>
                   <Button type="primary" block>
