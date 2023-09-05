@@ -19,7 +19,7 @@ interface CodeParams {
   code: string;
 }
 
-const serverPath = "http://baichuanpm.test.wxliebao.com";
+const serverPath = "http://baichuanpm.test.wxliebao.com:88";
 
 const Login: React.FC = () => {
   const [form] = useForm();

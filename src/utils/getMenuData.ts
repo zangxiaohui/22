@@ -4,13 +4,15 @@ const data: MenuDataItem[] = [
   {
     name: "招标须知",
     key: "1",
-    icon: "1223",
+    icon: "ico1",
+    iconClassName: "ico1",
     path: "/client/home",
   },
-
   {
     name: "招标竞价",
     key: "2",
+    icon: "ico2",
+    iconClassName: "ico2",
     children: [
       {
         name: "全部产品",
@@ -40,11 +42,15 @@ const data: MenuDataItem[] = [
   {
     name: "新品推荐",
     key: "3",
+    icon: "ico3",
+    iconClassName: "ico3",
     path: "/client/product",
   },
   {
     name: "我的",
     key: "4",
+    icon: "ico4",
+    iconClassName: "ico4",
     children: [
       {
         name: "我的招标",
@@ -67,6 +73,8 @@ const data: MenuDataItem[] = [
   {
     name: "联系我们",
     key: "5",
+    icon: "ico5",
+    iconClassName: "ico5",
     path: "/client/contact",
   },
 ];

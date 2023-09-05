@@ -6,7 +6,7 @@ import "./index.less";
 interface DescriptionRowProps {
   status: BidType;
   label: string;
-  desc?: string;
+  desc?: string | number;
   prefix?: string;
   className?: string;
 }

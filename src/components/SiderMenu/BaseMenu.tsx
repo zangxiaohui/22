@@ -168,7 +168,6 @@ class MenuUtil {
   props: BaseMenuProps & {
     menuRenderType?: "header" | "sider";
     baseClassName: string;
-    hashId: string;
   };
 
   getNavMenuItems = (
@@ -206,11 +205,7 @@ class MenuUtil {
       const shouldHasIcon = level === 0 || (isGroup && level === 1);
 
       //  get defaultTitle by menuItemRender
-      const iconDom = getIcon(
-        item.icon,
-        iconPrefixes,
-        `${baseClassName}-icon ${this.props?.hashId}`
-      );
+      const iconDom = getIcon(item.icon, iconPrefixes, `${baseClassName}-icon`);
       /**
        * 如果没有icon在收起的时候用首字母代替
        */
@@ -219,24 +214,19 @@ class MenuUtil {
 
       const defaultTitle = (
         <div
-          className={classNames(
-            `${baseClassName}-item-title`,
-            this.props?.hashId,
-            {
-              [`${baseClassName}-item-title-collapsed`]: collapsed,
-              [`${baseClassName}-item-title-collapsed-level-${level}`]:
-                collapsed,
-              [`${baseClassName}-group-item-title`]: menuType === "group",
-              [`${baseClassName}-item-collapsed-show-title`]:
-                menu?.collapsedShowTitle && collapsed,
-            }
-          )}
+          className={classNames(`${baseClassName}-item-title`, {
+            [`${baseClassName}-item-title-collapsed`]: collapsed,
+            [`${baseClassName}-item-title-collapsed-level-${level}`]: collapsed,
+            [`${baseClassName}-group-item-title`]: menuType === "group",
+            [`${baseClassName}-item-collapsed-show-title`]:
+              menu?.collapsedShowTitle && collapsed,
+          })}
         >
           {/* 收起的时候group模式就不要展示icon了，放不下 */}
           {menuType === "group" && collapsed ? null : shouldHasIcon &&
             iconDom ? (
             <span
-              className={`${baseClassName}-item-icon ${this.props?.hashId}`.trim()}
+              className={`${baseClassName}-item-icon ${item.iconClassName}`}
             >
               {iconDom}
             </span>
@@ -244,16 +234,12 @@ class MenuUtil {
             defaultIcon
           )}
           <span
-            className={classNames(
-              `${baseClassName}-item-text`,
-              this.props?.hashId,
-              {
-                [`${baseClassName}-item-text-has-icon`]:
-                  menuType !== "group" &&
-                  shouldHasIcon &&
-                  (iconDom || defaultIcon),
-              }
-            )}
+            className={classNames(`${baseClassName}-item-text`, {
+              [`${baseClassName}-item-text-has-icon`]:
+                menuType !== "group" &&
+                shouldHasIcon &&
+                (iconDom || defaultIcon),
+            })}
           >
             {name}
           </span>
@@ -350,11 +336,7 @@ class MenuUtil {
     const hasIcon = level === 0 || (isGroup && level === 1);
     const icon = !hasIcon
       ? null
-      : getIcon(
-          item.icon,
-          iconPrefixes,
-          `${baseClassName}-icon ${this.props?.hashId}`
-        );
+      : getIcon(item.icon, iconPrefixes, `${baseClassName}-icon`);
 
     // 如果没有 icon 在收起的时候用首字母代替
     const defaultIcon =
@@ -363,19 +345,15 @@ class MenuUtil {
     let defaultItem = (
       <div
         key={itemPath}
-        className={classNames(
-          `${baseClassName}-item-title`,
-          this.props?.hashId,
-          {
-            [`${baseClassName}-item-title-collapsed`]: collapsed,
-            [`${baseClassName}-item-title-collapsed-level-${level}`]: collapsed,
-            [`${baseClassName}-item-collapsed-show-title`]:
-              menu?.collapsedShowTitle && collapsed,
-          }
-        )}
+        className={classNames(`${baseClassName}-item-title`, {
+          [`${baseClassName}-item-title-collapsed`]: collapsed,
+          [`${baseClassName}-item-title-collapsed-level-${level}`]: collapsed,
+          [`${baseClassName}-item-collapsed-show-title`]:
+            menu?.collapsedShowTitle && collapsed,
+        })}
       >
         <span
-          className={`${baseClassName}-item-icon ${this.props?.hashId}`.trim()}
+          className={`${baseClassName}-item-icon ${item.iconClassName}`.trim()}
           style={{
             display: defaultIcon === null && !icon ? "none" : "",
           }}
@@ -383,14 +361,10 @@ class MenuUtil {
           {icon || <span className="anticon">{defaultIcon}</span>}
         </span>
         <span
-          className={classNames(
-            `${baseClassName}-item-text`,
-            this.props?.hashId,
-            {
-              [`${baseClassName}-item-text-has-icon`]:
-                hasIcon && (icon || defaultIcon),
-            }
-          )}
+          className={classNames(`${baseClassName}-item-text`, {
+            [`${baseClassName}-item-text-has-icon`]:
+              hasIcon && (icon || defaultIcon),
+          })}
         >
           {menuItemTitle}
         </span>
@@ -406,21 +380,16 @@ class MenuUtil {
           onClick={() => {
             window?.open?.(itemPath, "_blank");
           }}
-          className={classNames(
-            `${baseClassName}-item-title`,
-            this.props?.hashId,
-            {
-              [`${baseClassName}-item-title-collapsed`]: collapsed,
-              [`${baseClassName}-item-title-collapsed-level-${level}`]:
-                collapsed,
-              [`${baseClassName}-item-link`]: true,
-              [`${baseClassName}-item-collapsed-show-title`]:
-                menu?.collapsedShowTitle && collapsed,
-            }
-          )}
+          className={classNames(`${baseClassName}-item-title`, {
+            [`${baseClassName}-item-title-collapsed`]: collapsed,
+            [`${baseClassName}-item-title-collapsed-level-${level}`]: collapsed,
+            [`${baseClassName}-item-link`]: true,
+            [`${baseClassName}-item-collapsed-show-title`]:
+              menu?.collapsedShowTitle && collapsed,
+          })}
         >
           <span
-            className={`${baseClassName}-item-icon ${this.props?.hashId}`.trim()}
+            className={`${baseClassName}-item-icon ${item.iconClassName}`}
             style={{
               display: defaultIcon === null && !icon ? "none" : "",
             }}
@@ -428,14 +397,10 @@ class MenuUtil {
             {icon || <span className="anticon">{defaultIcon}</span>}
           </span>
           <span
-            className={classNames(
-              `${baseClassName}-item-text`,
-              this.props?.hashId,
-              {
-                [`${baseClassName}-item-text-has-icon`]:
-                  hasIcon && (icon || defaultIcon),
-              }
-            )}
+            className={classNames(`${baseClassName}-item-text`, {
+              [`${baseClassName}-item-text-has-icon`]:
+                hasIcon && (icon || defaultIcon),
+            })}
           >
             {menuItemTitle}
           </span>
@@ -661,32 +626,34 @@ const BaseMenu: React.FC<BaseMenuProps & PrivateSiderMenuProps> = (props) => {
   }
 
   return (
-    <Menu
-      {...openKeysProps}
-      key="Menu"
-      mode={mode}
-      inlineIndent={16}
-      defaultOpenKeys={defaultOpenKeysRef.current}
-      // theme={dark ? 'dark' : 'light'}
-      theme="dark"
-      selectedKeys={selectedKeys}
-      style={{
-        backgroundColor: "transparent",
-        border: "none",
-        ...style,
-      }}
-      className={classNames(className, baseClassName, {
-        [`${baseClassName}-horizontal`]: mode === "horizontal",
-        [`${baseClassName}-collapsed`]: props.collapsed,
-      })}
-      items={menuUtils.getNavMenuItems(finallyData, 0)}
-      onOpenChange={(_openKeys: React.Key[]) => {
-        if (!props.collapsed) {
-          setOpenKeys(_openKeys);
-        }
-      }}
-      {...props.menuProps}
-    />
+    <div className="menu-wrap">
+      <Menu
+        {...openKeysProps}
+        key="Menu"
+        mode={mode}
+        inlineIndent={16}
+        defaultOpenKeys={defaultOpenKeysRef.current}
+        // theme={dark ? 'dark' : 'light'}
+        theme="dark"
+        selectedKeys={selectedKeys}
+        style={{
+          backgroundColor: "transparent",
+          border: "none",
+          ...style,
+        }}
+        className={classNames(className, baseClassName, {
+          [`${baseClassName}-horizontal`]: mode === "horizontal",
+          [`${baseClassName}-collapsed`]: props.collapsed,
+        })}
+        items={menuUtils.getNavMenuItems(finallyData, 0)}
+        onOpenChange={(_openKeys: React.Key[]) => {
+          if (!props.collapsed) {
+            setOpenKeys(_openKeys);
+          }
+        }}
+        {...props.menuProps}
+      />
+    </div>
   );
 };
 

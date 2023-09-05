@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const serverPath = "http://baichuanpm.test.wxliebao.com";
+const serverPath = "http://baichuanpm.test.wxliebao.com:88";
 
 module.exports = function (app) {
   app.use(
