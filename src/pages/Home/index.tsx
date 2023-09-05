@@ -16,7 +16,6 @@ const routes = [
 
 const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
   const [data, setData] = useState<any>({});
 
   useEffect(() => {

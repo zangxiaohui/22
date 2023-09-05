@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
 import PageLoading from "../../../components/PageLoading";
 import { getBidDetail } from "../../../services/bid";
+import HistoryModal from "../components/HistoryModal";
 import "./index.less";
 
 const { Countdown } = Statistic;
@@ -31,10 +32,12 @@ const routes = [
 ];
 
 const BidDetail: React.FC = () => {
+  const [historyVisible, setHistoryVisible] = useState<boolean>(false);
+
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
-  const { currentPrice, setCurrentPrice } = useState();
+  // const { currentPrice, setCurrentPrice } = useState();
 
   const deadline = moment(data?.Propm_EndTime);
 
@@ -48,8 +51,6 @@ const BidDetail: React.FC = () => {
     });
   }, [id]);
 
-  console.log("data :>> 1223 ", data);
-
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -58,6 +59,11 @@ const BidDetail: React.FC = () => {
 
   const onChange2 = (value: any) => {
     console.log("changed", value);
+  };
+
+  // 出价记录
+  const viewHistory = () => {
+    setHistoryVisible(true);
   };
 
   const step = data?.Propm_StepPrice;
@@ -117,7 +123,9 @@ const BidDetail: React.FC = () => {
               {data?.Propm_AddType}
             </Descriptions.Item>
           </Descriptions>
-          <Button type="link">我司历史出价记录</Button>
+          <Button type="link" onClick={viewHistory}>
+            我司历史出价记录
+          </Button>
         </Col>
       </Row>
       <Tabs
@@ -132,6 +140,11 @@ const BidDetail: React.FC = () => {
         className="content"
         dangerouslySetInnerHTML={{ __html: data.content }}
       ></div>
+
+      <HistoryModal
+        visible={historyVisible}
+        onCancel={() => setHistoryVisible(false)}
+      />
     </PageContainer>
   );
 };
