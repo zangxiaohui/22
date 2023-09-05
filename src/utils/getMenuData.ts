@@ -31,10 +31,12 @@ const data: MenuDataItem[] = [
       },
       {
         name: "己结束",
+        key: "24",
         path: "/client/bid/finished",
       },
       {
         name: "已中止",
+        key: "25",
         path: "/client/bid/terminated",
       },
     ],

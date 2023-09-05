@@ -1,10 +1,5 @@
 import type { MenuDataItem } from "./typings";
 
-const reg =
-  /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
-
-export const isUrl = (path: string): boolean => reg.test(path);
-
 export const isBrowser = () =>
   typeof window !== "undefined" && typeof window.document !== "undefined";
 
@@ -57,3 +52,21 @@ export function clearMenuItem(menusData: MenuDataItem[]): MenuDataItem[] {
     })
     .filter((item) => item) as MenuDataItem[];
 }
+
+export function stripQueryStringAndHashFromPath(url: string) {
+  return url.split("?")[0].split("#")[0];
+}
+
+export const isUrl = (path: string): boolean => {
+  if (!path.startsWith("http")) {
+    return false;
+  }
+  try {
+    const url = new URL(path);
+    return !!url;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const childrenPropsName = "routes";

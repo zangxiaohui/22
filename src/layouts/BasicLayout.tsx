@@ -1,4 +1,3 @@
-import { getMatchMenu } from "@umijs/route-utils";
 import { ConfigProvider, Layout } from "antd";
 import classNames from "classnames";
 import Omit from "omit.js";
@@ -13,6 +12,7 @@ import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
 import { useAsync } from "../lib/hooks";
 import { getCurrentCompany, getSelf } from "../services/user";
+import { getMatchMenu } from "../utils/getMatchMenu";
 import { getMenuData } from "../utils/getMenuData";
 import type { MenuDataItem, RouterTypes, WithFalse } from "../utils/typings";
 import { useCurrentMenuLayoutProps } from "../utils/useCurrentMenuLayoutProps";
@@ -138,9 +138,31 @@ const renderSiderMenu = (
   props: ProLayoutProps,
   matchMenuKeys: string[]
 ): React.ReactNode => {
-  const { layout, isMobile, splitMenus, suppressSiderWhenMenuEmpty } = props;
+  const {
+    layout,
+    isMobile,
+    selectedKeys,
+    openKeys,
+    splitMenus,
+    suppressSiderWhenMenuEmpty,
+    menuRender,
+  } = props;
+  if (props.menuRender === false || props.pure) {
+    return null;
+  }
 
   let { menuData } = props;
+
+  /** 如果是分割菜单模式，需要专门实现一下 */
+  if (splitMenus && (openKeys !== false || layout === "mix") && !isMobile) {
+    const [key] = selectedKeys || matchMenuKeys;
+    if (key) {
+      menuData =
+        props.menuData?.find((item: any) => item.key === key)?.children || [];
+    } else {
+      menuData = [];
+    }
+  }
 
   // 这里走了可以少一次循环
   const clearMenuData = clearMenuItem(menuData || []);
@@ -164,6 +186,10 @@ const renderSiderMenu = (
       menuData={clearMenuData}
     />
   );
+
+  if (menuRender) {
+    return menuRender(props, defaultDom);
+  }
 
   return defaultDom;
 };
@@ -204,7 +230,7 @@ const BasicLayout: React.FC<any> = (props) => {
     return getMatchMenu(location.pathname || "/", menuData || [], true);
   }, [location.pathname, menuData]);
 
-  console.log("matchMenus 111 :>> ", matchMenus);
+  console.log("matchMenus :>> ", matchMenus);
 
   const matchMenuKeys = useMemo(
     () =>
@@ -213,8 +239,6 @@ const BasicLayout: React.FC<any> = (props) => {
       ),
     [matchMenus]
   );
-
-  console.log("matchMenuKeys :>> ", matchMenuKeys);
 
   // 当前选中的menu，一般不会为空
   const currentMenu = (matchMenus[matchMenus.length - 1] || {}) as any;

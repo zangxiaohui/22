@@ -174,6 +174,7 @@ const SiderMenu: React.FC<any> = (props) => {
     collapsedButtonRender,
     prefixCls,
     avatarProps,
+    menuContentRender,
 
     //@ts-ignore
     rightContentRender,
@@ -208,21 +209,26 @@ const SiderMenu: React.FC<any> = (props) => {
 
   const headerDom = renderLogoAndTitle(props);
 
-  const menuRenderDom = useMemo(
-    () => (
-      <BaseMenu
-        {...props}
-        key="base-menu"
-        mode={collapsed && !isMobile ? "vertical" : "inline"}
-        handleOpenChange={onOpenChange}
-        style={{
-          width: "100%",
-        }}
-        className={`${baseClassName}-menu `}
-      />
-    ),
-    [baseClassName, onOpenChange, props]
+  const menuDom = useMemo(
+    () =>
+      menuContentRender !== false && (
+        <BaseMenu
+          {...props}
+          key="base-menu"
+          mode={collapsed && !isMobile ? "vertical" : "inline"}
+          handleOpenChange={onOpenChange}
+          style={{
+            width: "100%",
+          }}
+          className={`${baseClassName}-menu`.trim()}
+        />
+      ),
+    [baseClassName, menuContentRender, onOpenChange, props]
   );
+
+  const menuRenderDom = useMemo(() => {
+    return menuContentRender ? menuContentRender(props, menuDom) : menuDom;
+  }, [menuContentRender, menuDom, props]);
 
   const avatarDom = useMemo(() => {
     if (!avatarProps) return null;
