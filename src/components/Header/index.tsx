@@ -46,7 +46,6 @@ const DefaultHeader: React.FC<any> = (props) => {
   } = props;
 
   const needFixedHeader = fixedHeader || layout === "mix";
-  console.log("headerContentRender :>> ", headerContentRender);
 
   const renderContent = useCallback(() => {
     const isTop = layout === "top";

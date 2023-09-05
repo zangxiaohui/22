@@ -22,6 +22,14 @@ export enum BidType {
   TERMINATED = 4,
 }
 
+export const BidTypeLabel = {
+  [BidType.ALL]: "全部产品",
+  [BidType.IN_PREPARATION]: "即将开始",
+  [BidType.IN_PROGRESS]: "正在招标中",
+  [BidType.FINISHED]: "已结束",
+  [BidType.TERMINATED]: "已终止",
+};
+
 export interface PagedRequest {
   pagesize?: number;
   page?: number;

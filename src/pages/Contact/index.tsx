@@ -9,12 +9,12 @@ const routes = [
     breadcrumbName: "首页",
   },
   {
-    path: "first",
-    breadcrumbName: "招标须知",
+    path: "/client/contact",
+    breadcrumbName: "联系我们",
   },
 ];
 
-const Home: React.FC = () => {
+const Contact: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [data, setData] = useState<any>({});
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
     setLoading(true);
     getNoticeInfo().then((res) => {
       if (res.state) {
-        setData(res.data);
+        setData(res.state);
       }
       setLoading(false);
     });
@@ -31,12 +31,9 @@ const Home: React.FC = () => {
 
   return (
     <PageContainer routes={routes} loading={loading}>
-      <div
-        className="content"
-        dangerouslySetInnerHTML={{ __html: data?.Con }}
-      ></div>
+      <div>联系我们</div>
     </PageContainer>
   );
 };
 
-export default Home;
+export default Contact;

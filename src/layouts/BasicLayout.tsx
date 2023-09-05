@@ -131,7 +131,6 @@ const headerRender = (
   },
   matchMenuKeys: string[]
 ): React.ReactNode => {
-  console.log("props :>> ", props);
   return <Header matchMenuKeys={matchMenuKeys} {...props} />;
 };
 

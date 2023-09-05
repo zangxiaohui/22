@@ -1,37 +1,42 @@
 import { Button, Card, List } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PageContainer from "../../components/PageContainer";
-import { getBidList } from "../../services/bid";
+import PageContainer from "../../../../components/PageContainer";
+import { BidType, BidTypeLabel, getBidList } from "../../../../services/bid";
 import "./index.less";
 
-const routes = [
-  {
-    breadcrumbName: "首页",
-  },
-  {
-    breadcrumbName: "招标的产品",
-  },
-  {
-    breadcrumbName: "全部产品",
-  },
-];
+interface BidListProps {
+  type: BidType;
+}
 
-const BidList: React.FC = () => {
+const BidList: React.FC<BidListProps> = (props) => {
+  const { type } = props;
+  const routes = [
+    {
+      breadcrumbName: "首页",
+    },
+    {
+      breadcrumbName: "招标的产品",
+    },
+    {
+      breadcrumbName: BidTypeLabel[type],
+    },
+  ];
+
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
   useEffect(() => {
     setLoading(true);
     getBidList({
-      state: 0,
+      state: type,
       pagesize: 10,
       page: 1,
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
     });
-  }, []);
+  }, [type]);
 
   return (
     <PageContainer routes={routes} className="bid">
