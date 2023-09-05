@@ -20,7 +20,6 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
 }) => {
   const history = useHistory();
   const currentUser = useSelf();
-  console.log("currentUser :>> ", currentUser);
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   const prefixCls = `${getPrefixCls()}-pro-global-header`;
 

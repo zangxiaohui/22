@@ -146,8 +146,10 @@ const Login: React.FC = () => {
       form={form}
       onFinish={onPassFinish}
       initialValues={{
+        // username: "BC230001-001",
+        // pwd: "123456",
         username: "BC230002-001",
-        pwd: "123",
+        pwd: "123123",
       }}
     >
       <Form.Item

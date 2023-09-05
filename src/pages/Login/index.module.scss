@@ -33,6 +33,31 @@
     flex: 1;
     background-color: #fff;
     padding: 30px;
+    position: relative;
+    height: 520px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+    }
+
+    &::after {
+      left: 0;
+      border-top: 520px solid $primary-color;
+      border-right: 100px solid transparent;
+    }
+
+    &::before {
+      right: 0;
+      border-bottom: 520px solid $primary-color;
+      border-left: 100px solid transparent;
+    }
   }
 
   .logo {
@@ -47,6 +72,8 @@
   .cardForm {
     width: 430px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
   .cardFormHd {
