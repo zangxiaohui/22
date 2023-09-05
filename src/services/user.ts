@@ -7,6 +7,13 @@ export function getSelf(): Promise<any> {
   });
 }
 
+/** 获取当前用户公司信息 */
+export function getCurrentCompany(): Promise<any> {
+  return fetch(`/CusApi/ComData/getcompanyinfo`, {
+    method: "POST",
+  });
+}
+
 export interface UserForm {
   RealName?: string;
   Email?: string;

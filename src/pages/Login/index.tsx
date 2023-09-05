@@ -1,5 +1,6 @@
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import React from "react";
+import GlobalFooter from "../../components/GlobalFooter";
 import LoginForm from "./LoginForm";
 import styles from "./index.module.scss";
 
@@ -29,11 +30,9 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* <p className={styles.bottomText}>
-        <a href="https://beian.miit.gov.cn/#/Integrated/index">
-          沪ICP备15053420号-1
-        </a>
-      </p> */}
+      <div className={styles.bottomText}>
+        <GlobalFooter />
+      </div>
     </div>
   );
 };

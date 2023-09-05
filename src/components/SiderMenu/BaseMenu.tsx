@@ -524,6 +524,7 @@ const BaseMenu: React.FC<BaseMenuProps & PrivateSiderMenuProps> = (props) => {
         }
       : undefined,
   });
+
   useEffect(() => {
     if (menu?.defaultOpenAll || propsOpenKeys === false) {
       return;

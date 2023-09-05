@@ -19,6 +19,7 @@ export type RouteContextType = {
   matchMenuKeys?: any[];
   currentMenu?: any;
   currentUser?: any;
+  currentCompany?: any;
 } & Partial<PureSettings>;
 
 const routeContext: React.Context<RouteContextType> = createContext({});
@@ -26,6 +27,11 @@ const routeContext: React.Context<RouteContextType> = createContext({});
 export function useSelf() {
   const { currentUser } = useContext(routeContext);
   return currentUser;
+}
+
+export function useCurrentCompany() {
+  const { currentCompany } = useContext(routeContext);
+  return currentCompany;
 }
 
 export default routeContext;

@@ -210,17 +210,46 @@ const Login: React.FC = () => {
         </Checkbox>
         <Link to="/forgot-password?back=true">忘记密码？</Link>
       </div>
-      <Form.Item>
-        <Button
-          htmlType="submit"
-          className={styles.button}
-          type="primary"
-          size="large"
-          block
-        >
-          登录
-        </Button>
-      </Form.Item>
+
+      <Row gutter={10} className={styles.btnArea}>
+        <Col span={8}>
+          <Button
+            htmlType="submit"
+            className={styles.button}
+            type="primary"
+            size="large"
+            block
+          >
+            登 录
+          </Button>
+        </Col>
+        <Col span={8}>
+          <Button
+            className={styles.button}
+            type="primary"
+            size="large"
+            block
+            onClick={() => {
+              form.resetFields();
+            }}
+          >
+            重 置
+          </Button>
+        </Col>
+        <Col span={8}>
+          <Button
+            className={styles.button}
+            type="primary"
+            size="large"
+            block
+            onClick={() => {
+              history.push("/client/register");
+            }}
+          >
+            注 册
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };

@@ -12,7 +12,7 @@ import Header from "../components/Header";
 import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
 import { useAsync } from "../lib/hooks";
-import { getSelf } from "../services/user";
+import { getCurrentCompany, getSelf } from "../services/user";
 import { getMenuData } from "../utils/getMenuData";
 import type { MenuDataItem, RouterTypes, WithFalse } from "../utils/typings";
 import { useCurrentMenuLayoutProps } from "../utils/useCurrentMenuLayoutProps";
@@ -204,6 +204,8 @@ const BasicLayout: React.FC<any> = (props) => {
     return getMatchMenu(location.pathname || "/", menuData || [], true);
   }, [location.pathname, menuData]);
 
+  console.log("matchMenus 111 :>> ", matchMenus);
+
   const matchMenuKeys = useMemo(
     () =>
       Array.from(
@@ -211,6 +213,8 @@ const BasicLayout: React.FC<any> = (props) => {
       ),
     [matchMenus]
   );
+
+  console.log("matchMenuKeys :>> ", matchMenuKeys);
 
   // 当前选中的menu，一般不会为空
   const currentMenu = (matchMenus[matchMenus.length - 1] || {}) as any;
@@ -323,6 +327,7 @@ const BasicLayout: React.FC<any> = (props) => {
   }, [location.pathname, location.pathname?.search]);
 
   const currentUserData = useAsync(getSelf);
+  const currentCompanyData = useAsync(getCurrentCompany);
 
   return (
     <>
@@ -337,6 +342,7 @@ const BasicLayout: React.FC<any> = (props) => {
           matchMenuKeys,
           currentMenu,
           currentUser: currentUserData?.data || {},
+          currentCompany: currentCompanyData?.data || {},
         }}
       >
         <div className={className}>
