@@ -323,8 +323,7 @@ const BasicLayout: React.FC<any> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.pathname?.search]);
 
-  const currentUser = useAsync(getSelf);
-  console.log("currentUser :>> ", currentUser);
+  const currentUserData = useAsync(getSelf);
 
   return (
     <>
@@ -338,6 +337,7 @@ const BasicLayout: React.FC<any> = (props) => {
           matchMenus,
           matchMenuKeys,
           currentMenu,
+          currentUser: currentUserData?.data || {},
         }}
       >
         <div className={className}>

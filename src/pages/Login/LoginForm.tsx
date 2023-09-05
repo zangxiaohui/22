@@ -123,11 +123,18 @@ const Login: React.FC = () => {
       uid,
     })
       .then((res: any) => {
-        const { openid, curtoken } = res?.data || {};
-        localStorage.setItem("baichuan_openid", openid);
-        localStorage.setItem("baichuan_curtoken", curtoken);
-        // setAuthority("admin");
-        history.push("/client/bid");
+        if (res.state) {
+          const { openid, curtoken } = res?.data || {};
+          localStorage.setItem("baichuan_openid", openid);
+          localStorage.setItem("baichuan_curtoken", curtoken);
+          // setAuthority("admin");
+          history.push("/client/home");
+        } else {
+          Modal.error({
+            content: <div style={{ width: 250 }}>{res.msg}</div>,
+            okText: "关闭",
+          });
+        }
       })
       .catch((e) => {
         errorHandler(e);
@@ -139,8 +146,8 @@ const Login: React.FC = () => {
       form={form}
       onFinish={onPassFinish}
       initialValues={{
-        username: "BC230001-001",
-        pwd: "123456",
+        username: "BC230002-001",
+        pwd: "123",
       }}
     >
       <Form.Item

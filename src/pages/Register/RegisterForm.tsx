@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Modal, Row, message } from "antd";
+import { Button, Col, Form, Input, Modal, Row } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
@@ -78,11 +78,14 @@ const Login: React.FC = () => {
       ...rest,
     })
       .then((res) => {
-        console.log("res :>> ", res);
-        message.success("注册成功！");
-        // history.push({
-        //   pathname: "/client/login",
-        // });
+        Modal.success({
+          title: `注册成功！`,
+          content: "请等待账号审核",
+          okText: "返回登录",
+          onOk() {
+            history.push("/client/login");
+          },
+        });
       })
       .catch((e) => {
         errorHandler(e);

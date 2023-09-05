@@ -9,6 +9,7 @@ import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import RegisterResult from "./pages/RegisterResult";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,11 @@ const App: React.FC = () => {
             <Switch>
               <Route path="/client/login" exact component={Login} />
               <Route path="/client/register" exact component={Register} />
+              <Route
+                path="/client/register-result"
+                exact
+                component={RegisterResult}
+              />
               <BasicLayout>
                 <Switch>
                   <Route path="/client/home" exact component={Home} />

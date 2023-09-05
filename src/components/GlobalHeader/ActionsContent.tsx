@@ -2,8 +2,10 @@ import { UserOutlined } from "@ant-design/icons";
 import { useDebounceFn } from "@ant-design/pro-utils";
 import { Avatar, ConfigProvider, Divider } from "antd";
 import React, { useContext, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import type { GlobalHeaderProps } from ".";
+import { useSelf } from "../../layouts/RouteContext";
+import { logout } from "../../services/login";
 /**
  * 抽离出来是为了防止 rightSize 经常改变导致菜单 render
  *
@@ -16,6 +18,9 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
   headerContentRender,
   ...props
 }) => {
+  const history = useHistory();
+  const currentUser = useSelf();
+  console.log("currentUser :>> ", currentUser);
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   const prefixCls = `${getPrefixCls()}-pro-global-header`;
 
@@ -51,6 +56,11 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
     setRightSize(width);
   }, 160);
 
+  const clickLogout = async () => {
+    await logout();
+    history.push("/client/login");
+  };
+
   const contentRender = rightContentRender;
   return (
     <div
@@ -63,10 +73,10 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
       <span className="avatar-icon">
         <UserOutlined />
       </span>
-      <span className="username">张三</span>， 您好！您可以：
+      <span className="username">{currentUser?.RealName}</span>， 您好！您可以：
       <Link to="/">管理信息</Link>
       <Divider type="vertical" />
-      <a>退出登录</a>
+      <a onClick={clickLogout}>退出登录</a>
     </div>
   );
 };

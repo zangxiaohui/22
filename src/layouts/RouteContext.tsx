@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import type { PureSettings } from "./defaultSettings";
 
 export type RouteContextType = {
@@ -18,8 +18,14 @@ export type RouteContextType = {
   matchMenus?: any[];
   matchMenuKeys?: any[];
   currentMenu?: any;
+  currentUser?: any;
 } & Partial<PureSettings>;
 
 const routeContext: React.Context<RouteContextType> = createContext({});
+
+export function useSelf() {
+  const { currentUser } = useContext(routeContext);
+  return currentUser;
+}
 
 export default routeContext;

@@ -208,3 +208,9 @@ export async function register(params: LoginParams): Promise<any> {
   }
   return response;
 }
+
+export function logout(): Promise<any> {
+  return fetch(`/CusApi/ComData/userloginout`, {
+    method: "POST",
+  });
+}

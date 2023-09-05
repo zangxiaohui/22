@@ -3,3 +3,7 @@
   height: 100%;
   position: relative;
 }
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #fff !important;
+}
