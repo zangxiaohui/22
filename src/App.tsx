@@ -27,7 +27,7 @@ const App: React.FC = () => {
                     exact
                     component={EditProfile}
                   />
-                  <Route path="/client/bid" exact component={Bid} />
+                  <Route path="/client/bid/all" exact component={Bid} />
                   <Route
                     path="/client/bid/detail/:id"
                     exact

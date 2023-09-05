@@ -659,6 +659,7 @@ const BaseMenu: React.FC<BaseMenuProps & PrivateSiderMenuProps> = (props) => {
   if (finallyData && finallyData?.length < 1) {
     return null;
   }
+
   return (
     <Menu
       {...openKeysProps}

@@ -1,6 +1,8 @@
+import { UserOutlined } from "@ant-design/icons";
 import { useDebounceFn } from "@ant-design/pro-utils";
-import { Avatar, ConfigProvider } from "antd";
+import { Avatar, ConfigProvider, Divider } from "antd";
 import React, { useContext, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import type { GlobalHeaderProps } from ".";
 /**
  * 抽离出来是为了防止 rightSize 经常改变导致菜单 render
@@ -58,7 +60,13 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
         height: "100%",
       }}
     >
-      用户名
+      <span className="avatar-icon">
+        <UserOutlined />
+      </span>
+      <span className="username">张三</span>， 您好！您可以：
+      <Link to="/">管理信息</Link>
+      <Divider type="vertical" />
+      <a>退出登录</a>
     </div>
   );
 };

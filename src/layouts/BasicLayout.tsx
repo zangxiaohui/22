@@ -5,11 +5,14 @@ import Omit from "omit.js";
 import useMergedState from "rc-util/lib/hooks/useMergedState";
 import type { CSSProperties } from "react";
 import React, { useContext, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import companyLogo from "../assets/images/logo-blue.svg";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
+import { useAsync } from "../lib/hooks";
+import { getSelf } from "../services/user";
 import { getMenuData } from "../utils/getMenuData";
 import type { MenuDataItem, RouterTypes, WithFalse } from "../utils/typings";
 import { useCurrentMenuLayoutProps } from "../utils/useCurrentMenuLayoutProps";
@@ -262,6 +265,9 @@ const BasicLayout: React.FC<any> = (props) => {
       onCollapse,
       isMobile,
       collapsed,
+      menuItemRender: (item: any, defaultDom: any) => {
+        return <Link to={item.path}>{defaultDom}</Link>;
+      },
     },
     matchMenuKeys
   );
@@ -316,6 +322,9 @@ const BasicLayout: React.FC<any> = (props) => {
     props.onPageChange?.(props.location);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.pathname?.search]);
+
+  const currentUser = useAsync(getSelf);
+  console.log("currentUser :>> ", currentUser);
 
   return (
     <>
