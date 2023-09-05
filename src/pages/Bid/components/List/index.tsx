@@ -62,20 +62,13 @@ const BidList: React.FC<BidListProps> = (props) => {
               >
                 <div>
                   {(item?.State === BidType.IN_PROGRESS ||
+                    item?.State === BidType.FINISHED ||
                     item?.State === BidType.TERMINATED) && (
                     <Row
                       status={item?.State}
-                      label="当前价"
-                      prefix="¥"
-                      desc={item?.Propm_CurPrice}
-                      className="font-size-lg colorful"
-                    />
-                  )}
-
-                  {item?.State === BidType.FINISHED && (
-                    <Row
-                      status={item?.State}
-                      label="成交价"
+                      label={
+                        item?.State === BidType.FINISHED ? "成交价" : "当前价"
+                      }
                       prefix="¥"
                       desc={item?.Propm_CurPrice}
                       className="font-size-lg colorful"
