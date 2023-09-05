@@ -1,19 +1,28 @@
 import {
+  Row as AntRow,
   Button,
   Col,
   Descriptions,
   Form,
   InputNumber,
-  Row,
+  Modal,
   Statistic,
   Tabs,
+  message,
 } from "antd";
+import { isNil } from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
 import PageLoading from "../../../components/PageLoading";
-import { getBidDetail } from "../../../services/bid";
+import {
+  BidType,
+  BidTypeColor,
+  getBidDetail,
+  postBid,
+} from "../../../services/bid";
+import Row from "../components/DescriptionRow";
 import HistoryModal from "../components/HistoryModal";
 import "./index.less";
 
@@ -37,6 +46,7 @@ const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
+  const [bidPrice, setBidPrice] = useState<number>();
   // const { currentPrice, setCurrentPrice } = useState();
 
   const deadline = moment(data?.Propm_EndTime);
@@ -48,6 +58,7 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
+      setBidPrice(res?.data?.Propm_CurPrice);
     });
   }, [id]);
 
@@ -57,8 +68,10 @@ const BidDetail: React.FC = () => {
 
   const items = [{ label: "拍品详情", key: "item-1" }];
 
-  const onChange2 = (value: any) => {
-    console.log("changed", value);
+  const onChangeBidPrice = (value: number | null) => {
+    if (!isNil(value)) {
+      setBidPrice(value);
+    }
   };
 
   // 出价记录
@@ -66,14 +79,34 @@ const BidDetail: React.FC = () => {
     setHistoryVisible(true);
   };
 
-  const step = data?.Propm_StepPrice;
+  const handleBid = () => {
+    Modal.confirm({
+      title: `张三，您好！`,
+      content: "...to do",
+      okText: "确认出价",
+      cancelText: "先不出价",
+      onOk() {
+        if (!isNil(bidPrice)) {
+          postBid({
+            Id: Number(id),
+            price: bidPrice,
+          }).then((res) => {
+            if (res.state) {
+              message.success("出价成功");
+            }
+            console.log(res);
+          });
+        }
+      },
+    });
+  };
 
   if (!data) {
     return <PageLoading />;
   }
 
   return (
-    <PageContainer routes={routes}>
+    <PageContainer routes={routes} loading={loading}>
       <div className="bid-row1">
         <h1>{data?.Propm_Title}</h1>
         <div className="statistic-wrap">
@@ -82,31 +115,71 @@ const BidDetail: React.FC = () => {
             value={deadline as any}
             format="D 天 H 时 m 分 s 秒"
           />
-          <Statistic title="当前价" value={data?.Propm_CurPrice} prefix="￥" />
+
+          {(data?.State === BidType.IN_PROGRESS ||
+            data?.State === BidType.FINISHED ||
+            data?.State === BidType.TERMINATED) && (
+            <Row
+              status={data?.State}
+              label={data?.State === BidType.FINISHED ? "成交价" : "当前价"}
+              prefix="¥"
+              desc={data?.Propm_CurPrice}
+              className="font-size-lg colorful"
+            />
+          )}
+          {data?.State === BidType.IN_PREPARATION && (
+            <Row
+              status={data?.State}
+              label="起拍价"
+              prefix="¥"
+              desc={data?.Propm_StartPrice}
+              className="font-size-lg colorful"
+            />
+          )}
+        </div>
+        <div className="bid-action">
+          <Button
+            type="primary"
+            block
+            className={`btn-${BidTypeColor[data?.State as BidType]}`}
+          >
+            {data?.StateName ?? "--"}
+          </Button>
+          <Button type="primary" block>
+            参加人数 {data?.Cyrs ?? 0}
+          </Button>
         </div>
       </div>
-      <Row className="bid-row2">
-        <Col flex="540px">
-          <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
-            <Form.Item label="出&nbsp;&nbsp;价">
-              <InputNumber
-                min={1}
-                defaultValue={9992929}
-                onChange={onChange2}
-                size="large"
-                formatter={(value) =>
-                  `￥${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value!.replace(/\$\s?|(,*)/g, "") as any}
-              />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-              <Button type="primary" size="large" block>
-                出价
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
+      <AntRow className="bid-row2">
+        {data?.State === BidType.IN_PROGRESS && (
+          <Col flex="540px">
+            <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
+              <Form.Item label="出&nbsp;&nbsp;价">
+                <InputNumber
+                  min={0}
+                  defaultValue={bidPrice ?? 0}
+                  onChange={onChangeBidPrice}
+                  size="large"
+                  formatter={(value) =>
+                    `￥${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={(value) => value!.replace(/\$\s?|(,*)/g, "") as any}
+                  step={data?.Propm_StepPrice ?? 1}
+                />
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+                <Button
+                  type="primary"
+                  size="large"
+                  className="btn-red bidding-btn"
+                  onClick={handleBid}
+                >
+                  出价
+                </Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        )}
 
         <Col flex="auto">
           <Descriptions column={2}>
@@ -127,7 +200,7 @@ const BidDetail: React.FC = () => {
             我司历史出价记录
           </Button>
         </Col>
-      </Row>
+      </AntRow>
       <Tabs
         onChange={onChange}
         type="card"

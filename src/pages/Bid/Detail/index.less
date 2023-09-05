@@ -3,6 +3,13 @@
   padding: 34px 0;
   margin-bottom: 58px;
 
+  .bidding-btn {
+    width: 309px;
+    height: 53px;
+    border-radius: 0;
+    font-size: 24px;
+  }
+
   .ant-form-item {
     margin-bottom: 12px;
   }
@@ -46,15 +53,19 @@
     border: 0 none;
     border-radius: 0;
     top: 0;
-    background: rgb(207, 43, 43);
+    background-color: rgb(207, 43, 43);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
   }
 
   .ant-input-number-handler-up {
-    left: 0;
+    right: 0;
+    background-image: url("../../../assets/images/plus.svg");
   }
 
   .ant-input-number-handler-down {
-    right: 0;
+    left: 0;
+    background-image: url("../../../assets/images/minus.svg");
   }
 
   .ant-input-number-handler-wrap:hover .ant-input-number-handler,
@@ -62,10 +73,44 @@
   .ant-input-number-handler-down:hover {
     height: 100% !important;
   }
+
+  .ant-form-item-label > label {
+    color: rgb(119, 119, 119);
+    font-size: 16px;
+    line-height: 53px;
+    height: 53px;
+  }
+
+  .ant-input-number-handler-wrap
+    .ant-input-number-handler
+    .ant-input-number-handler-up-inner,
+  .ant-input-number-handler-wrap
+    .ant-input-number-handler
+    .ant-input-number-handler-down-inner {
+    visibility: hidden;
+  }
 }
 
 .bid-row1 {
   margin-bottom: 30px;
+  padding: 0 40px;
+  position: relative;
+  h1 {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .bid-action {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    width: 206px;
+    .ant-btn {
+      margin-top: 12px;
+      border-radius: 20px;
+    }
+  }
 }
 
 .statistic-wrap {
@@ -73,9 +118,9 @@
     display: flex;
     align-items: center;
     .ant-statistic-title {
-      width: 5em;
-      padding-right: 0.5em;
-      text-align: right;
+      margin-right: 10px;
+      color: rgb(119, 119, 119);
+      font-size: 16px;
     }
     .ant-statistic-content {
       flex: 1;
