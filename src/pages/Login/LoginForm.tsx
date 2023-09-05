@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Modal } from "antd";
+import { Button, Checkbox, Col, Form, Input, Modal, Row } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import lock from "../../assets/images/lock.svg";
@@ -172,24 +172,33 @@ const Login: React.FC = () => {
           prefix={<img src={lock} className="basic-form-prefix-icon" alt="" />}
         />
       </Form.Item>
-
-      <Form.Item
-        name="ValidCode"
-        rules={[{ required: true, message: "验证码不能为空" }]}
-      >
-        <Input
-          placeholder="请填写右侧验证码"
-          size="large"
-          style={{ width: 290 }}
-          prefix={<img src={lock} className="basic-form-prefix-icon" alt="" />}
-        />
+      <Form.Item>
+        <Row gutter={8}>
+          <Col span={16}>
+            <Form.Item
+              name="ValidCode"
+              noStyle
+              rules={[{ required: true, message: "验证码不能为空" }]}
+            >
+              <Input
+                placeholder="请填写右侧验证码"
+                size="large"
+                prefix={
+                  <img src={lock} className="basic-form-prefix-icon" alt="" />
+                }
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <img
+              src={captchaSrc}
+              alt="验证码"
+              onClick={refreshCaptcha}
+              className={styles.captchaImg}
+            />
+          </Col>
+        </Row>
       </Form.Item>
-      <img
-        src={captchaSrc}
-        alt="验证码"
-        onClick={refreshCaptcha}
-        className={styles.captchaImg}
-      />
       <div className={styles.checkboxWrapper}>
         <Checkbox
           checked={remeber}
