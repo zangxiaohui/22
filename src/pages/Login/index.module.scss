@@ -126,6 +126,14 @@
 
   .cardFormFt {
     text-align: center;
+    font-size: 16px;
+    color: rgb(119, 119, 119);
+    :global {
+      .anticon {
+        margin-right: 14px;
+        color: rgb(42, 89, 143);
+      }
+    }
   }
 
   .cardForm {

@@ -96,3 +96,13 @@ export function postBid(params: { Id: number; price: number }): Promise<any> {
     }),
   });
 }
+
+/** 竞价当前价格获取 */
+export function getCurrentBidPrice(params: { Id: number }): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjprocurprice`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}

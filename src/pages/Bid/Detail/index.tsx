@@ -20,6 +20,7 @@ import {
   BidType,
   BidTypeColor,
   getBidDetail,
+  getCurrentBidPrice,
   postBid,
 } from "../../../services/bid";
 import Row from "../components/DescriptionRow";
@@ -47,7 +48,7 @@ const BidDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
   const [bidPrice, setBidPrice] = useState<number>();
-  // const { currentPrice, setCurrentPrice } = useState();
+  const [currentPrice, setCurrentPrice] = useState<number>();
 
   const deadline = moment(data?.Propm_EndTime);
 
@@ -58,7 +59,16 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
+      console.log("res?.data?.Propm_CurPrice :>> ", res?.data?.Propm_CurPrice);
       setBidPrice(res?.data?.Propm_CurPrice);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    getCurrentBidPrice({
+      Id: Number(id),
+    }).then((res) => {
+      setCurrentPrice(res?.data);
     });
   }, [id]);
 
@@ -123,7 +133,7 @@ const BidDetail: React.FC = () => {
               status={data?.State}
               label={data?.State === BidType.FINISHED ? "成交价" : "当前价"}
               prefix="¥"
-              desc={data?.Propm_CurPrice}
+              desc={currentPrice}
               className="font-size-lg colorful"
             />
           )}
@@ -157,7 +167,7 @@ const BidDetail: React.FC = () => {
               <Form.Item label="出&nbsp;&nbsp;价">
                 <InputNumber
                   min={0}
-                  defaultValue={bidPrice ?? 0}
+                  value={bidPrice ?? 0}
                   onChange={onChangeBidPrice}
                   size="large"
                   formatter={(value) =>
@@ -191,9 +201,6 @@ const BidDetail: React.FC = () => {
             </Descriptions.Item>
             <Descriptions.Item label="起拍价">
               ￥{data?.Propm_StartPrice}
-            </Descriptions.Item>
-            <Descriptions.Item label="顺延周期">
-              {data?.Propm_AddType}
             </Descriptions.Item>
           </Descriptions>
           <Button type="link" onClick={viewHistory}>

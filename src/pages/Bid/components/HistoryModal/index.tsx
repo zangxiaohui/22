@@ -1,4 +1,5 @@
 import { Modal, Table } from "antd";
+import moment from "moment";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -17,27 +18,30 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
   const [historyData, setHistoryData] = useState<any[]>();
 
   useEffect(() => {
-    setHistoryLoading(true);
-    getBidHistory({
-      Id: Number(id),
-    }).then((res) => {
-      setHistoryLoading(false);
-      setHistoryData(res?.data);
-    });
-  }, [id]);
+    if (visible) {
+      setHistoryLoading(true);
+      getBidHistory({
+        Id: Number(id),
+      }).then((res) => {
+        setHistoryLoading(false);
+        setHistoryData(res?.data);
+      });
+    }
+  }, [id, visible]);
 
   const columns = [
     {
       title: "出价记录",
-      dataIndex: "key1",
+      dataIndex: "PropmBjLog_Price",
     },
     {
       title: "出价时间",
-      dataIndex: "2",
+      dataIndex: "PropmBjLog_AddTime",
+      render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "操作人",
-      dataIndex: "2",
+      dataIndex: "Lxr",
     },
   ];
 
