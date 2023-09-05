@@ -182,7 +182,7 @@ const BidDetail: React.FC = () => {
         )}
 
         <Col flex="auto">
-          <Descriptions column={2}>
+          <Descriptions column={2} className="details-area">
             <Descriptions.Item label="我司出价">
               ￥{data?.MyPrice}
             </Descriptions.Item>
