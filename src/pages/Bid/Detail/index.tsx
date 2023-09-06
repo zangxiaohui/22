@@ -213,7 +213,7 @@ const BidDetail: React.FC = () => {
       />
       <div
         className="content"
-        dangerouslySetInnerHTML={{ __html: data.content }}
+        dangerouslySetInnerHTML={{ __html: data?.content }}
       ></div>
 
       <HistoryModal
