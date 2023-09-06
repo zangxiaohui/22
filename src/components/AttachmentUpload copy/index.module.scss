@@ -1,0 +1,12 @@
+.imgWrapper {
+  width: 500px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .img {
+    width: 500px;
+    height: 300px;
+    object-fit: scale-down;
+  }
+}

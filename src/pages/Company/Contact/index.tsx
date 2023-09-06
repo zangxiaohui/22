@@ -22,7 +22,7 @@ const Contact: React.FC = () => {
     });
   }, []);
 
-  const handleReview = () => {};
+  const handleReview = (id: string) => {};
 
   const mergedColumns: ColumnsType<any> = [
     ...columns,
@@ -39,7 +39,7 @@ const Contact: React.FC = () => {
             <span>审核通过</span>
           </Popconfirm>
 
-          <Button type="link" onClick={handleReview}>
+          <Button type="link" onClick={() => handleReview(record.id)}>
             审核通过
           </Button>
         </Space>

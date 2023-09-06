@@ -15,7 +15,7 @@ import AttachmentUpload from "../../../components/AttachmentUpload";
 import PageLoading from "../../../components/PageLoading";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
 import { useAsync } from "../../../lib/hooks";
-import { getTreeData, updateCompany } from "../../../services/company";
+import { getTreeData, uploadFile } from "../../../services/company";
 import "./index.less";
 
 const { useForm } = Form;
@@ -69,12 +69,14 @@ const CompanyInfo: React.FC = () => {
   }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
-    console.log("values :>> ", values);
+    const { fileList } = values;
 
     const formData = new FormData();
-    // formData.append('filezjz', fileList?.[0] as unknown as Blob);
-
-    const res = await updateCompany(values);
+    formData.append("filezjz", fileList?.[0] as unknown as Blob);
+    const res = await uploadFile(formData);
+    console.log("fileList :>> ", fileList);
+    console.log("res1 :>> ", res);
+    // const res = await updateCompany(values);
     if (res?.state) {
       message.success("修改成功");
     } else {
@@ -145,7 +147,7 @@ const CompanyInfo: React.FC = () => {
               </div>
               <Form.Item
                 label="营业执照"
-                name="Yyzz"
+                name="fileList"
                 rules={[{ required: true, message: "不能为空" }]}
               >
                 <AttachmentUpload maxSize={5} />

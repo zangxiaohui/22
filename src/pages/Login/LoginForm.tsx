@@ -5,6 +5,7 @@ import lock from "../../assets/images/lock.svg";
 import user from "../../assets/images/user.svg";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
 import { LoginParams, getToken, login } from "../../services/login";
+
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -14,12 +15,12 @@ const userNameKey = "cas-login:username";
 
 const commonPhoneRegex = /^(?:1\d{10}|0\d{2,3}-?\d{7,8})$/;
 
+export const serverPath = "http://baichuanpm.test.wxliebao.com:88";
+
 interface CodeParams {
   cellphone: string;
   code: string;
 }
-
-const serverPath = "http://baichuanpm.test.wxliebao.com:88";
 
 const Login: React.FC = () => {
   const [form] = useForm();

@@ -71,11 +71,10 @@ export function getTreeData(): Promise<any> {
 }
 
 /** 上传 */
-export function uploadFile(params: { filezjz: FormData }): Promise<any> {
-  return fetch(`/CusApi/ComData/regbusinessfile`, {
+export async function uploadFile(params: FormData): Promise<any> {
+  const response = await window.fetch(`/CusApi/ComData/regbusinessfile`, {
     method: "POST",
-    body: qs.stringify({
-      ...params,
-    }),
+    body: params,
   });
+  return await response.json();
 }

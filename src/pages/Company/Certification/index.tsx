@@ -25,8 +25,6 @@ const Certification: React.FC = () => {
     });
   }, []);
 
-  const handleReview = () => {};
-
   const handleDelete = async (id: string) => {
     const res = await deleteCertification({ id });
     if (res.state) {

@@ -7,6 +7,7 @@ import {
   UploadProps,
 } from "antd/lib/upload/interface";
 import React, { useMemo, useState } from "react";
+import { serverPath } from "../../pages/Login/LoginForm";
 import styles from "./index.module.scss";
 
 interface AttachmentUploadProps
@@ -74,14 +75,11 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
   };
 
   const onUploadChange = (info: UploadChangeParam<UploadFile>) => {
-    console.log("info info :>> ", info);
     let fileList = [...info.fileList];
     fileList = fileList.filter((file) => !!file.status);
     setFileList(fileList);
-
     if (info.file.status) {
       const newFileList = fileList.map((i) => ({ ...i, status: "done" }));
-
       setFileList(newFileList);
       onChange!(newFileList);
     }
@@ -92,7 +90,7 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
 
   const uploadProps: UploadProps = {
     name: "filezjz",
-    action: `/CusApi/ComData/regbusinessfile`,
+    action: `${serverPath}/CusApi/ComData/regbusinessfile`,
     headers: {
       openid: openid!,
       curtoken: curtoken!,
@@ -104,12 +102,14 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
       <div>
         <Upload
           {...uploadProps}
+          // listType="picture-card"
           listType="picture"
           accept={accept}
           fileList={fileList}
           onRemove={onRemove}
           onPreview={onPreview}
           beforeUpload={beforeUpload}
+          customRequest={() => console.log("fake upload")}
           onChange={onUploadChange}
         >
           {fileList.length < max! && (
@@ -120,7 +120,7 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
       </div>
       <Modal
         className={styles.imgWrapper}
-        open={!!previewImage}
+        visible={!!previewImage}
         title="图片预览"
         footer={null}
         onCancel={() => {
