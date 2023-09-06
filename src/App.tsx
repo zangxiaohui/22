@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ManageCompany from "./pages/Manage";
 import MyBid from "./pages/MyBid";
+import DeliveryDetail from "./pages/MyBid/DeliveryDetail";
 import Register from "./pages/Register";
 import RegisterResult from "./pages/RegisterResult";
 
@@ -41,6 +42,13 @@ const App: React.FC = () => {
                     exact
                     component={MyBid}
                   />
+
+                  <Route
+                    path="/client/account/my-bid/delivery/:id"
+                    exact
+                    component={DeliveryDetail}
+                  />
+
                   <Route
                     path="/client/account/edit-profile"
                     exact

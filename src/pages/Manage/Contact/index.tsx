@@ -16,7 +16,6 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-
     getContactList({
       page: pageOffset,
       pagesize: pageSize,

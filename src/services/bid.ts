@@ -141,3 +141,17 @@ export function getMyBidList(params: any): Promise<any> {
     }),
   });
 }
+
+interface GetDeliveryListRequest extends PagedRequest {
+  Id: number;
+}
+
+/** 竞价提货列表 */
+export function getDeliveryList(params: GetDeliveryListRequest): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmythjl`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}

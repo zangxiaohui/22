@@ -1,6 +1,7 @@
 import { Button, Popconfirm, Space, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useReducer, useState } from "react";
+import { Link } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import { Paging, usePaging } from "../../components/Paging";
 import { useSelf } from "../../layouts/RouteContext";
@@ -75,29 +76,36 @@ const MyBid: React.FC<MyBidProps> = () => {
       title: "操作",
       key: "action",
       render: (_, record) => (
-        <Space size="middle">
-          {record.State === BidType.PROCESSING && (
-            <Popconfirm
-              placement="topRight"
-              title="确认删除吗?"
-              onConfirm={() => handleDelete(record.Propm_Id)}
-            >
-              <Button type="primary" className="btn-red">
-                立即出价
-              </Button>
-            </Popconfirm>
-          )}
+        <div className="my-bid-action">
+          <Space size="middle">
+            {record.State === BidType.PROCESSING && (
+              <Popconfirm
+                placement="topRight"
+                title="确认删除吗?"
+                onConfirm={() => handleDelete(record.Propm_Id)}
+              >
+                <Button type="primary" className="btn-red">
+                  立即出价
+                </Button>
+              </Popconfirm>
+            )}
 
-          {record.State !== BidType.PROCESSING && (
-            <Popconfirm
-              placement="topRight"
-              title="确认删除吗?"
-              onConfirm={() => handleDelete(record.Propm_Id)}
-            >
-              <Button type="primary">申请提货</Button>
-            </Popconfirm>
-          )}
-        </Space>
+            {record.State !== BidType.PROCESSING && (
+              <Popconfirm
+                placement="topRight"
+                title="确认删除吗?"
+                onConfirm={() => handleDelete(record.Propm_Id)}
+              >
+                <Button type="primary">申请提货</Button>
+              </Popconfirm>
+            )}
+          </Space>
+          <div className="delivery-link">
+            <Link to={`/client/account/my-bid/delivery/${record.Propm_Id}`}>
+              提货记录
+            </Link>
+          </div>
+        </div>
       ),
     },
   ];
