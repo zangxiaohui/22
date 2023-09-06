@@ -2,10 +2,12 @@ import qs from "qs";
 import { fetch } from "../lib/fetch";
 import { PagedRequest } from "./api";
 
-interface GetBidListRequest extends PagedRequest {}
+interface GetCertificationListRequest extends PagedRequest {}
 
 /** 获取其他资质列表 */
-export function getCertificationList(params: GetBidListRequest): Promise<any> {
+export function getCertificationList(
+  params: GetCertificationListRequest
+): Promise<any> {
   return fetch(`/CusApi/ComData/cusfilelist`, {
     method: "POST",
     body: qs.stringify({
@@ -32,6 +34,28 @@ export function deleteCertification(params: {
   id: number | string;
 }): Promise<any> {
   return fetch(`/CusApi/ComData/delcusfile`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+interface GetContactListRequest extends PagedRequest {}
+
+/** 获取其他资质列表 */
+export function getContactList(params: GetContactListRequest): Promise<any> {
+  return fetch(`/CusApi/ComData/cusfilelist`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+/** 设置当前用户公司信息 */
+export function updateCompany(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/setcompanyinfo`, {
     method: "POST",
     body: qs.stringify({
       ...params,

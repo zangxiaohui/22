@@ -18,8 +18,17 @@ export type RouteContextType = {
   matchMenus?: any[];
   matchMenuKeys?: any[];
   currentMenu?: any;
-  currentUser?: any;
-  currentCompany?: any;
+  currentUser?: {
+    Address?: string;
+    Email?: string;
+    Name?: string;
+    Phone?: string;
+    RealName?: string;
+  };
+  currentCompany?: {
+    Name?: string;
+    Nsrsbh?: string;
+  };
 } & Partial<PureSettings>;
 
 const routeContext: React.Context<RouteContextType> = createContext({});
