@@ -61,17 +61,19 @@ const CompanyInfo: React.FC = () => {
 
   useEffect(() => {
     if (currentCompany) {
+      const { XqCateIds } = currentCompany;
       form.setFieldsValue({
         ...currentCompany,
-        XqCateIds: currentCompany.XqCateIds?.split(","),
+        XqCateIds: XqCateIds ? XqCateIds?.split(",") : [],
       });
     }
   }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
-    const { YyzzImage, rest } = values;
+    const { YyzzImage, XqCateIds, ...rest } = values;
     const res = await updateCompany({
       ...rest,
+      XqCateIds: XqCateIds?.join(","),
       YyzzImage: YyzzImage?.[0]?.url,
     });
     if (res?.state) {
@@ -129,7 +131,7 @@ const CompanyInfo: React.FC = () => {
               </Form.Item>
               <Form.Item
                 label="注册资金"
-                name="RealName"
+                name="Zczj"
                 rules={[{ required: true, message: "不能为空" }]}
               >
                 <Input placeholder="请输入" />
