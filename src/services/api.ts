@@ -1,4 +1,8 @@
 import { fetch } from "../lib/fetch";
+export interface PagedRequest {
+  pagesize?: number;
+  page?: number;
+}
 
 /** 招标须知信息 */
 export function getNoticeInfo(): Promise<any> {

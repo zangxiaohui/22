@@ -1,7 +1,6 @@
-import { Tabs } from "antd";
-import React, { useEffect, useState } from "react";
-import PageContainer from "../../../../components/PageContainer";
-import { getMyTenderList } from "../../../services/tender";
+import React, { useState } from "react";
+// import PageContainer from "../../../components/PageContainer";
+// import { getMyTenderList } from "../../../services/tender";
 import "./index.less";
 
 interface MyTenderProps {}
@@ -30,18 +29,18 @@ const MyTender: React.FC<MyTenderProps> = (props) => {
     { label: "已拍下", key: "item-2" },
   ];
 
-  useEffect(() => {
-    setLoading(true);
-    getMyTenderList({
-      state: 0,
-      pagesize: 10,
-      page: 1,
-    }).then((res) => {
-      console.log("state :>> ", res);
-      setLoading(false);
-      setData(res?.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getMyTenderList({
+  //     state: 0,
+  //     pagesize: 10,
+  //     page: 1,
+  //   }).then((res) => {
+  //     console.log("state :>> ", res);
+  //     setLoading(false);
+  //     setData(res?.data);
+  //   });
+  // }, []);
 
   const onTabChange = (key: string) => {
     setTabActiveKey(key);
@@ -53,19 +52,7 @@ const MyTender: React.FC<MyTenderProps> = (props) => {
     // });
   };
 
-  return (
-    <PageContainer routes={routes} className="bid">
-      <Tabs
-        activeKey={tabActiveKey}
-        onChange={onTabChange}
-        type="card"
-        items={items}
-        tabBarExtraContent={
-          <div className="h">有疑问请立即咨询 4008-888-8888</div>
-        }
-      />
-    </PageContainer>
-  );
+  return <div>111</div>;
 };
 
 export default MyTender;
