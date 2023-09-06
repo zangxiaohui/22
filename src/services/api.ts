@@ -17,3 +17,9 @@ export function getContactInfo(): Promise<any> {
     method: "POST",
   });
 }
+
+export function getProductCategory(): Promise<any> {
+  return fetch(`/CusApi/ComData/xpcate`, {
+    method: "POST",
+  });
+}

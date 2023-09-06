@@ -44,7 +44,7 @@ const data: MenuDataItem[] = [
   },
   {
     name: "新品推荐",
-    key: "3",
+    key: "product",
     icon: "ico3",
     iconClassName: "ico3",
     path: "/client/product",
@@ -73,7 +73,6 @@ const data: MenuDataItem[] = [
       },
     ],
   },
-
   {
     name: "联系我们",
     key: "5",
@@ -83,8 +82,21 @@ const data: MenuDataItem[] = [
   },
 ];
 
-const getMenuData = (): MenuDataItem[] => {
-  return data;
+const getMenuData = (productMenu: any[]): MenuDataItem[] => {
+  const productChildren = productMenu.slice(0, 1).map((item) => ({
+    name: item.Title,
+    key: `product-${item.Id}`,
+    path: `/client/product/${item.Id}`,
+  }));
+  return data.map((item) => {
+    if (item.key === "product") {
+      return {
+        ...item,
+        children: productChildren,
+      };
+    }
+    return item;
+  });
 };
 
 export { getMenuData };
