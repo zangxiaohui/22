@@ -1,36 +1,47 @@
 import type { ColumnsType } from "antd/es/table";
 
+export enum ContactReviewType {
+  UN_REVIEW = 0,
+  REVIEWED = 1,
+}
+
+export const ContactReviewTypeMap = {
+  [ContactReviewType.UN_REVIEW]: {
+    label: "待审核",
+    color: "#CF2B2B",
+  },
+  [ContactReviewType.REVIEWED]: {
+    label: "已审核",
+    color: "#00B58C",
+  },
+};
+
 export const columns: ColumnsType<any> = [
   {
     title: "姓名",
-    key: "order_number",
-    dataIndex: "order_number",
+    key: "CusLxr_RealName",
+    dataIndex: "CusLxr_RealName",
   },
   {
     title: "手机号",
-    dataIndex: "email",
-    key: "email",
-    render: (text) => text ?? "-",
+    dataIndex: "CusLxr_Phone",
+    key: "CusLxr_Phone",
   },
   {
     title: "邮箱",
-    key: "order_number",
-    dataIndex: "order_number",
+    key: "CusLxr_Email",
+    dataIndex: "CusLxr_Email",
   },
   {
     title: "状态",
-    dataIndex: "status",
-    key: "status",
-    // render: (_, record) => {
-    //   let rawStatus: EmailInvitationStatus = record.status;
-    //   if (
-    //     record.status === EmailInvitationStatus.SEND_COMPLETE &&
-    //     +moment().format('X') >= record.expires_at
-    //   ) {
-    //     rawStatus = EmailInvitationStatus.EXPIRED;
-    //   }
-    //   const text = EmailInvitationStatusDisplay[rawStatus];
-    //   return text ? <FormattedMessage id={text} /> : '-';
-    // },
+    dataIndex: "CusLxr_State",
+    key: "CusLxr_State",
+    render: (text: ContactReviewType) => {
+      return (
+        <span style={{ color: ContactReviewTypeMap[text]?.color }}>
+          {ContactReviewTypeMap[text]?.label}
+        </span>
+      );
+    },
   },
 ];

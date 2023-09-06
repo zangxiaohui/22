@@ -32,8 +32,10 @@ const Certification: React.FC = () => {
   const handleDelete = async (id: number) => {
     const res = await deleteCertification({ id });
     if (res.state) {
-      message.success("删除成功");
+      message.success("删除成功！");
       forceUpdate();
+    } else {
+      message.error(res?.msg);
     }
   };
 
@@ -46,9 +48,11 @@ const Certification: React.FC = () => {
         fileurl: fileurl?.[0]?.url,
       });
       if (res.state) {
-        message.success("添加成功");
+        message.success("添加成功！");
         form.resetFields();
         forceUpdate();
+      } else {
+        message.error(res?.msg);
       }
     }
   };

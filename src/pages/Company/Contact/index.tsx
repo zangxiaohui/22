@@ -1,11 +1,12 @@
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import React, { useEffect, useState } from "react";
-import { getContactList } from "../../../services/company";
+import React, { useEffect, useReducer, useState } from "react";
+import { getContactList, updateContact } from "../../../services/company";
 import { columns } from "./columns";
 import "./index.less";
 
 const Contact: React.FC = () => {
+  const [x, forceUpdate] = useReducer((x) => x + 1, 1);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
@@ -20,9 +21,18 @@ const Contact: React.FC = () => {
       }
       setLoading(false);
     });
-  }, []);
+  }, [x]);
 
-  const handleReview = (id: string) => {};
+  const handleReview = async (id: number) => {
+    const res = await updateContact({ id });
+    if (res.state) {
+      message.success("审核成功！");
+      console.log("111 :>> ", 111);
+      forceUpdate();
+    } else {
+      message.error(res?.msg);
+    }
+  };
 
   const mergedColumns: ColumnsType<any> = [
     ...columns,
@@ -33,15 +43,11 @@ const Contact: React.FC = () => {
         <Space size="middle">
           <Popconfirm
             placement="topRight"
-            title="确认审核通过吗?"
-            onConfirm={() => handleReview(record.id)}
+            title="确认审核通过?"
+            onConfirm={() => handleReview(record.CusLxr_Id)}
           >
-            <span>审核通过</span>
+            <Button type="primary">审核通过</Button>
           </Popconfirm>
-
-          <Button type="link" onClick={() => handleReview(record.id)}>
-            审核通过
-          </Button>
         </Space>
       ),
     },
@@ -52,7 +58,7 @@ const Contact: React.FC = () => {
         columns={mergedColumns}
         dataSource={data}
         pagination={false}
-        rowKey={(record) => record.invitation_id}
+        rowKey={(record) => record.CusLxr_Id}
         loading={loading}
       />
     </div>

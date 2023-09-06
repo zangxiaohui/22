@@ -70,11 +70,12 @@ export function getTreeData(): Promise<any> {
   });
 }
 
-/** 上传 */
-export async function uploadFile(params: FormData): Promise<any> {
-  const response = await window.fetch(`/CusApi/ComData/regbusinessfile`, {
+/** 其他联系人审核 */
+export function updateContact(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/cuslxrsh`, {
     method: "POST",
-    body: params,
+    body: qs.stringify({
+      ...params,
+    }),
   });
-  return await response.json();
 }
