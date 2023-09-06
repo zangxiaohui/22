@@ -45,7 +45,7 @@ interface GetContactListRequest extends PagedRequest {}
 
 /** 获取其他资质列表 */
 export function getContactList(params: GetContactListRequest): Promise<any> {
-  return fetch(`/CusApi/ComData/cusfilelist`, {
+  return fetch(`/CusApi/ComData/cuslxrlist`, {
     method: "POST",
     body: qs.stringify({
       ...params,
