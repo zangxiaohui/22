@@ -59,8 +59,6 @@ const CompanyInfo: React.FC = () => {
     return [];
   }, [initTreeData]);
 
-  console.log("treeData :>> ", treeData);
-
   useEffect(() => {
     if (currentCompany) {
       form.setFieldsValue({
