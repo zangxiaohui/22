@@ -69,7 +69,7 @@ const data: MenuDataItem[] = [
       {
         name: "企业信息管理",
         key: "43",
-        path: "/client/edit-profile2",
+        path: "/client/account/manage-company",
       },
     ],
   },

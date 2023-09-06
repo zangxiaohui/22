@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Modal } from "antd";
 import React from "react";
 import { updatePwd } from "../../services/user";
 import { layout, tailLayout } from "../EditProfile";
@@ -15,6 +15,12 @@ const ModifyPassword: React.FC = () => {
     });
     if (res?.state) {
       message.success("修改成功");
+    } else {
+      Modal.error({
+        title: res?.msg,
+        okText: "关闭",
+        width: 440,
+      });
     }
   };
 

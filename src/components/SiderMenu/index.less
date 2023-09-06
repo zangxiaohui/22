@@ -213,6 +213,7 @@
 }
 
 .ant-menu-dark {
+  font-size: 16px;
   .ant-menu-sub {
     .ant-menu-item,
     .ant-menu-item-group-title,
@@ -225,6 +226,14 @@
 
 .menu-wrap {
   padding: 44px 0 0 44px;
+
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal)
+    .ant-menu-item-selected {
+    color: #2a598f;
+    a {
+      color: #2a598f;
+    }
+  }
 }
 .ant-menu {
   .ant-pro-base-menu-inline-item-icon {

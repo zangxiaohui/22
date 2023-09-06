@@ -9,6 +9,7 @@ import BidListFinished from "./pages/Bid/Finished";
 import BidListInPreparation from "./pages/Bid/InPreparation";
 import BidListInProgress from "./pages/Bid/InProgress";
 import BidListTerminated from "./pages/Bid/Terminated";
+import Company from "./pages/Company";
 import Contact from "./pages/Contact";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
@@ -38,6 +39,11 @@ const App: React.FC = () => {
                     path="/client/account/edit-profile"
                     exact
                     component={EditProfile}
+                  />
+                  <Route
+                    path="/client/account/manage-company"
+                    exact
+                    component={Company}
                   />
                   <Route path="/client/bid/all" exact component={BidListAll} />
                   <Route

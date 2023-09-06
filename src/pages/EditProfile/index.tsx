@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, message } from "antd";
+import { Button, Col, Form, Input, Modal, Row, message } from "antd";
 import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import { useCurrentCompany, useSelf } from "../../layouts/RouteContext";
@@ -32,6 +32,13 @@ const EditProfile: React.FC = () => {
     if (res?.state) {
       setModified(false);
       message.success("修改成功");
+      window.location.reload();
+    } else {
+      Modal.error({
+        title: res?.msg,
+        okText: "关闭",
+        width: 440,
+      });
     }
   };
 
