@@ -69,6 +69,11 @@ const CompanyInfo: React.FC = () => {
   }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
+    console.log("values :>> ", values);
+
+    const formData = new FormData();
+    // formData.append('filezjz', fileList?.[0] as unknown as Blob);
+
     const res = await updateCompany(values);
     if (res?.state) {
       message.success("修改成功");
@@ -100,7 +105,7 @@ const CompanyInfo: React.FC = () => {
       <div className="company-info-bd">
         <Form {...layout} form={form} onFinish={onFinish}>
           <Row gutter={16}>
-            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+            {/* <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div className="company-info-title">企业基本信息</div>
               <Form.Item
                 label="公司名称"
@@ -130,7 +135,7 @@ const CompanyInfo: React.FC = () => {
               >
                 <Input placeholder="请输入" />
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div
                 className="company-info-title"
@@ -165,7 +170,7 @@ const CompanyInfo: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+            {/* <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div className="company-info-title">企业开票信息</div>
               <Form.Item
                 label="纳税人识别号"
@@ -195,7 +200,7 @@ const CompanyInfo: React.FC = () => {
               >
                 <Input placeholder="请输入" />
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
 
           <Form.Item style={{ textAlign: "center" }}>

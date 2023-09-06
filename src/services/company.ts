@@ -69,3 +69,13 @@ export function getTreeData(): Promise<any> {
     method: "POST",
   });
 }
+
+/** 上传 */
+export function uploadFile(params: { filezjz: FormData }): Promise<any> {
+  return fetch(`/CusApi/ComData/regbusinessfile`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
