@@ -13,6 +13,7 @@ const data: MenuDataItem[] = [
     key: "2",
     icon: "ico2",
     iconClassName: "ico2",
+    path: "/client/bid",
     children: [
       {
         name: "全部产品",
@@ -53,16 +54,17 @@ const data: MenuDataItem[] = [
     key: "4",
     icon: "ico4",
     iconClassName: "ico4",
+    path: "/client/account",
     children: [
       {
         name: "我的招标",
         key: "41",
-        path: "/client/edit-profile3",
+        path: "/client/account/my-tender",
       },
       {
         name: "个人信息管理",
         key: "42",
-        path: "/client/edit-profile",
+        path: "/client/account/edit-profile",
       },
       {
         name: "企业信息管理",

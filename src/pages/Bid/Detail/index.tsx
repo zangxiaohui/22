@@ -15,7 +15,6 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
-import PageLoading from "../../../components/PageLoading";
 import {
   BidType,
   BidTypeColor,
@@ -111,12 +110,8 @@ const BidDetail: React.FC = () => {
     });
   };
 
-  if (!data) {
-    return <PageLoading />;
-  }
-
   return (
-    <PageContainer routes={routes} loading={loading}>
+    <PageContainer routes={routes} loading={loading || !data}>
       <div className="bid-row1">
         <h1>{data?.Propm_Title}</h1>
         <div className="statistic-wrap">

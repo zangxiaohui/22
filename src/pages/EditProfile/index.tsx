@@ -1,58 +1,52 @@
-import { Button, Form, Input } from "antd";
-import React, { useState } from "react";
+import { Button, Col, Form, Input, Row, message } from "antd";
+import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
-import { useBeforeUnload, useSubmission } from "../../lib/hooks";
-import {
-  forwardOrRefreshByQueryParam,
-  redirectByQueryParam,
-} from "../../lib/util";
-import { updateCurrentUser } from "../../services/login";
+import { useCurrentCompany, useSelf } from "../../layouts/RouteContext";
+import { useBeforeUnload } from "../../lib/hooks";
+import { updateCurrentUser } from "../../services/user";
+import ModifyPassword from "../ModifyPassword";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
 
-const layout = {
+export const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
-const tailLayout = {
+export const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
 const EditProfile: React.FC = () => {
   const [modified, setModified] = useState(false);
-  // const user1 = useAsync(getCurrentUserInfo);
 
-  const user = {
-    Name: "BC230001-001",
-    RealName: "张三",
-    Phone: "18168871151",
-    Email: "12524051@qq.com",
-    Address: "江苏省无锡市中山路288号",
-  };
+  const currentUser = useSelf();
+  const currentCompany = useCurrentCompany();
+
   const [form] = useForm();
-  const [doSubmit, submitting] = useSubmission();
 
   useBeforeUnload(modified);
 
-  const onSubmit = () =>
-    doSubmit(async () => {
-      await updateCurrentUser(
-        form.getFieldValue("name").trim(),
-        form.getFieldValue("cellphone").trim()
-      );
+  const onFinish = async (values: any) => {
+    const res = await updateCurrentUser(values);
+    if (res?.state) {
       setModified(false);
-      await redirectByQueryParam(
-        "redirect",
-        "保存成功，正在跳转回原页面",
-        "保存成功",
-        3000
-      );
-    });
-
-  const onCancel = () => {
-    forwardOrRefreshByQueryParam("redirect");
+      message.success("修改成功");
+    }
   };
+
+  useEffect(() => {
+    if (currentUser && currentCompany) {
+      form.setFieldsValue({
+        Name: currentUser.Name,
+        RealName: currentUser.RealName,
+        Phone: currentUser.Phone,
+        Email: currentUser.Email,
+        Address: currentUser.Address,
+        Con: currentCompany.Name,
+      });
+    }
+  }, [currentUser, currentCompany, form]);
 
   const routes = [
     {
@@ -68,72 +62,60 @@ const EditProfile: React.FC = () => {
 
   return (
     <PageContainer routes={routes}>
-      <div className={styles.wrapper}>
-        <h1 className={styles.title}>信息管理</h1>
-
-        <div className={styles.formWrapper}>
-          {user && (
-            <Form
-              {...layout}
-              form={form}
-              onFinish={onSubmit}
-              onValuesChange={() => setModified(true)}
-              initialValues={user}
-            >
-              <Form.Item
-                label="个人编号"
-                name="Name"
-                rules={[{ required: true, message: "个人编号不能为空" }]}
+      <div
+        className={styles.wrapper}
+        style={{ height: 1500, overflowY: "auto" }}
+      >
+        <Row gutter={16}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+            <h1 className={styles.title}>信息管理</h1>
+            <div className={styles.formWrapper}>
+              <Form
+                {...layout}
+                form={form}
+                onFinish={onFinish}
+                onValuesChange={() => setModified(true)}
               >
-                <Input placeholder="请输入" autoComplete="name" disabled />
-              </Form.Item>
-              <Form.Item
-                label="姓名"
-                name="RealName"
-                rules={[{ required: true, message: "姓名不能为空" }]}
-              >
-                <Input placeholder="请输入" />
-              </Form.Item>
-              <Form.Item
-                label="公司"
-                name="Con"
-                rules={[{ required: true, message: "公司不能为空" }]}
-              >
-                <Input placeholder="请输入" disabled />
-              </Form.Item>
-              <Form.Item
-                label="电话"
-                name="Phone"
-                rules={[{ required: true, message: "电话不能为空" }]}
-              >
-                <Input placeholder="请输入" disabled />
-              </Form.Item>
-              <Form.Item
-                label="邮箱"
-                name="Email"
-                rules={[{ required: true, message: "邮箱不能为空" }]}
-              >
-                <Input placeholder="请输入" />
-              </Form.Item>
-              <Form.Item
-                label="地址"
-                name="Address"
-                rules={[{ required: true, message: "地址不能为空" }]}
-              >
-                <Input placeholder="请输入" />
-              </Form.Item>
-              <Form.Item {...tailLayout}>
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  loading={submitting}
-                  disabled={submitting}
-                  block
+                <Form.Item
+                  label="个人编号"
+                  name="Name"
+                  rules={[{ required: true, message: "个人编号不能为空" }]}
                 >
-                  修改
-                </Button>
-              </Form.Item>
-              {/* <Form.Item
+                  <Input placeholder="请输入" autoComplete="name" disabled />
+                </Form.Item>
+                <Form.Item
+                  label="姓名"
+                  name="RealName"
+                  rules={[{ required: true, message: "姓名不能为空" }]}
+                >
+                  <Input placeholder="请输入" />
+                </Form.Item>
+                <Form.Item
+                  label="公司"
+                  name="Con"
+                  rules={[{ required: true, message: "公司不能为空" }]}
+                >
+                  <Input placeholder="请输入" disabled />
+                </Form.Item>
+                <Form.Item
+                  label="电话"
+                  name="Phone"
+                  rules={[{ required: true, message: "电话不能为空" }]}
+                >
+                  <Input placeholder="请输入" disabled />
+                </Form.Item>
+                <Form.Item label="邮箱" name="Email">
+                  <Input placeholder="请输入" />
+                </Form.Item>
+                <Form.Item label="地址" name="Address">
+                  <Input placeholder="请输入" />
+                </Form.Item>
+                <Form.Item {...tailLayout}>
+                  <Button htmlType="submit" type="primary" block>
+                    修改
+                  </Button>
+                </Form.Item>
+                {/* <Form.Item
                 label="手机号码"
                 name="cellphone"
                 rules={[
@@ -143,9 +125,14 @@ const EditProfile: React.FC = () => {
               >
                 <Input placeholder="请输入联系人电话" autoComplete="tel" />
               </Form.Item> */}
-            </Form>
-          )}
-        </div>
+              </Form>
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={12}>
+            <h1 className={styles.title}>密码管理</h1>
+            <ModifyPassword />
+          </Col>
+        </Row>
       </div>
     </PageContainer>
   );

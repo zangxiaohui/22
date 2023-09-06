@@ -35,7 +35,7 @@ const App: React.FC = () => {
                   <Route path="/client/home" exact component={Home} />
                   <Route path="/client/contact" exact component={Contact} />
                   <Route
-                    path="/client/edit-profile"
+                    path="/client/account/edit-profile"
                     exact
                     component={EditProfile}
                   />

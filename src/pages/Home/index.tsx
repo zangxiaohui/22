@@ -32,6 +32,7 @@ const Home: React.FC = () => {
     <PageContainer routes={routes} loading={loading}>
       <div
         className="content"
+        style={{ minHeight: 400 }}
         dangerouslySetInnerHTML={{ __html: data?.Con }}
       ></div>
     </PageContainer>

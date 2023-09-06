@@ -230,8 +230,6 @@ const BasicLayout: React.FC<any> = (props) => {
     return getMatchMenu(location.pathname || "/", menuData || [], true);
   }, [location.pathname, menuData]);
 
-  console.log("matchMenus :>> ", matchMenus);
-
   const matchMenuKeys = useMemo(
     () =>
       Array.from(

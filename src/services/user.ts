@@ -1,3 +1,4 @@
+import qs from "qs";
 import { fetch } from "../lib/fetch";
 
 /** 获取当前用户信息 */
@@ -21,8 +22,21 @@ export interface UserForm {
 }
 
 /** 设置当前用户信息 */
-export function updateUser(form: UserForm): Promise<any> {
+export function updateCurrentUser(form: UserForm): Promise<any> {
   return fetch(`/CusApi/ComData/setuserinfo`, {
     method: "POST",
+    body: qs.stringify({
+      ...form,
+    }),
+  });
+}
+
+/** 修改密码 */
+export function updatePwd(form: any): Promise<any> {
+  return fetch(`/CusApi/ComData/changepd`, {
+    method: "POST",
+    body: qs.stringify({
+      ...form,
+    }),
   });
 }
