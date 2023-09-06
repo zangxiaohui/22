@@ -26,7 +26,7 @@ export default ({ className, prefixCls, style }: GlobalFooterProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          苏ICP备19025755号-1
+          苏ICP备88888号
         </a>
         <Divider type="vertical" />
         技术服务:
