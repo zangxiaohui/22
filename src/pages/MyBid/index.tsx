@@ -100,6 +100,7 @@ const MyBid: React.FC<MyBidProps> = () => {
                   setVisible(true);
                   setFormData({
                     productTitle: record.Propm_Title,
+                    id: record.Propm_Id,
                   });
                 }}
               >

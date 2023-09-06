@@ -155,3 +155,13 @@ export function getDeliveryList(params: GetDeliveryListRequest): Promise<any> {
     }),
   });
 }
+
+/** 竞价提货列表 */
+export function postDelivery(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmythjlsave`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
