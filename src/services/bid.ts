@@ -35,6 +35,39 @@ export const BidTypeColor = {
   [BidType.SUCCESS]: "blue",
 };
 
+export const BidTypeMap = {
+  [BidType.ALL]: {
+    label: "全部产品",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.IN_PREPARATION]: {
+    label: "即将开始",
+    color: "green",
+    badgeStatus: "warning",
+  },
+  [BidType.PROCESSING]: {
+    label: "正在招标中",
+    color: "red",
+    badgeStatus: "processing",
+  },
+  [BidType.FINISHED]: {
+    label: "已结束",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.TERMINATED]: {
+    label: "TERMINATED",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.SUCCESS]: {
+    label: "已拍下",
+    color: "blue",
+    badgeStatus: "success",
+  },
+};
+
 interface GetBidListRequest extends PagedRequest {
   state?: BidType;
 }

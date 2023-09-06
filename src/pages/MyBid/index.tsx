@@ -2,6 +2,7 @@ import { Button, Popconfirm, Space, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useReducer, useState } from "react";
 import PageContainer from "../../components/PageContainer";
+import { Paging, usePaging } from "../../components/Paging";
 import { useSelf } from "../../layouts/RouteContext";
 import { BidType, getMyBidList } from "../../services/bid";
 import { columns } from "./columns";
@@ -36,37 +37,36 @@ const routes = [
   },
 ];
 
-const MyBid: React.FC<MyBidProps> = (props) => {
+const MyBid: React.FC<MyBidProps> = () => {
   const currentUser = useSelf();
   const [x, forceUpdate] = useReducer((x) => x + 1, 1);
   const [tabActiveKey, setTabActiveKey] = useState<BidType>(BidType.ALL);
-
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
+
+  const pagingInfo = usePaging();
+  const { pageOffset, pageSize, setTotalCount } = pagingInfo;
 
   useEffect(() => {
     setLoading(true);
     getMyBidList({
       state: tabActiveKey,
-      pagesize: 10,
-      page: 1,
-    }).then((res) => {
-      console.log("state :>> ", res);
-      setLoading(false);
-      setData(res?.data);
-    });
-  }, [x, tabActiveKey]);
+      pagesize: pageSize,
+      page: pageOffset,
+    })
+      .then((res) => {
+        if (res.state) {
+          setData(res?.data);
+          setTotalCount(res?.total);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [x, pageSize, pageOffset, tabActiveKey, setTotalCount]);
 
   const handleDelete = async (id: number) => {};
 
   const onTabChange = (key: string) => {
     setTabActiveKey(key as any);
-    // history.push({
-    //   query: {
-    //     ...query,
-    //     filter: key,
-    //   },
-    // });
   };
 
   const mergedColumns: ColumnsType<any> = [
@@ -76,20 +76,23 @@ const MyBid: React.FC<MyBidProps> = (props) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
+          {record.State === BidType.PROCESSING && (
+            <Popconfirm
+              placement="topRight"
+              title="确认删除吗?"
+              onConfirm={() => handleDelete(record.Propm_Id)}
+            >
+              <Button type="primary" className="btn-red">
+                立即出价
+              </Button>
+            </Popconfirm>
+          )}
           <Popconfirm
             placement="topRight"
             title="确认删除吗?"
             onConfirm={() => handleDelete(record.Propm_Id)}
           >
-            <Button danger>立即出价</Button>
-          </Popconfirm>
-
-          <Popconfirm
-            placement="topRight"
-            title="确认删除吗?"
-            onConfirm={() => handleDelete(record.Propm_Id)}
-          >
-            <Button danger>申请提货</Button>
+            <Button type="primary">申请提货</Button>
           </Popconfirm>
         </Space>
       ),
@@ -113,6 +116,7 @@ const MyBid: React.FC<MyBidProps> = (props) => {
           rowKey={(record) => record.Propm_Id}
           loading={loading}
         />
+        <Paging pagingInfo={pagingInfo} />
       </div>
     </PageContainer>
   );

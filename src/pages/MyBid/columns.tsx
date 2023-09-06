@@ -1,6 +1,7 @@
+import { Badge } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
-import { BidType, BidTypeLabel } from "../../services/bid";
+import { BidType, BidTypeMap } from "../../services/bid";
 
 export const columns: ColumnsType<any> = [
   {
@@ -20,7 +21,16 @@ export const columns: ColumnsType<any> = [
     key: "status",
     render: (_, record) => {
       let rawStatus: BidType = record.State;
-      return <span>{BidTypeLabel[rawStatus]}</span>;
+      return (
+        <Badge
+          status={BidTypeMap[rawStatus]?.badgeStatus as any}
+          text={
+            <span className={BidTypeMap[rawStatus]?.color}>
+              {BidTypeMap[rawStatus]?.label}
+            </span>
+          }
+        />
+      );
     },
   },
   {

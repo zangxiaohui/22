@@ -1,0 +1,13 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  // justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+
+  .total {
+    margin-right: 20px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
