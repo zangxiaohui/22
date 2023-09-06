@@ -15,7 +15,7 @@ import AttachmentUpload from "../../../components/AttachmentUpload";
 import PageLoading from "../../../components/PageLoading";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
 import { useAsync } from "../../../lib/hooks";
-import { getTreeData, uploadFile } from "../../../services/company";
+import { getTreeData, updateCompany } from "../../../services/company";
 import "./index.less";
 
 const { useForm } = Form;
@@ -69,14 +69,11 @@ const CompanyInfo: React.FC = () => {
   }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
-    const { fileList } = values;
-
-    const formData = new FormData();
-    formData.append("filezjz", fileList?.[0] as unknown as Blob);
-    const res = await uploadFile(formData);
-    console.log("fileList :>> ", fileList);
-    console.log("res1 :>> ", res);
-    // const res = await updateCompany(values);
+    const { YyzzImage, rest } = values;
+    const res = await updateCompany({
+      ...rest,
+      YyzzImage: YyzzImage?.[0]?.url,
+    });
     if (res?.state) {
       message.success("修改成功");
     } else {
@@ -107,7 +104,7 @@ const CompanyInfo: React.FC = () => {
       <div className="company-info-bd">
         <Form {...layout} form={form} onFinish={onFinish}>
           <Row gutter={16}>
-            {/* <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div className="company-info-title">企业基本信息</div>
               <Form.Item
                 label="公司名称"
@@ -137,7 +134,7 @@ const CompanyInfo: React.FC = () => {
               >
                 <Input placeholder="请输入" />
               </Form.Item>
-            </Col> */}
+            </Col>
             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div
                 className="company-info-title"
@@ -147,10 +144,10 @@ const CompanyInfo: React.FC = () => {
               </div>
               <Form.Item
                 label="营业执照"
-                name="fileList"
+                name="YyzzImage"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <AttachmentUpload maxSize={5} />
+                <AttachmentUpload maxSize={5} max={1} />
               </Form.Item>
               <Form.Item
                 label="公司性质"
@@ -172,7 +169,7 @@ const CompanyInfo: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            {/* <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div className="company-info-title">企业开票信息</div>
               <Form.Item
                 label="纳税人识别号"
@@ -202,7 +199,7 @@ const CompanyInfo: React.FC = () => {
               >
                 <Input placeholder="请输入" />
               </Form.Item>
-            </Col> */}
+            </Col>
           </Row>
 
           <Form.Item style={{ textAlign: "center" }}>

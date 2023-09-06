@@ -74,17 +74,21 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
   };
 
   const onUploadChange = (info: UploadChangeParam<UploadFile>) => {
-    console.log("info info :>> ", info);
     let fileList = [...info.fileList];
-    fileList = fileList.filter((file) => !!file.status);
-    setFileList(fileList);
+    fileList = fileList
+      .filter((file) => !!file.status)
+      .map((file) => {
+        if (file.response) {
+          file.url = file.response.data;
+        }
+        return file;
+      });
 
-    if (info.file.status) {
-      const newFileList = fileList.map((i) => ({ ...i, status: "done" }));
-
-      setFileList(newFileList);
-      onChange!(newFileList);
+    if (info.file.status !== "uploading") {
+      const doneFiles = fileList.filter((file) => !!file.url);
+      onChange!(doneFiles);
     }
+    setFileList(fileList);
   };
 
   const openid = localStorage.getItem("baichuan_openid");
