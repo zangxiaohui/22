@@ -11,6 +11,7 @@ import {
 import { DataNode } from "antd/lib/tree";
 import { isEmpty } from "lodash-es";
 import React, { useEffect, useMemo } from "react";
+import AttachmentUpload from "../../../components/AttachmentUpload";
 import PageLoading from "../../../components/PageLoading";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
 import { useAsync } from "../../../lib/hooks";
@@ -144,7 +145,7 @@ const CompanyInfo: React.FC = () => {
                 name="Yyzz"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" disabled />
+                <AttachmentUpload maxSize={5} />
               </Form.Item>
               <Form.Item
                 label="公司性质"
