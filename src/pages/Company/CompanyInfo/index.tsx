@@ -1,7 +1,20 @@
-import { Button, Col, Form, Input, Modal, Row, message } from "antd";
-import React from "react";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Row,
+  TreeSelect,
+  message,
+} from "antd";
+import { DataNode } from "antd/lib/tree";
+import { isEmpty } from "lodash-es";
+import React, { useEffect, useMemo } from "react";
+import PageLoading from "../../../components/PageLoading";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
-import { updateCompany } from "../../../services/company";
+import { useAsync } from "../../../lib/hooks";
+import { getTreeData, updateCompany } from "../../../services/company";
 import "./index.less";
 
 const { useForm } = Form;
@@ -14,10 +27,47 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
+function buildProductTreeData(data: any[]): DataNode[] {
+  if (!data) {
+    return [];
+  }
+  if (!Array.isArray(data)) {
+    data = [data];
+  }
+  return data.map((item) => {
+    const res: DataNode = {
+      ...item,
+      title: item.name,
+      key: item.value,
+      children: buildProductTreeData(item.children),
+    };
+    return res;
+  });
+}
+
 const CompanyInfo: React.FC = () => {
   const [form] = useForm();
   const currentUser = useSelf();
   const currentCompany = useCurrentCompany();
+  const initTreeData = useAsync(getTreeData);
+
+  const treeData = useMemo(() => {
+    if (initTreeData?.state) {
+      return buildProductTreeData(initTreeData?.data);
+    }
+    return [];
+  }, [initTreeData]);
+
+  console.log("treeData :>> ", treeData);
+
+  useEffect(() => {
+    if (currentCompany) {
+      form.setFieldsValue({
+        ...currentCompany,
+        XqCateIds: currentCompany.XqCateIds?.split(","),
+      });
+    }
+  }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
     const res = await updateCompany(values);
@@ -31,6 +81,10 @@ const CompanyInfo: React.FC = () => {
       });
     }
   };
+
+  if (isEmpty(currentCompany) || isEmpty(treeData)) {
+    return <PageLoading />;
+  }
 
   return (
     <div className="company-info">
@@ -104,14 +158,19 @@ const CompanyInfo: React.FC = () => {
                 name="XqCateIds"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <TreeSelect
+                  multiple
+                  treeData={treeData}
+                  placeholder="请选择"
+                  listHeight={300}
+                />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div className="company-info-title">企业开票信息</div>
               <Form.Item
                 label="纳税人识别号"
-                name="Name"
+                name="Nsrsbh"
                 rules={[{ required: true, message: "不能为空" }]}
               >
                 <Input placeholder="请输入" disabled />

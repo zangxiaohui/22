@@ -62,3 +62,10 @@ export function updateCompany(params: any): Promise<any> {
     }),
   });
 }
+
+/** 需求类别树获取 */
+export function getTreeData(): Promise<any> {
+  return fetch(`/CusApi/ComData/getxqcatetree`, {
+    method: "POST",
+  });
+}

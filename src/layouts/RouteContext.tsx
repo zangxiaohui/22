@@ -28,6 +28,7 @@ export type RouteContextType = {
   currentCompany?: {
     Name?: string;
     Nsrsbh?: string;
+    XqCateIds?: string;
   };
 } & Partial<PureSettings>;
 
