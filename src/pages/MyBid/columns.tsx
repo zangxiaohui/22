@@ -57,6 +57,21 @@ export const columns: ColumnsType<any> = [
     dataIndex: "Propm_EndTime",
     key: "Propm_EndTime",
     width: 300,
-    render: (text) => (text ? moment(text).format("YYYY-MM-DD HH:mm:ss") : "-"),
+    render: (_, record: any) => {
+      const { State, Propm_EndTime, Propm_CurEndTime } = record || {};
+      const endDate = moment(Propm_EndTime).format("YYYY-MM-DD");
+      const endTime = moment(Propm_EndTime).format("HH:mm:ss");
+      const text =
+        State === BidType.IN_PREPARATION || State === BidType.PROCESSING
+          ? "预计"
+          : "";
+      return (
+        <div className="time-cell">
+          <div className="time-cell-title">{text}结束时间</div>
+          <div className="time-cell-date">{endDate}</div>
+          <div className="time-cell-time">{endTime}</div>
+        </div>
+      );
+    },
   },
 ];

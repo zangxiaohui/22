@@ -83,17 +83,20 @@ const MyBid: React.FC<MyBidProps> = () => {
               onConfirm={() => handleDelete(record.Propm_Id)}
             >
               <Button type="primary" className="btn-red">
-                立即出价 222
+                立即出价
               </Button>
             </Popconfirm>
           )}
-          <Popconfirm
-            placement="topRight"
-            title="确认删除吗?"
-            onConfirm={() => handleDelete(record.Propm_Id)}
-          >
-            <Button type="primary">申请提货</Button>
-          </Popconfirm>
+
+          {record.State !== BidType.PROCESSING && (
+            <Popconfirm
+              placement="topRight"
+              title="确认删除吗?"
+              onConfirm={() => handleDelete(record.Propm_Id)}
+            >
+              <Button type="primary">申请提货</Button>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },
