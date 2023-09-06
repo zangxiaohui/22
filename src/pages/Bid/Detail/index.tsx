@@ -15,6 +15,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
+import { useSelf } from "../../../layouts/RouteContext";
 import {
   BidType,
   BidTypeColor,
@@ -41,6 +42,7 @@ const routes = [
 ];
 
 const BidDetail: React.FC = () => {
+  const currentUser = useSelf();
   const [historyVisible, setHistoryVisible] = useState<boolean>(false);
 
   const { id } = useParams<{ id: string }>();
@@ -121,7 +123,7 @@ const BidDetail: React.FC = () => {
             format="D 天 H 时 m 分 s 秒"
           />
 
-          {(data?.State === BidType.IN_PROGRESS ||
+          {(data?.State === BidType.PROCESSING ||
             data?.State === BidType.FINISHED ||
             data?.State === BidType.TERMINATED) && (
             <Row
@@ -156,7 +158,7 @@ const BidDetail: React.FC = () => {
         </div>
       </div>
       <AntRow className="bid-row2">
-        {data?.State === BidType.IN_PROGRESS && (
+        {data?.State === BidType.PROCESSING && (
           <Col flex="540px">
             <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
               <Form.Item label="出&nbsp;&nbsp;价">
@@ -207,9 +209,7 @@ const BidDetail: React.FC = () => {
         onChange={onChange}
         type="card"
         items={items}
-        tabBarExtraContent={
-          <div className="h">有疑问请立即咨询 4008-888-8888</div>
-        }
+        tabBarExtraContent={<div className="h">{currentUser?.serviceTel}</div>}
       />
       <div
         className="content"

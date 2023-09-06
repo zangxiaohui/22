@@ -73,7 +73,7 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
         <UserOutlined />
       </span>
       <span className="username">{currentUser?.RealName}</span>， 您好！您可以：
-      <Link to="/">管理信息</Link>
+      <Link to="/client/account/manage-company">管理信息</Link>
       <Divider type="vertical" />
       <a onClick={clickLogout}>退出登录</a>
     </div>

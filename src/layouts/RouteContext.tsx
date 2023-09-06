@@ -24,6 +24,7 @@ export type RouteContextType = {
     Name?: string;
     Phone?: string;
     RealName?: string;
+    serviceTel?: string;
   };
   currentCompany?: {
     Name?: string;

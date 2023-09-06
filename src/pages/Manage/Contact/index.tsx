@@ -2,7 +2,7 @@ import { Button, Popconfirm, Space, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useReducer, useState } from "react";
 import { getContactList, updateContact } from "../../../services/company";
-import { columns } from "./columns";
+import { ContactReviewType, columns } from "./columns";
 import "./index.less";
 
 const Contact: React.FC = () => {
@@ -41,13 +41,15 @@ const Contact: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Popconfirm
-            placement="topRight"
-            title="确认审核通过?"
-            onConfirm={() => handleReview(record.CusLxr_Id)}
-          >
-            <Button type="primary">审核通过</Button>
-          </Popconfirm>
+          {record.CusLxr_State === ContactReviewType.UN_REVIEW && (
+            <Popconfirm
+              placement="topRight"
+              title="确认审核通过?"
+              onConfirm={() => handleReview(record.CusLxr_Id)}
+            >
+              <Button type="primary">审核通过</Button>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },

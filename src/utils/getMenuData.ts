@@ -59,7 +59,7 @@ const data: MenuDataItem[] = [
       {
         name: "我的招标",
         key: "41",
-        path: "/client/account/my-tender",
+        path: "/client/account/my-bid",
       },
       {
         name: "个人信息管理",

@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
 import { useAsync } from "../lib/hooks";
-import { getCurrentCompany, getSelf } from "../services/user";
+import { getCurrentCompany, getSelf, getTelInfo } from "../services/user";
 import { getMatchMenu } from "../utils/getMatchMenu";
 import { getMenuData } from "../utils/getMenuData";
 import type { MenuDataItem, RouterTypes, WithFalse } from "../utils/typings";
@@ -350,6 +350,7 @@ const BasicLayout: React.FC<any> = (props) => {
 
   const currentUserData = useAsync(getSelf);
   const currentCompanyData = useAsync(getCurrentCompany);
+  const telData = useAsync(getTelInfo);
 
   return (
     <>
@@ -363,7 +364,10 @@ const BasicLayout: React.FC<any> = (props) => {
           matchMenus,
           matchMenuKeys,
           currentMenu,
-          currentUser: currentUserData?.data || {},
+          currentUser: {
+            ...(currentUserData?.data || {}),
+            serviceTel: telData?.data?.Con,
+          },
           currentCompany: currentCompanyData?.data || {},
         }}
       >

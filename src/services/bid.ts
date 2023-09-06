@@ -1,13 +1,6 @@
 import qs from "qs";
 import { fetch } from "../lib/fetch";
-
-export enum AFSErrorCode {
-  SUCCESS_1 = "100",
-  SUCCESS_2 = "200",
-  NEED_NC = "400",
-  BLOCK_1 = "800",
-  BLOCK_2 = "900",
-}
+import { PagedRequest } from "./api";
 
 export enum BidType {
   // 全部
@@ -15,33 +8,32 @@ export enum BidType {
   // 即将开始
   IN_PREPARATION = 1,
   // 正在招标中
-  IN_PROGRESS = 2,
+  PROCESSING = 2,
   // 已结束
   FINISHED = 3,
   // 已终止
   TERMINATED = 4,
+  // 已拍下
+  SUCCESS = 5,
 }
 
 export const BidTypeLabel = {
   [BidType.ALL]: "全部产品",
   [BidType.IN_PREPARATION]: "即将开始",
-  [BidType.IN_PROGRESS]: "正在招标中",
+  [BidType.PROCESSING]: "正在招标中",
   [BidType.FINISHED]: "已结束",
   [BidType.TERMINATED]: "已终止",
+  [BidType.SUCCESS]: "已拍下",
 };
 
 export const BidTypeColor = {
   [BidType.ALL]: "gray",
   [BidType.IN_PREPARATION]: "green",
-  [BidType.IN_PROGRESS]: "red",
+  [BidType.PROCESSING]: "red",
   [BidType.FINISHED]: "gray",
   [BidType.TERMINATED]: "gray",
+  [BidType.SUCCESS]: "blue",
 };
-
-export interface PagedRequest {
-  pagesize?: number;
-  page?: number;
-}
 
 interface GetBidListRequest extends PagedRequest {
   state?: BidType;
@@ -100,6 +92,16 @@ export function postBid(params: { Id: number; price: number }): Promise<any> {
 /** 竞价当前价格获取 */
 export function getCurrentBidPrice(params: { Id: number }): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjprocurprice`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+/** 我的招标竞价列表 */
+export function getMyBidList(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmylist`, {
     method: "POST",
     body: qs.stringify({
       ...params,

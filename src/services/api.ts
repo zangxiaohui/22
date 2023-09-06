@@ -10,3 +10,10 @@ export function getNoticeInfo(): Promise<any> {
     method: "POST",
   });
 }
+
+/** 联系信息 */
+export function getContactInfo(): Promise<any> {
+  return fetch(`/CusApi/ComData/infocontact`, {
+    method: "POST",
+  });
+}

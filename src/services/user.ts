@@ -15,6 +15,13 @@ export function getCurrentCompany(): Promise<any> {
   });
 }
 
+/** 服务电话 */
+export function getTelInfo(): Promise<any> {
+  return fetch(`/CusApi/ComData/infofwdh`, {
+    method: "POST",
+  });
+}
+
 export interface UserForm {
   RealName?: string;
   Email?: string;

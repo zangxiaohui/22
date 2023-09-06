@@ -61,7 +61,7 @@ const BidList: React.FC<BidListProps> = (props) => {
                 bordered={false}
               >
                 <div>
-                  {(item?.State === BidType.IN_PROGRESS ||
+                  {(item?.State === BidType.PROCESSING ||
                     item?.State === BidType.FINISHED ||
                     item?.State === BidType.TERMINATED) && (
                     <Row

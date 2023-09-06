@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
-import { getNoticeInfo } from "../../services/api";
+import { getContactInfo } from "../../services/api";
 import "./index.less";
 
 const routes = [
@@ -16,14 +16,13 @@ const routes = [
 
 const Contact: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
     setLoading(true);
-    getNoticeInfo().then((res) => {
+    getContactInfo().then((res) => {
       if (res.state) {
-        setData(res.state);
+        setData(res.data);
       }
       setLoading(false);
     });
@@ -31,7 +30,11 @@ const Contact: React.FC = () => {
 
   return (
     <PageContainer routes={routes} loading={loading}>
-      <div>联系我们</div>
+      <div
+        className="content"
+        style={{ minHeight: 400 }}
+        dangerouslySetInnerHTML={{ __html: data?.Con }}
+      ></div>
     </PageContainer>
   );
 };
