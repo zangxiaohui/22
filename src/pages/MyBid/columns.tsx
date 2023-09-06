@@ -1,4 +1,4 @@
-import { Badge } from "antd";
+import { Badge, Statistic } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import { BidType, BidTypeMap } from "../../services/bid";
@@ -13,7 +13,26 @@ export const columns: ColumnsType<any> = [
     title: "价格",
     dataIndex: "Propm_CurPrice",
     key: "Propm_CurPrice",
-    render: (text) => text ?? "-",
+    width: 300,
+    render: (text, record: any) => {
+      const { State, Propm_CurPrice, Propm_StartPrice, MyPrice } = record || {};
+      return (
+        <div className="price-cell">
+          <Statistic title="起拍价" value={Propm_StartPrice} prefix="¥" />
+          {State === BidType.PROCESSING && (
+            <Statistic
+              className="red"
+              title="当前价"
+              value={Propm_CurPrice}
+              prefix="¥"
+            />
+          )}
+          {State !== BidType.IN_PREPARATION && (
+            <Statistic title="我司出价" value={MyPrice} prefix="¥" />
+          )}
+        </div>
+      );
+    },
   },
   {
     title: "状态",
@@ -37,6 +56,7 @@ export const columns: ColumnsType<any> = [
     title: "时间",
     dataIndex: "Propm_EndTime",
     key: "Propm_EndTime",
+    width: 300,
     render: (text) => (text ? moment(text).format("YYYY-MM-DD HH:mm:ss") : "-"),
   },
 ];

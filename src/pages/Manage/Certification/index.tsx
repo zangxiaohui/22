@@ -1,6 +1,7 @@
 import { Button, Form, Input, Popconfirm, Space, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useReducer, useState } from "react";
+import { Paging, usePaging } from "../../../components";
 import AttachmentUpload from "../../../components/AttachmentUpload";
 import {
   createCertification,
@@ -16,18 +17,23 @@ const Certification: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
+  const pagingInfo = usePaging();
+  const { pageOffset, pageSize, setTotalCount } = pagingInfo;
+
   useEffect(() => {
     setLoading(true);
     getCertificationList({
-      page: 1,
-      pagesize: 10,
-    }).then((res) => {
-      if (res.state) {
-        setData(res.data);
-      }
-      setLoading(false);
-    });
-  }, [x]);
+      page: pageOffset,
+      pagesize: pageSize,
+    })
+      .then((res) => {
+        if (res.state) {
+          setData(res.data);
+          setTotalCount(res?.total);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [x, pageSize, pageOffset, setTotalCount]);
 
   const handleDelete = async (id: number) => {
     const res = await deleteCertification({ id });
@@ -104,6 +110,7 @@ const Certification: React.FC = () => {
           rowKey={(record) => record.CusFile_Id}
           loading={loading}
         />
+        <Paging pagingInfo={pagingInfo} />
       </div>
     </div>
   );

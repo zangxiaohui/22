@@ -1,0 +1,35 @@
+.price-cell {
+  .ant-statistic {
+    display: flex;
+    align-items: center;
+    &-title {
+      margin-bottom: 0;
+      position: relative;
+      text-align: right;
+      width: 5em;
+      // color: rgb(85, 85, 85);
+      // font-size: 16px;
+
+      &::after {
+        content: ":";
+        position: relative;
+        top: -0.5px;
+        margin: 0 8px 0 2px;
+      }
+    }
+    &-content {
+      padding-left: 4px;
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+      &-prefix {
+        margin-right: 4px;
+      }
+    }
+
+    &.red {
+      .ant-statistic-content {
+        color: rgb(207, 43, 43);
+      }
+    }
+  }
+}

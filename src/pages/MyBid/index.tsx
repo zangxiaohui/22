@@ -61,7 +61,7 @@ const MyBid: React.FC<MyBidProps> = () => {
         }
       })
       .finally(() => setLoading(false));
-  }, [x, pageSize, pageOffset, tabActiveKey, setTotalCount]);
+  }, [x, tabActiveKey, pageSize, pageOffset, setTotalCount]);
 
   const handleDelete = async (id: number) => {};
 
@@ -83,7 +83,7 @@ const MyBid: React.FC<MyBidProps> = () => {
               onConfirm={() => handleDelete(record.Propm_Id)}
             >
               <Button type="primary" className="btn-red">
-                立即出价
+                立即出价 222
               </Button>
             </Popconfirm>
           )}
@@ -115,6 +115,7 @@ const MyBid: React.FC<MyBidProps> = () => {
           pagination={false}
           rowKey={(record) => record.Propm_Id}
           loading={loading}
+          scroll={{ x: "max-content" }}
         />
         <Paging pagingInfo={pagingInfo} />
       </div>
