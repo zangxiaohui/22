@@ -1,11 +1,12 @@
 import { Button, Popconfirm, Space, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import { Paging, usePaging } from "../../components/Paging";
 import { useSelf } from "../../layouts/RouteContext";
 import { BidType, getMyBidList } from "../../services/bid";
+import DeliveryForm from "./DeliveryForm";
 import { columns } from "./columns";
 import "./index.less";
 
@@ -40,10 +41,12 @@ const routes = [
 
 const MyBid: React.FC<MyBidProps> = () => {
   const currentUser = useSelf();
-  const [x, forceUpdate] = useReducer((x) => x + 1, 1);
   const [tabActiveKey, setTabActiveKey] = useState<BidType>(BidType.ALL);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
+
+  const [visible, setVisible] = useState<boolean>(false);
+  const [formData, setFormData] = useState<any>();
 
   const pagingInfo = usePaging();
   const { pageOffset, pageSize, setTotalCount } = pagingInfo;
@@ -62,7 +65,7 @@ const MyBid: React.FC<MyBidProps> = () => {
         }
       })
       .finally(() => setLoading(false));
-  }, [x, tabActiveKey, pageSize, pageOffset, setTotalCount]);
+  }, [tabActiveKey, pageSize, pageOffset, setTotalCount]);
 
   const handleDelete = async (id: number) => {};
 
@@ -91,13 +94,17 @@ const MyBid: React.FC<MyBidProps> = () => {
             )}
 
             {record.State !== BidType.PROCESSING && (
-              <Popconfirm
-                placement="topRight"
-                title="确认删除吗?"
-                onConfirm={() => handleDelete(record.Propm_Id)}
+              <Button
+                type="primary"
+                onClick={() => {
+                  setVisible(true);
+                  setFormData({
+                    productTitle: record.Propm_Title,
+                  });
+                }}
               >
-                <Button type="primary">申请提货</Button>
-              </Popconfirm>
+                申请提货
+              </Button>
             )}
           </Space>
           <div className="delivery-link">
@@ -130,6 +137,13 @@ const MyBid: React.FC<MyBidProps> = () => {
         />
         <Paging pagingInfo={pagingInfo} />
       </div>
+      <DeliveryForm
+        formData={formData}
+        modalVisible={visible}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
     </PageContainer>
   );
 };
