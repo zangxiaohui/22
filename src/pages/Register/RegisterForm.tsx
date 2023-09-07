@@ -1,14 +1,11 @@
 import { Button, Col, Form, Input, Modal, Row } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
 import { register } from "../../services/login";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
-
-const rememberUserNamekey = "cas-login:rememberUserName";
-const userNameKey = "cas-login:username";
 
 const commonPhoneRegex = /^(?:1\d{10}|0\d{2,3}-?\d{7,8})$/;
 
@@ -24,8 +21,6 @@ const Login: React.FC = () => {
 
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useLoginSMSToken();
-
-  useEffect(() => {}, []);
 
   const errorHandler = useCallback(
     (e: Response | any, defaultDesc = "请输入正确的账号或手机号和密码。") => {
@@ -93,20 +88,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Form
-      layout="vertical"
-      form={form}
-      onFinish={onPassFinish}
-      initialValues={{
-        cellphone: "18066666666",
-        company: "波波公司",
-        email: "12524051@qq.com",
-        nsrsbh: "456",
-        password: "123",
-        passwordRepeat: "123",
-        realname: "贾宝玉",
-      }}
-    >
+    <Form layout="vertical" form={form} onFinish={onPassFinish}>
       <Row>
         <Col span={14} className={styles.colLeft}>
           <div className={styles.cardFormTitle}>个人信息</div>
@@ -129,35 +111,41 @@ const Login: React.FC = () => {
                 onChange={(e) => setCellphone(e.target.value)}
               />
             </Form.Item>
-            <Form.Item
-              label="手机验证  *必填"
-              name="code"
-              // rules={[
-              //   { required: true, message: "验证码不能为空" },
-              //   { whitespace: true, message: "验证码不能为空字符" },
-              // ]}
-            >
-              <Input
-                placeholder="输入验证码"
-                size="large"
-                autoComplete="off"
-                style={{ width: "120px", marginRight: "10px" }}
-              />
-              <Button
-                onClick={sendSMS}
-                // disabled={!canSendSMS}
-                loading={smsSending}
-                size="large"
-                type="primary"
-                danger
-              >
-                {smsSending
-                  ? "发送中"
-                  : smsCoolDown > 0
-                  ? `${smsCoolDown}秒后可重发`
-                  : "获取验证码"}
-              </Button>
+
+            <Form.Item label="手机验证  *必填">
+              <Row gutter={8}>
+                <Col span={12}>
+                  <Form.Item
+                    name="code"
+                    noStyle
+                    rules={[{ required: true, message: "验证码不能为空" }]}
+                  >
+                    <Input
+                      placeholder="输入验证码"
+                      size="large"
+                      autoComplete="off"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Button
+                    onClick={sendSMS}
+                    // disabled={!canSendSMS}
+                    loading={smsSending}
+                    size="large"
+                    type="primary"
+                    danger
+                  >
+                    {smsSending
+                      ? "发送中"
+                      : smsCoolDown > 0
+                      ? `${smsCoolDown}秒后可重发`
+                      : "获取验证码"}
+                  </Button>
+                </Col>
+              </Row>
             </Form.Item>
+
             <Form.Item
               label="密码  *必填"
               name="password"

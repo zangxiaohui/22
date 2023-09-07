@@ -16,23 +16,26 @@ export interface SMSTokenResponse {
 }
 
 export function sendSMSToken(cellphone: string): Promise<SMSTokenResponse> {
-  return fetch("/api/selfmgmt/sendtoken", {
-    method: "POST",
-    body: JSON.stringify({
-      cellphone,
-    }),
-  });
+  // return fetch("/api/selfmgmt/sendtoken", {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //     cellphone,
+  //   }),
+  // });
+  return Promise.resolve({ limit: 60 });
 }
 
 export function sendLoginSMSToken(
   cellphone: string
 ): Promise<SMSTokenResponse> {
-  return fetch("/cs/login/sms", {
-    method: "POST",
-    body: JSON.stringify({
-      cellphone,
-    }),
-  });
+  // return fetch("/cs/login/sms", {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //     cellphone,
+  //   }),
+  // });
+
+  return Promise.resolve({ limit: 60 });
 }
 
 export interface ActivateResetPasswordRequest {
