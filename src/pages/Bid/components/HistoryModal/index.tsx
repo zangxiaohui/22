@@ -10,10 +10,11 @@ type EmailInviteModalProps = {
   visible: boolean;
   onCancel: () => void;
   companyName?: string;
+  myPrice?: number;
 };
 
 const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
-  const { visible, onCancel, companyName } = props;
+  const { visible, onCancel, companyName, myPrice } = props;
   const { id } = useParams<{ id: string }>();
   const [historyLoading, setHistoryLoading] = useState<boolean>(false);
   const [historyData, setHistoryData] = useState<any[]>();
@@ -57,7 +58,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
       onCancel={onCancel}
     >
       <div>
-        我司的当前出价为 <strong>¥8,888,000</strong>
+        我司的当前出价为 <strong>¥{myPrice}</strong>
       </div>
       <Table
         loading={historyLoading}

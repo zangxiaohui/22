@@ -1,5 +1,15 @@
-import { Button, Col, Form, Input, Modal, Row, message } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Row,
+  message,
+} from "antd";
 import layout from "antd/lib/layout";
+import moment from "moment";
 import React from "react";
 import { postDelivery } from "../../../services/bid";
 import "./index.less";
@@ -15,20 +25,24 @@ const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = async () => {
-    const values = form.getFieldsValue();
-    const res = await postDelivery({
-      Id: formData?.id,
-      ...values,
-    });
-    if (res?.state) {
-      message.success("操作成功");
-    } else {
-      Modal.error({
-        title: res?.msg,
-        okText: "关闭",
-        width: 440,
+    form.validateFields().then(async (values: any) => {
+      const { ThTime, ...rest } = values;
+      const res = await postDelivery({
+        Id: formData?.id,
+        ThTime: ThTime ? moment(ThTime).format("YYYY-MM-DD HH:mm:ss") : null,
+        ...rest,
       });
-    }
+      if (res?.state) {
+        message.success("操作成功");
+        onCancel();
+      } else {
+        Modal.error({
+          title: res?.msg,
+          okText: "关闭",
+          width: 440,
+        });
+      }
+    });
   };
 
   return (
@@ -57,24 +71,53 @@ const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
             <Form {...layout} form={form}>
               <Row gutter={60}>
                 <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                  <Form.Item label="提货时间" name="ThTime">
+                  <Form.Item
+                    label="提货时间"
+                    name="ThTime"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
+                    <DatePicker
+                      placeholder="请选择"
+                      style={{ width: "100%" }}
+                      showTime
+                      format="YYYY-MM-DD HH:mm:ss"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="提货物料"
+                    name="Thwl"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
                     <Input placeholder="请输入" />
                   </Form.Item>
-                  <Form.Item label="提货物料" name="Thwl">
-                    <Input placeholder="请输入" />
-                  </Form.Item>
-                  <Form.Item label="车牌号" name="ThCarNo">
+                  <Form.Item
+                    label="车牌号"
+                    name="ThCarNo"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
                     <Input placeholder="请输入" />
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                  <Form.Item label="司机姓名" name="Lxr">
+                  <Form.Item
+                    label="司机姓名"
+                    name="Lxr"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
                     <Input placeholder="请输入" />
                   </Form.Item>
-                  <Form.Item label="联系方式" name="Phone">
+                  <Form.Item
+                    label="联系方式"
+                    name="Phone"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
                     <Input placeholder="请输入" />
                   </Form.Item>
-                  <Form.Item label="起始地点" name="BAddress">
+                  <Form.Item
+                    label="起始地点"
+                    name="BAddress"
+                    rules={[{ required: true, message: "不能为空" }]}
+                  >
                     <Input placeholder="请输入" />
                   </Form.Item>
                 </Col>

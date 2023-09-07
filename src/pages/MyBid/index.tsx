@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tabs } from "antd";
+import { Button, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -80,39 +80,35 @@ const MyBid: React.FC<MyBidProps> = () => {
       key: "action",
       render: (_, record) => (
         <div className="my-bid-action">
-          <Space size="middle">
-            {record.State === BidType.PROCESSING && (
-              <Link to={`/client/bid/detail/${record.Propm_Id}`}>
-                <Button type="primary" className="btn-red">
-                  立即出价
-                </Button>
-              </Link>
-            )}
-            {record.State === BidType.SUCCESS && (
-              <>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setVisible(true);
-                    setFormData({
-                      productTitle: record.Propm_Title,
-                      id: record.Propm_Id,
-                    });
-                  }}
-                >
-                  申请提货
-                </Button>
+          {record.State === BidType.PROCESSING && (
+            <Link to={`/client/bid/detail/${record.Propm_Id}`}>
+              <Button type="primary" className="btn-red">
+                立即出价
+              </Button>
+            </Link>
+          )}
+          {record.State === BidType.SUCCESS && (
+            <>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setVisible(true);
+                  setFormData({
+                    productTitle: record.Propm_Title,
+                    id: record.Propm_Id,
+                  });
+                }}
+              >
+                申请提货
+              </Button>
 
-                <div className="delivery-link">
-                  <Link
-                    to={`/client/account/my-bid/delivery/${record.Propm_Id}`}
-                  >
-                    提货记录
-                  </Link>
-                </div>
-              </>
-            )}
-          </Space>
+              <div className="delivery-link">
+                <Link to={`/client/account/my-bid/delivery/${record.Propm_Id}`}>
+                  提货记录
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       ),
     },

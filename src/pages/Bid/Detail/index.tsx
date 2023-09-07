@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { isNil } from "lodash";
 import moment from "moment";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
@@ -50,10 +50,10 @@ const BidDetail: React.FC = () => {
   const currentCompany = useCurrentCompany();
 
   const { id } = useParams<{ id: string }>();
-  const [x, forceUpdate] = useReducer((x) => x + 1, 1);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
   const [bidPrice, setBidPrice] = useState<number>();
+  const [myPrice, setMyPrice] = useState<number>();
   const [currentPrice, setCurrentPrice] = useState<number>();
   const [historyVisible, setHistoryVisible] = useState<boolean>(false);
   const [bidConfirmModalVisible, setBidConfirmModalVisible] =
@@ -70,10 +70,10 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      const { Propm_CurPrice, Propm_StartPrice, MyPrice } = res?.data || {};
+      const { Propm_CurPrice, Propm_StartPrice } = res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
     });
-  }, [id, x]);
+  }, [id]);
 
   const { data: pollingBidPriceData, run } = useRequest(
     () =>
@@ -87,10 +87,12 @@ const BidDetail: React.FC = () => {
   );
 
   useEffect(() => {
-    if (pollingBidPriceData?.data > 0) {
-      setCurrentPrice(pollingBidPriceData?.data);
+    if (pollingBidPriceData?.state) {
+      const { CurPrice, MyPrice } = pollingBidPriceData?.data || {};
+      setCurrentPrice(CurPrice);
+      setMyPrice(MyPrice);
     }
-  }, [pollingBidPriceData?.data]);
+  }, [pollingBidPriceData]);
 
   const onChangeBidPrice = (value: number | null) => {
     if (!isNil(value)) {
@@ -112,7 +114,6 @@ const BidDetail: React.FC = () => {
         if (res.state) {
           message.success("出价成功");
           run();
-          forceUpdate();
           setBidConfirmModalVisible(false);
         } else {
           Modal.error({
@@ -210,9 +211,7 @@ const BidDetail: React.FC = () => {
 
         <Col flex="auto">
           <Descriptions column={2} className="details-area">
-            <Descriptions.Item label="我司出价">
-              ￥{data?.MyPrice}
-            </Descriptions.Item>
+            <Descriptions.Item label="我司出价">￥{myPrice}</Descriptions.Item>
             <Descriptions.Item label="加价幅度">
               ￥{data?.Propm_StepPrice}
             </Descriptions.Item>
@@ -239,6 +238,7 @@ const BidDetail: React.FC = () => {
         visible={historyVisible}
         onCancel={() => setHistoryVisible(false)}
         companyName={currentCompany?.Name}
+        myPrice={myPrice}
       />
 
       <BidConfirmModal
