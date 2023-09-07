@@ -56,13 +56,6 @@
         margin-bottom: 20px;
       }
       .cardFormBody {
-        :global {
-          .ant-form-item {
-            width: 50%;
-            float: left;
-            padding-right: 22px;
-          }
-        }
         .checkboxWrapper {
           display: flex;
           justify-content: space-between;

@@ -89,119 +89,117 @@ const Login: React.FC = () => {
 
   return (
     <Form layout="vertical" form={form} onFinish={onPassFinish}>
-      <Row>
-        <Col span={14} className={styles.colLeft}>
+      <Row gutter={30}>
+        <Col span={15} className={styles.colLeft}>
           <div className={styles.cardFormTitle}>个人信息</div>
           <div className={styles.cardFormBody}>
-            <Form.Item
-              label="手机号  *必填"
-              name="cellphone"
-              rules={[
-                {
-                  pattern: commonPhoneRegex,
-                  message: "请输入正确的手机号",
-                },
-                { required: true, message: "手机号不能为空" },
-              ]}
-            >
-              <Input
-                placeholder="手机号"
-                size="large"
-                autoComplete="off"
-                onChange={(e) => setCellphone(e.target.value)}
-              />
-            </Form.Item>
-
-            <Form.Item label="手机验证  *必填">
-              <Row gutter={8}>
-                <Col span={12}>
-                  <Form.Item
-                    name="code"
-                    noStyle
-                    rules={[{ required: true, message: "验证码不能为空" }]}
-                  >
-                    <Input
-                      placeholder="输入验证码"
-                      size="large"
-                      autoComplete="off"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <Button
-                    onClick={sendSMS}
-                    // disabled={!canSendSMS}
-                    loading={smsSending}
+            <Row gutter={30}>
+              <Col span={12}>
+                <Form.Item
+                  label="手机号  *必填"
+                  name="cellphone"
+                  rules={[
+                    {
+                      pattern: commonPhoneRegex,
+                      message: "请输入正确的手机号",
+                    },
+                    { required: true, message: "手机号不能为空" },
+                  ]}
+                >
+                  <Input
+                    placeholder="手机号"
                     size="large"
-                    type="primary"
-                    danger
-                  >
-                    {smsSending
-                      ? "发送中"
-                      : smsCoolDown > 0
-                      ? `${smsCoolDown}秒后可重发`
-                      : "获取验证码"}
-                  </Button>
-                </Col>
-              </Row>
-            </Form.Item>
+                    autoComplete="off"
+                    onChange={(e) => setCellphone(e.target.value)}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="手机验证  *必填">
+                  <Row gutter={8}>
+                    <Col span={12}>
+                      <Form.Item
+                        name="code"
+                        noStyle
+                        rules={[{ required: true, message: "验证码不能为空" }]}
+                      >
+                        <Input
+                          placeholder="输入验证码"
+                          size="large"
+                          autoComplete="off"
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Button
+                        onClick={sendSMS}
+                        // disabled={!canSendSMS}
+                        loading={smsSending}
+                        size="large"
+                        type="primary"
+                        className="btn-orange"
+                      >
+                        {smsSending
+                          ? "发送中"
+                          : smsCoolDown > 0
+                          ? `${smsCoolDown}秒后可重发`
+                          : "获取验证码"}
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form.Item>
+              </Col>
+            </Row>
 
-            <Form.Item
-              label="密码  *必填"
-              name="password"
-              rules={[
-                { required: true, message: "密码不能为空" },
-                { whitespace: true, message: "密码不能为空字符" },
-              ]}
-            >
-              <Input.Password placeholder="密码" size="large" />
-            </Form.Item>
-            <Form.Item
-              label="确认密码  *必填"
-              name="passwordRepeat"
-              validateFirst={true}
-              validateTrigger={["onChange", "onBlur"]}
-              rules={[
-                { required: true, message: "请输入确认密码" },
-                (form) => {
-                  const pwd = form.getFieldValue("password");
-                  return {
-                    type: "string",
-                    validator: (rule, value) =>
-                      value === pwd
-                        ? Promise.resolve()
-                        : Promise.reject("两次输入密码不一致，请重新输入"),
-                    validateTrigger: "onBlur",
-                  };
-                },
-              ]}
-            >
-              <Input
-                type="password"
-                autoComplete="new-password"
-                placeholder="确认密码"
-                size="large"
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="realname"
-              label="姓名  *必填"
-              rules={[{ required: true, message: "姓名不能为空" }]}
-            >
-              <Input placeholder="请输入姓名" size="large" />
-            </Form.Item>
-
-            <Form.Item
-              name="email"
-              label="邮箱  *必填"
-              rules={[{ required: true, message: "邮箱不能为空" }]}
-            >
-              <Input placeholder="请输入邮箱" size="large" />
-            </Form.Item>
+            <Row gutter={30}>
+              <Col span={12}>
+                <Form.Item
+                  label="密码  *必填"
+                  name="password"
+                  rules={[
+                    { required: true, message: "密码不能为空" },
+                    { whitespace: true, message: "密码不能为空字符" },
+                  ]}
+                >
+                  <Input.Password placeholder="密码" size="large" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="realname"
+                  label="姓名  *必填"
+                  rules={[{ required: true, message: "姓名不能为空" }]}
+                >
+                  <Input placeholder="请输入姓名" size="large" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={30}>
+              <Col span={12}>
+                <Form.Item
+                  label="密码  *必填"
+                  name="password"
+                  rules={[
+                    { required: true, message: "密码不能为空" },
+                    { whitespace: true, message: "密码不能为空字符" },
+                  ]}
+                >
+                  <Input.Password placeholder="密码" size="large" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="email"
+                  label="邮箱  *必填"
+                  rules={[{ required: true, message: "邮箱不能为空" }]}
+                >
+                  <Input placeholder="请输入邮箱" size="large" />
+                </Form.Item>
+              </Col>
+            </Row>
           </div>
         </Col>
-        <Col span={9} offset={1}>
+        <Col span={9}>
           <div className={styles.cardFormTitle}>企业信息</div>
           <Form.Item
             name="company"
@@ -220,10 +218,9 @@ const Login: React.FC = () => {
           <Form.Item>
             <Button
               htmlType="submit"
-              className={styles.button}
               size="large"
               type="primary"
-              danger
+              className="btn-orange"
               block
             >
               注册
