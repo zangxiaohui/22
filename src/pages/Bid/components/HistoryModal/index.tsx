@@ -9,10 +9,12 @@ import "./index.less";
 type EmailInviteModalProps = {
   visible: boolean;
   onCancel: () => void;
+  companyName?: string;
+  myPrice?: number;
 };
 
 const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
-  const { visible, onCancel } = props;
+  const { visible, onCancel, companyName, myPrice } = props;
   const { id } = useParams<{ id: string }>();
   const [historyLoading, setHistoryLoading] = useState<boolean>(false);
   const [historyData, setHistoryData] = useState<any[]>();
@@ -48,15 +50,15 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title="无锡猎豹信息科技有限公司 历史出价记录"
-      width={640}
+      title={`${companyName} 历史出价记录`}
+      width={692}
       wrapClassName="mailInvitationModal"
       open={visible}
       footer={null}
       onCancel={onCancel}
     >
       <div>
-        我司的当前出价为 <strong>¥8,888,000</strong>
+        我司的当前出价为 <strong>¥{myPrice}</strong>
       </div>
       <Table
         loading={historyLoading}

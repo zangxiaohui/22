@@ -24,11 +24,13 @@ export type RouteContextType = {
     Name?: string;
     Phone?: string;
     RealName?: string;
+    serviceTel?: string;
   };
   currentCompany?: {
     Name?: string;
     Nsrsbh?: string;
     XqCateIds?: string;
+    YyzzImage?: string;
   };
 } & Partial<PureSettings>;
 

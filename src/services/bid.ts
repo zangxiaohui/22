@@ -1,13 +1,6 @@
 import qs from "qs";
 import { fetch } from "../lib/fetch";
-
-export enum AFSErrorCode {
-  SUCCESS_1 = "100",
-  SUCCESS_2 = "200",
-  NEED_NC = "400",
-  BLOCK_1 = "800",
-  BLOCK_2 = "900",
-}
+import { PagedRequest } from "./api";
 
 export enum BidType {
   // 全部
@@ -15,33 +8,65 @@ export enum BidType {
   // 即将开始
   IN_PREPARATION = 1,
   // 正在招标中
-  IN_PROGRESS = 2,
+  PROCESSING = 2,
   // 已结束
   FINISHED = 3,
   // 已终止
   TERMINATED = 4,
+  // 已拍下
+  SUCCESS = 5,
 }
 
 export const BidTypeLabel = {
   [BidType.ALL]: "全部产品",
   [BidType.IN_PREPARATION]: "即将开始",
-  [BidType.IN_PROGRESS]: "正在招标中",
+  [BidType.PROCESSING]: "正在招标中",
   [BidType.FINISHED]: "已结束",
   [BidType.TERMINATED]: "已终止",
+  [BidType.SUCCESS]: "已拍下",
 };
 
 export const BidTypeColor = {
   [BidType.ALL]: "gray",
   [BidType.IN_PREPARATION]: "green",
-  [BidType.IN_PROGRESS]: "red",
+  [BidType.PROCESSING]: "red",
   [BidType.FINISHED]: "gray",
   [BidType.TERMINATED]: "gray",
+  [BidType.SUCCESS]: "blue",
 };
 
-export interface PagedRequest {
-  pagesize?: number;
-  page?: number;
-}
+export const BidTypeMap = {
+  [BidType.ALL]: {
+    label: "全部产品",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.IN_PREPARATION]: {
+    label: "即将开始",
+    color: "green",
+    badgeStatus: "warning",
+  },
+  [BidType.PROCESSING]: {
+    label: "正在招标中",
+    color: "red",
+    badgeStatus: "processing",
+  },
+  [BidType.FINISHED]: {
+    label: "已结束",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.TERMINATED]: {
+    label: "TERMINATED",
+    color: "gray",
+    badgeStatus: "default",
+  },
+  [BidType.SUCCESS]: {
+    label: "已拍下",
+    color: "blue",
+    badgeStatus: "success",
+  },
+};
 
 interface GetBidListRequest extends PagedRequest {
   state?: BidType;
@@ -99,7 +124,42 @@ export function postBid(params: { Id: number; price: number }): Promise<any> {
 
 /** 竞价当前价格获取 */
 export function getCurrentBidPrice(params: { Id: number }): Promise<any> {
+  console.log("111111  来看看:>> ", 111111);
   return fetch(`/CusApi/ComData/zbjjprocurprice`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+/** 我的招标竞价列表 */
+export function getMyBidList(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmylist`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+interface GetDeliveryListRequest extends PagedRequest {
+  Id: number;
+}
+
+/** 竞价提货列表 */
+export function getDeliveryList(params: GetDeliveryListRequest): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmythjl`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+/** 竞价提货列表 */
+export function postDelivery(params: any): Promise<any> {
+  return fetch(`/CusApi/ComData/zbjjmythjlsave`, {
     method: "POST",
     body: qs.stringify({
       ...params,

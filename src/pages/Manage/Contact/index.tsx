@@ -1,8 +1,9 @@
 import { Button, Popconfirm, Space, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useReducer, useState } from "react";
+import { Paging, usePaging } from "../../../components";
 import { getContactList, updateContact } from "../../../services/company";
-import { columns } from "./columns";
+import { ContactReviewType, columns } from "./columns";
 import "./index.less";
 
 const Contact: React.FC = () => {
@@ -10,18 +11,23 @@ const Contact: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
+  const pagingInfo = usePaging();
+  const { pageOffset, pageSize, setTotalCount } = pagingInfo;
+
   useEffect(() => {
     setLoading(true);
     getContactList({
-      page: 1,
-      pagesize: 10,
-    }).then((res) => {
-      if (res.state) {
-        setData(res.data);
-      }
-      setLoading(false);
-    });
-  }, [x]);
+      page: pageOffset,
+      pagesize: pageSize,
+    })
+      .then((res) => {
+        if (res.state) {
+          setData(res.data);
+          setTotalCount(res?.total);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [x, pageSize, pageOffset, setTotalCount]);
 
   const handleReview = async (id: number) => {
     const res = await updateContact({ id });
@@ -41,13 +47,15 @@ const Contact: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Popconfirm
-            placement="topRight"
-            title="确认审核通过?"
-            onConfirm={() => handleReview(record.CusLxr_Id)}
-          >
-            <Button type="primary">审核通过</Button>
-          </Popconfirm>
+          {record.CusLxr_State === ContactReviewType.UN_REVIEW && (
+            <Popconfirm
+              placement="topRight"
+              title="确认审核通过?"
+              onConfirm={() => handleReview(record.CusLxr_Id)}
+            >
+              <Button type="primary">审核通过</Button>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },
@@ -61,6 +69,7 @@ const Contact: React.FC = () => {
         rowKey={(record) => record.CusLxr_Id}
         loading={loading}
       />
+      <Paging pagingInfo={pagingInfo} />
     </div>
   );
 };

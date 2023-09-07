@@ -9,11 +9,14 @@ import BidListFinished from "./pages/Bid/Finished";
 import BidListInPreparation from "./pages/Bid/InPreparation";
 import BidListInProgress from "./pages/Bid/InProgress";
 import BidListTerminated from "./pages/Bid/Terminated";
-import Company from "./pages/Company";
 import Contact from "./pages/Contact";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import ManageCompany from "./pages/Manage";
+import MyBid from "./pages/MyBid";
+import DeliveryDetail from "./pages/MyBid/DeliveryDetail";
+import Product from "./pages/Product";
 import Register from "./pages/Register";
 import RegisterResult from "./pages/RegisterResult";
 
@@ -35,6 +38,19 @@ const App: React.FC = () => {
                 <Switch>
                   <Route path="/client/home" exact component={Home} />
                   <Route path="/client/contact" exact component={Contact} />
+                  <Route path="/client/product/:id" exact component={Product} />
+                  <Route
+                    path="/client/account/my-bid"
+                    exact
+                    component={MyBid}
+                  />
+
+                  <Route
+                    path="/client/account/my-bid/delivery/:id"
+                    exact
+                    component={DeliveryDetail}
+                  />
+
                   <Route
                     path="/client/account/edit-profile"
                     exact
@@ -43,7 +59,7 @@ const App: React.FC = () => {
                   <Route
                     path="/client/account/manage-company"
                     exact
-                    component={Company}
+                    component={ManageCompany}
                   />
                   <Route path="/client/bid/all" exact component={BidListAll} />
                   <Route

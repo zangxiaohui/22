@@ -29139,3 +29139,27 @@ div.ant-typography-edit-content.ant-typography-rtl {
   background: transparent;
   content: "";
 }
+.red {
+  color: #cf2b2b;
+}
+.green {
+  color: #00b58c;
+}
+.orange {
+  color: #ee9400;
+}
+.gray {
+  color: #777777;
+}
+.ant-badge-status-success {
+  background-color: #2a598f;
+}
+.ant-badge-status-processing {
+  background-color: #cf2b2b;
+}
+.ant-badge-status-processing::after {
+  border: 1px solid #cf2b2b;
+}
+.ant-badge-status-warning {
+  background-color: #00b58c;
+}

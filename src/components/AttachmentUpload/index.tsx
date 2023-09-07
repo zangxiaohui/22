@@ -6,7 +6,7 @@ import {
   UploadFile,
   UploadProps,
 } from "antd/lib/upload/interface";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
 interface AttachmentUploadProps
@@ -22,6 +22,28 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
   const { value, onChange, maxSize, max, aspect, accept, disabled } = props;
   const [fileList, setFileList] = useState<any[]>([]);
   const [previewImage, setPreviewImage] = useState<string>("");
+
+  useEffect(() => {
+    if (fileList.length) return;
+    let newValue: string[];
+    if (!value) {
+      newValue = [];
+    } else if (typeof value === "string") {
+      newValue = [value];
+    } else {
+      newValue = value;
+    }
+    setFileList(
+      newValue!.map((item) => {
+        return {
+          status: "done" as any,
+          size: 0,
+          type: "",
+          url: item,
+        };
+      })
+    );
+  }, [fileList.length, value]);
 
   const text = useMemo(() => {
     return !disabled ? (

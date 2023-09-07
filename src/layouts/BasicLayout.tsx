@@ -11,7 +11,8 @@ import Header from "../components/Header";
 import PageLoading from "../components/PageLoading";
 import { SiderMenu } from "../components/SiderMenu";
 import { useAsync } from "../lib/hooks";
-import { getCurrentCompany, getSelf } from "../services/user";
+import { getProductCategory } from "../services/api";
+import { getCurrentCompany, getSelf, getTelInfo } from "../services/user";
 import { getMatchMenu } from "../utils/getMatchMenu";
 import { getMenuData } from "../utils/getMenuData";
 import type { MenuDataItem, RouterTypes, WithFalse } from "../utils/typings";
@@ -219,12 +220,18 @@ const BasicLayout: React.FC<any> = (props) => {
     loading,
     layout,
   } = props || {};
+
+  const currentUserData = useAsync(getSelf);
+  const currentCompanyData = useAsync(getCurrentCompany);
+  const telData = useAsync(getTelInfo);
+  const productCategory = useAsync(getProductCategory);
+
   const context = useContext(ConfigProvider.ConfigContext);
   const prefixCls = props.prefixCls ?? context.getPrefixCls("pro");
 
-  // const [menuData, setMenuData] = useState<any[]>([]);
-
-  const menuData = getMenuData();
+  const menuData = useMemo(() => {
+    return getMenuData(productCategory?.data || []);
+  }, [productCategory]);
 
   const matchMenus = useMemo(() => {
     return getMatchMenu(location.pathname || "/", menuData || [], true);
@@ -348,9 +355,6 @@ const BasicLayout: React.FC<any> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.pathname?.search]);
 
-  const currentUserData = useAsync(getSelf);
-  const currentCompanyData = useAsync(getCurrentCompany);
-
   return (
     <>
       <RouteContext.Provider
@@ -363,7 +367,10 @@ const BasicLayout: React.FC<any> = (props) => {
           matchMenus,
           matchMenuKeys,
           currentMenu,
-          currentUser: currentUserData?.data || {},
+          currentUser: {
+            ...(currentUserData?.data || {}),
+            serviceTel: telData?.data?.Con,
+          },
           currentCompany: currentCompanyData?.data || {},
         }}
       >
