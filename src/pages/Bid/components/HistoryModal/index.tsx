@@ -3,6 +3,7 @@ import moment from "moment";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Paging, usePaging } from "../../../../components";
 import { getBidHistory } from "../../../../services/bid";
 import "./index.less";
 
@@ -19,17 +20,24 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
   const [historyLoading, setHistoryLoading] = useState<boolean>(false);
   const [historyData, setHistoryData] = useState<any[]>();
 
+  const pagingInfo = usePaging();
+  const { pageOffset, pageSize, setTotalCount } = pagingInfo;
+
   useEffect(() => {
-    if (visible) {
-      setHistoryLoading(true);
-      getBidHistory({
-        Id: Number(id),
-      }).then((res) => {
-        setHistoryLoading(false);
-        setHistoryData(res?.data);
-      });
-    }
-  }, [id, visible]);
+    setHistoryLoading(true);
+    getBidHistory({
+      Id: Number(id),
+      page: pageOffset,
+      pagesize: pageSize,
+    })
+      .then((res) => {
+        if (res.state) {
+          setHistoryData(res.data);
+          setTotalCount(res?.total);
+        }
+      })
+      .finally(() => setHistoryLoading(false));
+  }, [id, visible, pageSize, pageOffset, setTotalCount]);
 
   const columns = [
     {
@@ -66,8 +74,8 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
         columns={columns}
         pagination={false}
         size="small"
-        scroll={{ y: "30vh" }}
       />
+      <Paging pagingInfo={pagingInfo} size="small" />
     </Modal>
   );
 };

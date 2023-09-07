@@ -102,8 +102,12 @@ export function getBidCurrentPrice(params: { Id: number }): Promise<any> {
   });
 }
 
+interface GetBidHistoryRequest extends PagedRequest {
+  Id: number;
+}
+
 /** 我司出价历史 */
-export function getBidHistory(params: { Id: number }): Promise<any> {
+export function getBidHistory(params: GetBidHistoryRequest): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjprobjlist`, {
     method: "POST",
     body: qs.stringify({
@@ -124,7 +128,6 @@ export function postBid(params: { Id: number; price: number }): Promise<any> {
 
 /** 竞价当前价格获取 */
 export function getCurrentBidPrice(params: { Id: number }): Promise<any> {
-  console.log("111111  来看看:>> ", 111111);
   return fetch(`/CusApi/ComData/zbjjprocurprice`, {
     method: "POST",
     body: qs.stringify({
