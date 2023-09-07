@@ -1,3 +1,4 @@
+import { useRequest } from "ahooks";
 import {
   Row as AntRow,
   Button,
@@ -15,7 +16,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
-import { useSelf } from "../../../layouts/RouteContext";
+import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
 import {
   BidType,
   BidTypeColor,
@@ -25,6 +26,7 @@ import {
 } from "../../../services/bid";
 import Row from "../components/DescriptionRow";
 import HistoryModal from "../components/HistoryModal";
+import BidConfirmModal from "./BidConfirmModal";
 import "./index.less";
 
 const { Countdown } = Statistic;
@@ -41,15 +43,22 @@ const routes = [
   },
 ];
 
+const items = [{ label: "拍品详情", key: "item-1" }];
+
 const BidDetail: React.FC = () => {
   const currentUser = useSelf();
-  const [historyVisible, setHistoryVisible] = useState<boolean>(false);
+  const currentCompany = useCurrentCompany();
 
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
   const [bidPrice, setBidPrice] = useState<number>();
   const [currentPrice, setCurrentPrice] = useState<number>();
+  const [historyVisible, setHistoryVisible] = useState<boolean>(false);
+  const [bidConfirmModalVisible, setBidConfirmModalVisible] =
+    useState<boolean>(false);
+
+  const isProcessing = data?.State === BidType.PROCESSING;
 
   const deadline = moment(data?.Propm_EndTime);
 
@@ -60,24 +69,27 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      console.log("res?.data?.Propm_CurPrice :>> ", res?.data?.Propm_CurPrice);
-      setBidPrice(res?.data?.Propm_CurPrice);
+      const { Propm_CurPrice, Propm_StartPrice } = res?.data || {};
+      setBidPrice(Propm_CurPrice || Propm_StartPrice);
     });
   }, [id]);
+
+  const { data: pollingBidPriceData, run } = useRequest(
+    () =>
+      getCurrentBidPrice({
+        Id: Number(id),
+      }),
+    {
+      pollingInterval: 1000 * 10,
+      ready: !!id && isProcessing,
+    }
+  );
 
   useEffect(() => {
-    getCurrentBidPrice({
-      Id: Number(id),
-    }).then((res) => {
-      setCurrentPrice(res?.data);
-    });
-  }, [id]);
-
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
-  const items = [{ label: "拍品详情", key: "item-1" }];
+    if (pollingBidPriceData?.data > 0) {
+      setCurrentPrice(pollingBidPriceData?.data);
+    }
+  }, [pollingBidPriceData?.data]);
 
   const onChangeBidPrice = (value: number | null) => {
     if (!isNil(value)) {
@@ -91,25 +103,24 @@ const BidDetail: React.FC = () => {
   };
 
   const handleBid = () => {
-    Modal.confirm({
-      title: `张三，您好！`,
-      content: "...to do",
-      okText: "确认出价",
-      cancelText: "先不出价",
-      onOk() {
-        if (!isNil(bidPrice)) {
-          postBid({
-            Id: Number(id),
-            price: bidPrice,
-          }).then((res) => {
-            if (res.state) {
-              message.success("出价成功");
-            }
-            console.log(res);
+    if (!isNil(bidPrice)) {
+      postBid({
+        Id: Number(id),
+        price: bidPrice,
+      }).then((res) => {
+        if (res.state) {
+          message.success("出价成功");
+          run();
+          setBidConfirmModalVisible(false);
+        } else {
+          Modal.error({
+            title: res?.msg,
+            okText: "关闭",
+            width: 440,
           });
         }
-      },
-    });
+      });
+    }
   };
 
   return (
@@ -123,6 +134,13 @@ const BidDetail: React.FC = () => {
             format="D 天 H 时 m 分 s 秒"
           />
 
+          {/* <Statistic
+            title={data?.State === BidType.FINISHED ? "成交价" : "当前价"}
+            value={currentPrice}
+            prefix="¥"
+            className="meta-price"
+          /> */}
+
           {(data?.State === BidType.PROCESSING ||
             data?.State === BidType.FINISHED ||
             data?.State === BidType.TERMINATED) && (
@@ -130,7 +148,7 @@ const BidDetail: React.FC = () => {
               status={data?.State}
               label={data?.State === BidType.FINISHED ? "成交价" : "当前价"}
               prefix="¥"
-              desc={currentPrice}
+              desc={currentPrice || bidPrice}
               className="font-size-lg colorful"
             />
           )}
@@ -179,7 +197,7 @@ const BidDetail: React.FC = () => {
                   type="primary"
                   size="large"
                   className="btn-red bidding-btn"
-                  onClick={handleBid}
+                  onClick={() => setBidConfirmModalVisible(true)}
                 >
                   出价
                 </Button>
@@ -206,20 +224,53 @@ const BidDetail: React.FC = () => {
         </Col>
       </AntRow>
       <Tabs
-        onChange={onChange}
         type="card"
         items={items}
         tabBarExtraContent={<div className="h">{currentUser?.serviceTel}</div>}
       />
       <div
-        className="content"
-        dangerouslySetInnerHTML={{ __html: data?.content }}
+        style={{ padding: "10px 30px 30px" }}
+        dangerouslySetInnerHTML={{ __html: data?.Propm_Content }}
       ></div>
 
       <HistoryModal
         visible={historyVisible}
         onCancel={() => setHistoryVisible(false)}
       />
+
+      <BidConfirmModal
+        visible={bidConfirmModalVisible}
+        onCancel={() => setBidConfirmModalVisible(false)}
+      >
+        <div className="mod">
+          <div className="mod-hd">
+            <div>{currentUser?.Name}，您好！</div>
+            <div>您将代表{currentCompany?.Name}提交的竞价为：</div>
+          </div>
+          <div className="mod-bd">
+            <div>产品名 {data?.Propm_Title}</div>
+            <Statistic title="出　价" value={bidPrice} prefix="¥" />
+            <div></div>
+          </div>
+          <div className="mod-ft">
+            <Button
+              type="primary"
+              size="large"
+              className="btn-red btn1"
+              onClick={handleBid}
+            >
+              确认出价
+            </Button>
+            <Button
+              size="large"
+              className="btn2"
+              onClick={() => setBidConfirmModalVisible(false)}
+            >
+              先不出价
+            </Button>
+          </div>
+        </div>
+      </BidConfirmModal>
     </PageContainer>
   );
 };

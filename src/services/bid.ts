@@ -124,6 +124,7 @@ export function postBid(params: { Id: number; price: number }): Promise<any> {
 
 /** 竞价当前价格获取 */
 export function getCurrentBidPrice(params: { Id: number }): Promise<any> {
+  console.log("111111  来看看:>> ", 111111);
   return fetch(`/CusApi/ComData/zbjjprocurprice`, {
     method: "POST",
     body: qs.stringify({
