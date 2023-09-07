@@ -72,7 +72,6 @@ const BidDetail: React.FC = () => {
       setData(res?.data);
       const { Propm_CurPrice, Propm_StartPrice, MyPrice } = res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
-      setMyPrice(MyPrice);
     });
   }, [id, x]);
 
