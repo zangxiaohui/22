@@ -7,3 +7,43 @@
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #fff !important;
 }
+
+#root {
+  .ant-menu {
+    font-size: 18px;
+  }
+
+  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    padding: 10px 0 20px;
+    border-radius: 10px 0 0 10px;
+    font-size: 16px;
+  }
+  .ant-tabs-tab {
+    font-size: 20px;
+    padding: 15px 45px;
+  }
+
+  .ant-tabs {
+    color: rgb(136, 136, 136);
+  }
+
+  .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
+  .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
+    color: #fff;
+    background: #2a598f;
+  }
+
+  .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
+  .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
+    border: 0 none;
+  }
+  .ant-tabs-nav .ant-tabs-tab,
+  div > .ant-tabs-nav .ant-tabs-tab {
+    // background: #fafafa;
+    background: rgb(235, 239, 244);
+  }
+
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+  }
+}

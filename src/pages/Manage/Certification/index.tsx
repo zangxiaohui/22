@@ -95,9 +95,12 @@ const Certification: React.FC = () => {
             rules={[{ required: true, message: "不能为空" }]}
           >
             <AttachmentUpload
+              btnType="primary"
+              btnSize="large"
               maxSize={10}
               max={1}
               accept=".jpg,.jpeg,.png,.gif,.pdf"
+              className="btn-orange"
             />
           </Form.Item>
         </Form>

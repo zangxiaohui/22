@@ -18,7 +18,7 @@ export const columns: ColumnsType<any> = [
           style={{ cursor: "pointer" }}
           onClick={() => window.open(`${serverPath}${text}`)}
         >
-          <PictureOutlined style={{ fontSize: 30 }} />
+          <PictureOutlined style={{ fontSize: 30, color: "#2a598f" }} />
         </div>
       );
     },

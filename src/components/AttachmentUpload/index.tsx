@@ -6,6 +6,7 @@ import {
   UploadFile,
   UploadProps,
 } from "antd/lib/upload/interface";
+import classNames from "classnames";
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
@@ -16,10 +17,22 @@ interface AttachmentUploadProps
   max?: number;
   aspect?: number;
   onChange?: (name: any) => void;
+  className?: string;
+  btnType?: string;
 }
 
 const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
-  const { value, onChange, maxSize, max, aspect, accept, disabled } = props;
+  const {
+    value,
+    onChange,
+    maxSize,
+    max,
+    aspect,
+    accept,
+    disabled,
+    className,
+    btnType = "default",
+  } = props;
   const [fileList, setFileList] = useState<any[]>([]);
   const [previewImage, setPreviewImage] = useState<string>("");
 
@@ -47,8 +60,8 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
 
   const text = useMemo(() => {
     return !disabled ? (
-      <span style={{ marginRight: "5px" }}>
-        <ExclamationCircleOutlined />
+      <span className="upload-tips">
+        <ExclamationCircleOutlined style={{ marginRight: "5px" }} />
         支持{accept}格式，文件小于{maxSize}MB
       </span>
     ) : null;
@@ -127,7 +140,7 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
 
   return (
     <>
-      <div>
+      <div className="upload-wrap">
         <Upload
           {...uploadProps}
           listType="picture"
@@ -139,7 +152,13 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
           onChange={onUploadChange}
         >
           {fileList.length < max! && (
-            <Button icon={<UploadOutlined />}>点击上传</Button>
+            <Button
+              type={btnType as any}
+              icon={<UploadOutlined />}
+              className={classNames("upload-btn", className)}
+            >
+              点击上传
+            </Button>
           )}
         </Upload>
         {text}

@@ -208,11 +208,11 @@ const CompanyInfo: React.FC = () => {
             </Col>
           </Row>
 
-          <Form.Item style={{ textAlign: "center" }}>
-            <Button htmlType="submit" type="primary" style={{ width: 258 }}>
+          <div className="btn-area">
+            <Button htmlType="submit" type="primary" className="submit-btn">
               提交
             </Button>
-          </Form.Item>
+          </div>
         </Form>
       </div>
     </div>

@@ -150,7 +150,7 @@ const Login: React.FC = () => {
         // username: "BC230001-001",
         // pwd: "123456",
         username: "BC230002-001",
-        pwd: "123123",
+        // pwd: "123123",
       }}
     >
       <Form.Item

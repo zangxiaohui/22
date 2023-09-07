@@ -1,0 +1,75 @@
+.contact-page {
+  border: 1px solid #d3dbe4;
+  margin: 56px 66px;
+
+  .descriptions {
+    padding: 48px 78px;
+  }
+
+  .descriptions-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .descriptions-title {
+      flex: auto;
+      overflow: hidden;
+      color: #333333;
+      font-size: 36px;
+      font-weight: normal;
+      line-height: 1.5715;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .descriptions-item {
+    padding-bottom: 0;
+    padding-left: 72px;
+  }
+
+  .descriptions-item {
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    &.tel {
+      background-image: url("../../assets/images/tel.svg");
+    }
+
+    &.mail {
+      background-image: url("../../assets/images/mail.svg");
+    }
+
+    &.address {
+      background-image: url("../../assets/images/location.svg");
+    }
+
+    &.postcode {
+      background-image: url("../../assets/images/postcode.svg");
+    }
+  }
+
+  .descriptions-item-label {
+    color: rgba(0, 0, 0, 0.95);
+    font-size: 18px;
+  }
+
+  .descriptions-item-content {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .contact-page {
+    margin: 30px;
+    padding: 30px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .contact-page {
+    margin: 10px;
+    padding: 20px;
+  }
+}
