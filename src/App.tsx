@@ -17,6 +17,7 @@ import ManageCompany from "./pages/Manage";
 import MyBid from "./pages/MyBid";
 import DeliveryDetail from "./pages/MyBid/DeliveryDetail";
 import Product from "./pages/Product";
+import ProductDetail from "./pages/Product/Detail";
 import Register from "./pages/Register";
 import RegisterResult from "./pages/RegisterResult";
 
@@ -38,7 +39,16 @@ const App: React.FC = () => {
                 <Switch>
                   <Route path="/client/home" exact component={Home} />
                   <Route path="/client/contact" exact component={Contact} />
-                  <Route path="/client/product/:id" exact component={Product} />
+                  <Route
+                    path="/client/product/:cateId"
+                    exact
+                    component={Product}
+                  />
+                  <Route
+                    path="/client/product/detail/:id"
+                    exact
+                    component={ProductDetail}
+                  />
                   <Route
                     path="/client/account/my-bid"
                     exact

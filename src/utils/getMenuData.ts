@@ -83,7 +83,7 @@ const data: MenuDataItem[] = [
 ];
 
 const getMenuData = (productMenu: any[]): MenuDataItem[] => {
-  const productChildren = productMenu.slice(0, 1).map((item) => ({
+  const productChildren = productMenu.map((item) => ({
     name: item.Title,
     key: `product-${item.Id}`,
     path: `/client/product/${item.Id}`,
