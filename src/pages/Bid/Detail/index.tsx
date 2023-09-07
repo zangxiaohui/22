@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { isNil } from "lodash";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
@@ -50,6 +50,7 @@ const BidDetail: React.FC = () => {
   const currentCompany = useCurrentCompany();
 
   const { id } = useParams<{ id: string }>();
+  const [x, forceUpdate] = useReducer((x) => x + 1, 1);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
   const [bidPrice, setBidPrice] = useState<number>();
@@ -72,7 +73,7 @@ const BidDetail: React.FC = () => {
       const { Propm_CurPrice, Propm_StartPrice } = res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
     });
-  }, [id]);
+  }, [id, x]);
 
   const { data: pollingBidPriceData, run } = useRequest(
     () =>
@@ -111,6 +112,7 @@ const BidDetail: React.FC = () => {
         if (res.state) {
           message.success("出价成功");
           run();
+          forceUpdate();
           setBidConfirmModalVisible(false);
         } else {
           Modal.error({
@@ -236,6 +238,7 @@ const BidDetail: React.FC = () => {
       <HistoryModal
         visible={historyVisible}
         onCancel={() => setHistoryVisible(false)}
+        companyName={currentCompany?.Name}
       />
 
       <BidConfirmModal
