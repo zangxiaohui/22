@@ -147,9 +147,6 @@ export interface LoginParams {
 }
 
 export async function login(params: LoginParams): Promise<any> {
-  const search = window.location.search;
-  const parseSearch: any = qs.parse(search.replace("?", ""));
-
   const response = await window.fetch(`/CusApi/ComData/userlogin`, {
     method: "POST",
     headers: {
@@ -160,8 +157,6 @@ export async function login(params: LoginParams): Promise<any> {
     }),
   });
 
-  console.log("response :>> ", response);
-
   if (response.status !== 200) {
     throw response;
   }
@@ -169,14 +164,6 @@ export async function login(params: LoginParams): Promise<any> {
   if (text) {
     return JSON.parse(text);
   }
-
-  // if (ticketRes.status !== 200) {
-  //   throw ticketRes;
-  // }
-  // const ticket = await ticketRes.text();
-  // const url = new URL(parseSearch.service);
-  // const parseRedirectSearch = qs.parse(url.search, { ignoreQueryPrefix: true });
-  // window.location.replace("/");
 }
 
 // export async function postLogin1(params: PostLoginRequest): Promise<void> {
@@ -209,7 +196,10 @@ export async function register(params: LoginParams): Promise<any> {
   if (response.status !== 200) {
     throw response;
   }
-  return response;
+  const text = await response.text();
+  if (text) {
+    return JSON.parse(text);
+  }
 }
 
 export function logout(): Promise<any> {

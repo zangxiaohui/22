@@ -1,7 +1,8 @@
 import { Button, Col, Form, Input, Modal, Row } from "antd";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
+import { useSubmission } from "../../lib/hooks";
 import { register } from "../../services/login";
 import styles from "./index.module.scss";
 
@@ -14,63 +15,22 @@ interface CodeParams {
 
 const Register: React.FC = () => {
   const [form] = Form.useForm();
-  const [err, setErr] = useState<string>("");
   const history = useHistory();
+  const [doSubmit, submitting] = useSubmission();
 
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useLoginSMSToken();
 
-  const errorHandler = useCallback(
-    (e: Response | any, defaultDesc = "请填写正确的账号或手机号和密码。") => {
-      if (e.status === 403) {
-        // setErr('这个账户被禁用了。');
-        Modal.warning({
-          className: styles.modal,
-          content: (
-            <div style={{ width: 250 }}>
-              您的账号已禁用，请核实是否填写错误或联系管理员进行开通。
-            </div>
-          ),
-          icon: null,
-          okText: "关闭",
-          mask: false,
-        });
-      }
-      if (e.status === 423) {
-        // 跳转页面
-        // setErr('这个账户被冻结了。');
-        Modal.warning({
-          className: styles.modal,
-          content: (
-            <div style={{ width: 250 }}>
-              您的账号已冻结，请核实是否填写错误或联系管理员进行开通。
-            </div>
-          ),
-          icon: null,
-          okText: "关闭",
-          mask: false,
-        });
-        // history.push('/activate?back=true');
-      }
-      if (e.status === 401) {
-        setErr(defaultDesc);
-      }
-      return;
-    },
-    []
-  );
-
-  const onPassFinish = (values: any) => {
-    const { cellphone, password, code, ...rest } = values;
-    console.log(values);
-
-    register({
-      phone: cellphone,
-      // SMSCode: code,
-      pwd: password,
-      ...rest,
-    })
-      .then((res) => {
+  const onFinish = (values: any) => {
+    doSubmit(async () => {
+      const { cellphone, password, code, passwordRepeat, ...rest } = values;
+      const res = await register({
+        phone: cellphone,
+        // SMSCode: code,
+        pwd: password,
+        ...rest,
+      });
+      if (res?.state) {
         Modal.success({
           title: `注册成功！`,
           content: "请等待账号审核",
@@ -79,14 +39,18 @@ const Register: React.FC = () => {
             history.push("/client/login");
           },
         });
-      })
-      .catch((e) => {
-        errorHandler(e);
-      });
+      } else {
+        Modal.error({
+          title: res?.msg,
+          okText: "关闭",
+          width: 440,
+        });
+      }
+    });
   };
 
   return (
-    <Form layout="vertical" form={form} onFinish={onPassFinish}>
+    <Form layout="vertical" form={form} onFinish={onFinish}>
       <Row gutter={30}>
         <Col span={15} className={styles.colLeft}>
           <div className={styles.cardFormTitle}>个人信息</div>
@@ -115,11 +79,11 @@ const Register: React.FC = () => {
               <Col span={12}>
                 <Form.Item label="手机验证  *必填">
                   <Row gutter={8}>
-                    <Col span={12}>
+                    <Col span={13}>
                       <Form.Item
                         name="code"
                         noStyle
-                        rules={[{ required: true, message: "验证码不能为空" }]}
+                        // rules={[{ required: true, message: "验证码不能为空" }]}
                       >
                         <Input
                           allowClear
@@ -128,7 +92,7 @@ const Register: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={11}>
                       <Button
                         onClick={sendSMS}
                         // disabled={!canSendSMS}
@@ -136,6 +100,7 @@ const Register: React.FC = () => {
                         size="large"
                         type="primary"
                         className="btn-orange"
+                        style={{ paddingLeft: 0, paddingRight: 0, width: 120 }}
                       >
                         {smsSending
                           ? "发送中"
@@ -156,7 +121,11 @@ const Register: React.FC = () => {
                   name="password"
                   rules={[
                     { required: true, message: "密码不能为空" },
-                    { whitespace: true, message: "密码不能为空字符" },
+                    {
+                      pattern:
+                        /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{6,}$/,
+                      message: "密码不少于6位，需同时包含字母和数字",
+                    },
                   ]}
                 >
                   <Input.Password
@@ -250,6 +219,8 @@ const Register: React.FC = () => {
               type="primary"
               className="btn-orange"
               block
+              loading={submitting}
+              disabled={submitting}
             >
               注册
             </Button>

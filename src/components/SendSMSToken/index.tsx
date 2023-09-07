@@ -59,7 +59,7 @@ export function useSMSToken(): UseSMSTokenResult {
 }
 
 export function useLoginSMSToken(): UseSMSTokenResult {
-  const [cellphone, setCellphone] = useState<string>();
+  const [cellphone, setCellphone] = useState<string>("18051936783");
   const [smsCoolDown, setSmsCoolDown] = useState(0);
   const [smsSending, setSmsSending] = useState(false);
 
@@ -86,6 +86,7 @@ export function useLoginSMSToken(): UseSMSTokenResult {
     setSmsSending(true);
     try {
       const res = await sendLoginSMSToken(cellphone);
+      console.log("11111 :>> ", 11111);
       startCountdown(res.limit);
     } catch (e) {
       message.error(
