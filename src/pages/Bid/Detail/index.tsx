@@ -70,8 +70,9 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      const { Propm_CurPrice, Propm_StartPrice } = res?.data || {};
+      const { Propm_CurPrice, Propm_StartPrice, MyPrice } = res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
+      setMyPrice(MyPrice);
     });
   }, [id, x]);
 
