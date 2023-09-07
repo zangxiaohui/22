@@ -72,17 +72,20 @@ export function getVerifyCellphoneToken(
 }
 
 export interface forgotResetPasswordRequest {
-  cellphone: string;
-  newPassword: string;
-  token: string;
+  phone: string;
+  pwd: string;
+  UserName: string;
+  SMSCode: string;
 }
 
 export function forgotResetPassword(
   request: forgotResetPasswordRequest
-): Promise<void> {
-  return fetch("/api/selfmgmt/forgetpassword", {
+): Promise<any> {
+  return fetch("/CusApi/ComData/userforgetpdg", {
     method: "POST",
-    body: JSON.stringify(request),
+    body: qs.stringify({
+      ...request,
+    }),
   });
 }
 

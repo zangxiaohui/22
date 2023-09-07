@@ -19,7 +19,6 @@ import DeliveryDetail from "./pages/MyBid/DeliveryDetail";
 import Product from "./pages/Product";
 import ProductDetail from "./pages/Product/Detail";
 import Register from "./pages/Register";
-import RegisterResult from "./pages/RegisterResult";
 import ResetPassword from "./pages/ResetPassword";
 
 const App: React.FC = () => {
@@ -32,14 +31,9 @@ const App: React.FC = () => {
               <Route path="/client/login" exact component={Login} />
               <Route path="/client/register" exact component={Register} />
               <Route
-                path="/client/register-result"
-                exact
-                component={ResetPassword}
-              />
-              <Route
                 path="/client/forgot-password"
                 exact
-                component={RegisterResult}
+                component={ResetPassword}
               />
               <BasicLayout>
                 <Switch>

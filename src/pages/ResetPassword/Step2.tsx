@@ -1,7 +1,7 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useSubmission } from "../../lib/hooks";
-import { gotoReferrerByQueryParam } from "../../lib/util";
 import { forgotResetPassword } from "../../services/login";
 import { ResetPasswordStep1Result } from "./Step1";
 
@@ -15,18 +15,32 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
   const { prevStepResult } = props;
   const [form] = useForm();
   const [doSubmit, submitting] = useSubmission();
+  const history = useHistory();
 
   const submit = async (values: any): Promise<void> => {
     await doSubmit(async () => {
-      await forgotResetPassword({
-        cellphone: prevStepResult.cellphone,
-        token: prevStepResult.token,
-        newPassword: values.newPassword,
+      const res = await forgotResetPassword({
+        phone: prevStepResult.cellphone,
+        UserName: prevStepResult.userName,
+        SMSCode: prevStepResult.token,
+        pwd: values.newPassword,
       });
-      await gotoReferrerByQueryParam(
-        "密码重置成功，正在跳转回原页面",
-        "密码重置成功，请关闭此窗口并重新登录"
-      );
+      if (res?.state) {
+        Modal.success({
+          title: `注册成功！`,
+          content: "请等待账号审核",
+          okText: "返回登录",
+          onOk() {
+            history.push("/client/login");
+          },
+        });
+      } else {
+        Modal.error({
+          title: res?.msg,
+          okText: "关闭",
+          width: 440,
+        });
+      }
     });
   };
 
@@ -47,12 +61,14 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
         rules={[
           { required: true, message: "请输入新密码" },
           {
-            pattern: /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{8,}$/,
+            pattern: /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{6,}$/,
             message: "密码不少于8位，需同时包含字母和数字",
           },
         ]}
       >
         <Input
+          allowClear
+          size="large"
           type="password"
           autoComplete="new-password"
           placeholder="请输入新密码"
@@ -78,6 +94,8 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
         ]}
       >
         <Input
+          allowClear
+          size="large"
           type="password"
           autoComplete="new-password"
           placeholder="确认密码"
@@ -87,8 +105,9 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
         htmlType="submit"
         type="primary"
         block
-        disabled={submitting || !allFieldsComplete}
+        // disabled={submitting || !allFieldsComplete}
         loading={submitting}
+        size="large"
       >
         提交
       </Button>

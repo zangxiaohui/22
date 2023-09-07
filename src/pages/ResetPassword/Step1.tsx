@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 // import styles from "./index.module.scss";
 import { useSMSToken } from "../../components/SendSMSToken";
 import { useSubmission } from "../../lib/hooks";
-import { getVerifyCellphoneToken } from "../../services/login";
 
 const { useForm } = Form;
 
@@ -14,6 +13,7 @@ export interface ResetPasswordStep1Props {
 export interface ResetPasswordStep1Result {
   cellphone: string;
   token: string;
+  userName: string;
 }
 
 const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
@@ -24,15 +24,18 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
     useSMSToken();
 
   const submit = async (values: any): Promise<void> => {
+    const userName: string = values.cellphone;
     const cellphone: string = values.cellphone;
     const code: string = values.code;
-    const response = await doSubmit(() =>
-      getVerifyCellphoneToken(cellphone, code)
-    );
-    if (!response) return;
+    // const response = await doSubmit(() =>
+    //   getVerifyCellphoneToken(cellphone, code)
+    // );
+    // if (!response) return;
     onStepFinish({
       cellphone: cellphone,
-      token: response.token,
+      // token: response.token,
+      token: "zxy",
+      userName,
     });
   };
 
@@ -49,6 +52,13 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
       onValuesChange={updateFormComplete}
     >
       <Form.Item
+        name="userName"
+        rules={[{ required: true, message: "账号不能为空" }]}
+      >
+        <Input allowClear size="large" placeholder="请输入账号" />
+      </Form.Item>
+
+      <Form.Item
         name="cellphone"
         rules={[
           { required: true, message: "手机号码不能为空" },
@@ -56,6 +66,8 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
         ]}
       >
         <Input
+          allowClear
+          size="large"
           placeholder="请输入手机号"
           autoComplete="tel"
           onChange={(e) => setCellphone(e.target.value)}
@@ -72,7 +84,12 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
                 { whitespace: true, message: "验证码不能为空字符" },
               ]}
             >
-              <Input placeholder="请输入验证码" autoComplete="one-time-code" />
+              <Input
+                placeholder="请输入验证码"
+                autoComplete="one-time-code"
+                allowClear
+                size="large"
+              />
             </Form.Item>
           </Col>
           <Col span={5} offset={1}>
@@ -81,6 +98,7 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
               onClick={sendSMS}
               disabled={!canSendSMS}
               loading={smsSending}
+              size="large"
             >
               {smsSending
                 ? "发送中"
@@ -96,8 +114,9 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
         htmlType="submit"
         type="primary"
         block
-        disabled={submitting || !allFieldsComplete}
+        // disabled={submitting || !allFieldsComplete}
         loading={submitting}
+        size="large"
       >
         提交
       </Button>
