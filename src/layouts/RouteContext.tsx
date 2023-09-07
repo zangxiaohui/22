@@ -30,6 +30,7 @@ export type RouteContextType = {
     Name?: string;
     Nsrsbh?: string;
     XqCateIds?: string;
+    YyzzImage?: string;
   };
 } & Partial<PureSettings>;
 

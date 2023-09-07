@@ -61,16 +61,20 @@ const CompanyInfo: React.FC = () => {
 
   useEffect(() => {
     if (currentCompany) {
-      const { XqCateIds } = currentCompany;
+      const { XqCateIds, YyzzImage } = currentCompany;
       form.setFieldsValue({
         ...currentCompany,
         XqCateIds: XqCateIds ? XqCateIds?.split(",") : [],
+        YyzzImage: YyzzImage ? [YyzzImage] : [],
       });
     }
   }, [currentCompany, form]);
 
   const onFinish = async (values: any) => {
     const { YyzzImage, XqCateIds, ...rest } = values;
+
+    console.log("YyzzImage :>> ", YyzzImage);
+
     const res = await updateCompany({
       ...rest,
       XqCateIds: XqCateIds?.join(","),
