@@ -1,19 +1,17 @@
 import { Button, Checkbox, Col, Form, Input, Modal, Row } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import captcha from "../../assets/images/captcha.svg";
 import lock from "../../assets/images/lock.svg";
 import user from "../../assets/images/user.svg";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
 import { LoginParams, getToken, login } from "../../services/login";
-
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
 
 const rememberUserNamekey = "cas-login:rememberUserName";
 const userNameKey = "cas-login:username";
-
-const commonPhoneRegex = /^(?:1\d{10}|0\d{2,3}-?\d{7,8})$/;
 
 export const serverPath = "http://baichuanpm.test.wxliebao.com:88";
 
@@ -24,7 +22,6 @@ interface CodeParams {
 
 const Login: React.FC = () => {
   const [form] = useForm();
-  const [formCode] = useForm();
   const [userName, setUserName] = useState<string>("");
   const [captchaSrc, setCaptchaSrc] = useState<string>("");
   const [uid, setUid] = useState<string>("");
@@ -62,9 +59,9 @@ const Login: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // form.setFieldsValue({
-    //   username: userName,
-    // });
+    form.setFieldsValue({
+      username: userName,
+    });
   }, [form, userName]);
 
   const errorHandler = useCallback(
@@ -107,17 +104,17 @@ const Login: React.FC = () => {
     []
   );
 
-  const onPassFinish = (values: LoginParams) => {
+  const onFinish = (values: LoginParams) => {
     // window.location.replace("/dashboard");
     // setAuthority("admin");
 
-    // if (remeber) {
-    //   localStorage.setItem(rememberUserNamekey, "true");
-    //   localStorage.setItem(userNameKey, values.username);
-    // } else {
-    //   localStorage.setItem(rememberUserNamekey, "false");
-    //   localStorage.removeItem(userNameKey);
-    // }
+    if (remeber) {
+      localStorage.setItem(rememberUserNamekey, "true");
+      localStorage.setItem(userNameKey, values.username);
+    } else {
+      localStorage.setItem(rememberUserNamekey, "false");
+      localStorage.removeItem(userNameKey);
+    }
 
     login({
       ...values,
@@ -143,18 +140,13 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Form
-      form={form}
-      onFinish={onPassFinish}
-      initialValues={{
-        username: "BC230002-001",
-      }}
-    >
+    <Form form={form} onFinish={onFinish}>
       <Form.Item
         name="username"
         rules={[{ required: true, message: "用户名不能为空" }]}
       >
         <Input
+          allowClear
           placeholder="请填写用户名"
           size="large"
           prefix={<img src={user} className="basic-form-prefix-icon" alt="" />}
@@ -165,6 +157,7 @@ const Login: React.FC = () => {
         rules={[{ required: true, message: "密码不能为空" }]}
       >
         <Input.Password
+          allowClear
           placeholder="请填写登录密码"
           size="large"
           prefix={<img src={lock} className="basic-form-prefix-icon" alt="" />}
@@ -179,10 +172,15 @@ const Login: React.FC = () => {
               rules={[{ required: true, message: "验证码不能为空" }]}
             >
               <Input
+                allowClear
                 placeholder="请填写右侧验证码"
                 size="large"
                 prefix={
-                  <img src={lock} className="basic-form-prefix-icon" alt="" />
+                  <img
+                    src={captcha}
+                    className="basic-form-prefix-icon"
+                    alt=""
+                  />
                 }
               />
             </Form.Item>
@@ -206,7 +204,7 @@ const Login: React.FC = () => {
         >
           记住账号
         </Checkbox>
-        <Link to="/forgot-password?back=true">忘记密码？</Link>
+        <Link to="/client/forgot-password">忘记密码？</Link>
       </div>
 
       <Row gutter={10} className={styles.btnArea}>

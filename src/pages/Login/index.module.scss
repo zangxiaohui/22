@@ -150,16 +150,11 @@
         line-height: 22px;
       }
     }
-    .carFormBody {
-      .checkboxWrapper {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        margin-bottom: 20px;
-      }
-      .button {
-        width: 100%;
-      }
+    .checkboxWrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
   }
 }
