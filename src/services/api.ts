@@ -1,3 +1,4 @@
+import qs from "qs";
 import { fetch } from "../lib/fetch";
 export interface PagedRequest {
   pagesize?: number;
@@ -21,5 +22,27 @@ export function getContactInfo(): Promise<any> {
 export function getProductCategory(): Promise<any> {
   return fetch(`/CusApi/ComData/xpcate`, {
     method: "POST",
+  });
+}
+
+interface GetProductListRequest extends PagedRequest {
+  cateid: string;
+}
+
+export function getProductList(params: GetProductListRequest): Promise<any> {
+  return fetch(`/CusApi/ComData/xpprolist`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
+  });
+}
+
+export function getProductDetail(params: { Id: string }): Promise<any> {
+  return fetch(`/CusApi/ComData/xpprodetails`, {
+    method: "POST",
+    body: qs.stringify({
+      ...params,
+    }),
   });
 }
