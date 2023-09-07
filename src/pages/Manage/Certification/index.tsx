@@ -96,7 +96,6 @@ const Certification: React.FC = () => {
           >
             <AttachmentUpload
               btnType="primary"
-              btnSize="large"
               maxSize={10}
               max={1}
               accept=".jpg,.jpeg,.png,.gif,.pdf"

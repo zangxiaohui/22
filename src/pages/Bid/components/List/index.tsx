@@ -2,6 +2,7 @@ import { Button, Card, List } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Paging, usePaging } from "../../../../components";
 import PageContainer from "../../../../components/PageContainer";
 import {
   BidType,
@@ -33,17 +34,22 @@ const BidList: React.FC<BidListProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
+  const pagingInfo = usePaging(2);
+  const { pageOffset, pageSize, setTotalCount } = pagingInfo;
+
   useEffect(() => {
     setLoading(true);
     getBidList({
       state: type,
-      pagesize: 10,
-      page: 1,
-    }).then((res) => {
-      setLoading(false);
-      setData(res?.data);
-    });
-  }, [type]);
+      pagesize: pageSize,
+      page: pageOffset,
+    })
+      .then((res) => {
+        setData(res?.data);
+        setTotalCount(res?.total);
+      })
+      .finally(() => setLoading(false));
+  }, [type, pageSize, pageOffset, setTotalCount]);
 
   return (
     <PageContainer routes={routes} className="bid">
@@ -121,6 +127,7 @@ const BidList: React.FC<BidListProps> = (props) => {
           </List.Item>
         )}
       />
+      <Paging pagingInfo={pagingInfo} />
     </PageContainer>
   );
 };
