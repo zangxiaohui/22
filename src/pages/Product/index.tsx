@@ -45,15 +45,8 @@ const Product: React.FC = () => {
     <PageContainer routes={routes} loading={loading} className="product-page">
       <div>
         <List
-          grid={{
-            gutter: 20,
-            xs: 1,
-            sm: 2,
-            md: 4,
-            lg: 4,
-            xl: 4,
-            xxl: 6,
-          }}
+          className="product-list"
+          grid={{ gutter: 20, column: 4 }}
           dataSource={data}
           renderItem={(item) => (
             <List.Item>
@@ -64,7 +57,7 @@ const Product: React.FC = () => {
                 hoverable
                 cover={<img alt="" src={item.Image} />}
               >
-                <Card.Meta title={item.Title} description={item.Con} />
+                <Card.Meta title={item.CateName} description={item.Title} />
               </Card>
             </List.Item>
           )}

@@ -1,3 +1,4 @@
+import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
@@ -32,14 +33,29 @@ const Product: React.FC = () => {
   }, [id]);
 
   return (
-    <PageContainer routes={routes} loading={loading}>
-      <div>{data?.Title}</div>
-
-      <div
-        className="content"
-        style={{ minHeight: 400 }}
-        dangerouslySetInnerHTML={{ __html: data?.Con }}
-      ></div>
+    <PageContainer
+      routes={routes}
+      loading={loading}
+      className="product-detail-page"
+    >
+      <Row>
+        <Col flex="537px" style={{ paddingTop: 50 }}>
+          <div className="product-detail-col-left">
+            <img alt="" src={data?.Image} className="product-img" />
+            <div dangerouslySetInnerHTML={{ __html: data?.Con }}></div>
+          </div>
+        </Col>
+        <Col flex="auto">
+          <div className="product-detail-col-right">
+            <div className="sub-title">{data?.CateName || "类别"}</div>
+            <div className="title">{data?.Title}</div>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: data?.Con }}
+            ></div>
+          </div>
+        </Col>
+      </Row>
     </PageContainer>
   );
 };
