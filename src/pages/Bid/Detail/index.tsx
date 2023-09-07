@@ -266,13 +266,17 @@ const BidDetail: React.FC = () => {
       >
         <div className="mod">
           <div className="mod-hd">
-            <div>{currentUser?.Name}，您好！</div>
+            <div>{currentUser?.RealName}，您好！</div>
             <div>您将代表{currentCompany?.Name}提交的竞价为：</div>
           </div>
           <div className="mod-bd">
-            <div>产品名 {data?.Propm_Title}</div>
-            <Statistic title="出　价" value={bidPrice} prefix="¥" />
-            <div></div>
+            <Statistic title="产品名" value={data?.Propm_Title} />
+            <Statistic
+              title="出&nbsp;&nbsp;&nbsp;&nbsp;价"
+              value={bidPrice}
+              prefix="¥"
+              className="red"
+            />
           </div>
           <div className="mod-ft">
             <Button

@@ -43,6 +43,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
     {
       title: "出价记录",
       dataIndex: "PropmBjLog_Price",
+      render: (text: number) => <Statistic value={text} prefix="¥" />,
     },
     {
       title: "出价时间",
@@ -72,6 +73,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
         className="history-my-price"
       />
       <Table
+        className="history-table"
         loading={historyLoading}
         dataSource={historyData}
         columns={columns}
