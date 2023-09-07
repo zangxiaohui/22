@@ -1,9 +1,9 @@
-import { Modal, Table } from "antd";
+import { Modal, Statistic, Table } from "antd";
 import moment from "moment";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Paging, usePaging } from "../../../../components";
+import { usePaging } from "../../../../components";
 import { getBidHistory } from "../../../../services/bid";
 import "./index.less";
 
@@ -20,7 +20,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
   const [historyLoading, setHistoryLoading] = useState<boolean>(false);
   const [historyData, setHistoryData] = useState<any[]>();
 
-  const pagingInfo = usePaging();
+  const pagingInfo = usePaging(100);
   const { pageOffset, pageSize, setTotalCount } = pagingInfo;
 
   useEffect(() => {
@@ -57,17 +57,20 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
 
   return (
     <Modal
+      wrapClassName="modal-wrap"
       destroyOnClose
-      title={`${companyName} 历史出价记录`}
+      title={`${companyName ?? ""} 历史出价记录`}
       width={692}
-      wrapClassName="mailInvitationModal"
       open={visible}
       footer={null}
       onCancel={onCancel}
     >
-      <div>
-        我司的当前出价为 <strong>¥{myPrice}</strong>
-      </div>
+      <Statistic
+        title="我司的当前出价为"
+        value={myPrice}
+        prefix="¥"
+        className="history-my-price"
+      />
       <Table
         loading={historyLoading}
         dataSource={historyData}
@@ -75,7 +78,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
         pagination={false}
         size="small"
       />
-      <Paging pagingInfo={pagingInfo} size="small" />
+      {/* <Paging pagingInfo={pagingInfo} /> */}
     </Modal>
   );
 };
