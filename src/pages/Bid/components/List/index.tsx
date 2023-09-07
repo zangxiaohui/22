@@ -34,7 +34,7 @@ const BidList: React.FC<BidListProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 
-  const pagingInfo = usePaging(2);
+  const pagingInfo = usePaging();
   const { pageOffset, pageSize, setTotalCount } = pagingInfo;
 
   useEffect(() => {

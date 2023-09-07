@@ -3,7 +3,6 @@ import {
   Row as AntRow,
   Button,
   Col,
-  Descriptions,
   Form,
   InputNumber,
   Modal,
@@ -210,18 +209,38 @@ const BidDetail: React.FC = () => {
         )}
 
         <Col flex="auto">
-          <Descriptions column={2} className="details-area">
-            <Descriptions.Item label="我司出价">￥{myPrice}</Descriptions.Item>
-            <Descriptions.Item label="加价幅度">
-              ￥{data?.Propm_StepPrice}
-            </Descriptions.Item>
-            <Descriptions.Item label="起拍价">
-              ￥{data?.Propm_StartPrice}
-            </Descriptions.Item>
-          </Descriptions>
-          <Button type="link" onClick={viewHistory}>
-            我司历史出价记录
-          </Button>
+          <div className="bid-info">
+            <AntRow gutter={16}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <Statistic
+                  title="我司出价"
+                  value={myPrice}
+                  prefix="¥"
+                  className="my-price"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <Statistic
+                  title="加价幅度"
+                  value={data?.Propm_StepPrice}
+                  prefix="¥"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <Statistic
+                  title="起拍价"
+                  value={data?.Propm_StartPrice}
+                  prefix="¥"
+                  className="start-price"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <a onClick={viewHistory} className="view-history-btn">
+                  我司历史出价记录
+                </a>
+              </Col>
+            </AntRow>
+          </div>
         </Col>
       </AntRow>
       <Tabs
