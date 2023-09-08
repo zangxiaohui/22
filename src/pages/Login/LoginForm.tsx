@@ -122,11 +122,16 @@ const Login: React.FC = () => {
     })
       .then((res: any) => {
         if (res.state) {
-          const { openid, curtoken } = res?.data || {};
+          const { openid, curtoken, ismain, companystate, userstate } =
+            res?.data || {};
           localStorage.setItem("baichuan_openid", openid);
           localStorage.setItem("baichuan_curtoken", curtoken);
+          if (ismain && !companystate && !userstate) {
+            history.push("/client/account/manage-company");
+          } else {
+            history.push("/client/home");
+          }
           // setAuthority("admin");
-          history.push("/client/home");
         } else {
           Modal.error({
             content: <div style={{ width: 250 }}>{res.msg}</div>,
