@@ -2,6 +2,7 @@ import {
   Button,
   Col,
   DatePicker,
+  Divider,
   Form,
   Input,
   Modal,
@@ -9,6 +10,7 @@ import {
   message,
 } from "antd";
 import layout from "antd/lib/layout";
+import { isNil } from "lodash-es";
 import moment from "moment";
 import React from "react";
 import { postDelivery } from "../../../services/bid";
@@ -64,7 +66,14 @@ const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
       footer={null}
     >
       <div className="mod">
-        <div className="mod-hd">产品名称：{formData?.productTitle}</div>
+        <div className="mod-hd">
+          产品名称：
+          <div>
+            {formData?.productTitle}
+            {!isNil(formData?.productCount) && <Divider type="vertical" />}
+            <span>{formData?.productCount}</span>
+          </div>
+        </div>
         <div className="mod-bd">
           <div className="mod-bd-title">提货信息</div>
           <div className="mod-form">

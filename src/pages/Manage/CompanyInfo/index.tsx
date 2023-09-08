@@ -17,6 +17,7 @@ import PageLoading from "../../../components/PageLoading";
 import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
 import { useAsync } from "../../../lib/hooks";
 import { getTreeData, updateCompany } from "../../../services/company";
+import { getUserInfo } from "../../../utils/utils";
 import "./index.less";
 
 const { useForm } = Form;
@@ -94,10 +95,7 @@ const CompanyInfo: React.FC = () => {
     return <PageLoading />;
   }
 
-  const infoString = localStorage.getItem("baichuan_info");
-  const infoObj = infoString ? JSON.parse(infoString) : {};
-  const { ismain: isMain, companystate: companyStatus } = infoObj;
-
+  const { isMain, companyStatus } = getUserInfo();
   return (
     <div className="company-info">
       <div className="company-info-hd">

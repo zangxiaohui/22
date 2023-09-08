@@ -3,6 +3,7 @@ import {
   Row as AntRow,
   Button,
   Col,
+  Divider,
   Form,
   InputNumber,
   Modal,
@@ -128,7 +129,13 @@ const BidDetail: React.FC = () => {
   return (
     <PageContainer routes={routes} loading={loading || !data}>
       <div className="bid-row1">
-        <h1>{data?.Propm_Title}</h1>
+        <h1>
+          <div>
+            {data?.Propm_Title}
+            {!isNil(data?.Propm_Count) && <Divider type="vertical" />}
+            <span>{data?.Propm_Count}</span>
+          </div>
+        </h1>
         <div className="statistic-wrap">
           <Countdown
             title="距结束"

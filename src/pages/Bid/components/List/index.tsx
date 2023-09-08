@@ -1,4 +1,5 @@
-import { Button, Card, List } from "antd";
+import { Button, Card, Divider, List } from "antd";
+import { isNil } from "lodash-es";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -61,7 +62,13 @@ const BidList: React.FC<BidListProps> = (props) => {
           <List.Item>
             <Link to={`/client/bid/detail/${item?.Propm_Id}`}>
               <Card
-                title={item?.Propm_Title}
+                title={
+                  <div>
+                    {item?.Propm_Title}
+                    {!isNil(item?.Propm_Count) && <Divider type="vertical" />}
+                    <span>{item?.Propm_Count}</span>
+                  </div>
+                }
                 className="bid-card"
                 hoverable
                 bordered={false}

@@ -1,5 +1,6 @@
-import { Badge, Statistic } from "antd";
+import { Badge, Divider, Statistic } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { isNil } from "lodash-es";
 import moment from "moment";
 import { BidType, BidTypeMap } from "../../services/bid";
 
@@ -8,6 +9,15 @@ export const columns: ColumnsType<any> = [
     title: "名称",
     dataIndex: "Propm_Title",
     key: "Propm_Title",
+    render: (_, record: any) => {
+      return (
+        <div>
+          {record?.Propm_Title}
+          {!isNil(record?.Propm_Count) && <Divider type="vertical" />}
+          <span>{record?.Propm_Count}</span>
+        </div>
+      );
+    },
   },
   {
     title: "价格",

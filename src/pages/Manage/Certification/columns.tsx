@@ -1,4 +1,3 @@
-import { PictureOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { serverPath } from "../../Login/LoginForm";
 
@@ -12,13 +11,14 @@ export const columns: ColumnsType<any> = [
     title: "查看证书",
     dataIndex: "CusFile_LocalPath",
     key: "CusFile_LocalPath",
-    render: (text) => {
+    render: (text, record) => {
       return (
         <div
           style={{ cursor: "pointer" }}
           onClick={() => window.open(`${serverPath}${text}`)}
         >
-          <PictureOutlined style={{ fontSize: 30, color: "#2a598f" }} />
+          {record?.CusFile_FileType}
+          {/* <PictureOutlined style={{ fontSize: 30, color: "#2a598f" }} /> */}
         </div>
       );
     },

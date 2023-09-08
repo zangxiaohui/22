@@ -70,3 +70,13 @@ export const isUrl = (path: string): boolean => {
 };
 
 export const childrenPropsName = "routes";
+
+export function getUserInfo() {
+  const infoString = localStorage.getItem("baichuan_info");
+  const infoObj = infoString ? JSON.parse(infoString) : {};
+  const { ismain: isMain, companystate: companyStatus } = infoObj;
+  return {
+    isMain,
+    companyStatus,
+  };
+}

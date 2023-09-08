@@ -78,6 +78,7 @@ const MyBid: React.FC<MyBidProps> = () => {
     {
       title: "操作",
       key: "action",
+      width: 200,
       render: (_, record) => (
         <div className="my-bid-action">
           {record.State === BidType.PROCESSING && (
@@ -95,6 +96,7 @@ const MyBid: React.FC<MyBidProps> = () => {
                   setVisible(true);
                   setFormData({
                     productTitle: record.Propm_Title,
+                    productCount: record.Propm_Count,
                     id: record.Propm_Id,
                   });
                 }}

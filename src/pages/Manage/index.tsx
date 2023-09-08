@@ -1,6 +1,7 @@
 import { Tabs } from "antd";
 import React, { useState } from "react";
 import PageContainer from "../../components/PageContainer";
+import { getUserInfo } from "../../utils/utils";
 import OtherCertification from "./Certification";
 import CompanyInfo from "./CompanyInfo";
 import OtherContact from "./Contact";
@@ -12,28 +13,31 @@ export enum CompanyManageType {
   OTHER_CONTACT = 2,
 }
 
-const items: any[] = [
-  {
-    label: "企业信息管理",
-    key: CompanyManageType.COMPANY_INFO,
-    children: <CompanyInfo />,
-  },
-  {
-    label: "其他资质管理",
-    key: CompanyManageType.OTHER_CERTIFICATION,
-    children: <OtherCertification />,
-  },
-  {
-    label: "其他联系人审核",
-    key: CompanyManageType.OTHER_CONTACT,
-    children: <OtherContact />,
-  },
-];
-
 const Company: React.FC = () => {
+  const { isMain, companyStatus } = getUserInfo();
   const [tabActiveKey, setTabActiveKey] = useState<CompanyManageType>(
     CompanyManageType.COMPANY_INFO
   );
+
+  const items: any[] = [
+    {
+      label: "企业信息管理",
+      key: CompanyManageType.COMPANY_INFO,
+      children: <CompanyInfo />,
+    },
+    {
+      label: "其他资质管理",
+      key: CompanyManageType.OTHER_CERTIFICATION,
+      children: <OtherCertification />,
+    },
+  ];
+  if (isMain) {
+    items.push({
+      label: "其他联系人审核",
+      key: CompanyManageType.OTHER_CONTACT,
+      children: <OtherContact />,
+    });
+  }
 
   const onTabChange = (key: string) => {
     setTabActiveKey(key as any);
