@@ -1,7 +1,6 @@
 import { Button, Form, Input, message, Modal } from "antd";
 import React from "react";
 import { updatePwd } from "../../services/user";
-import { layout, tailLayout } from "../EditProfile";
 
 const { useForm } = Form;
 
@@ -25,13 +24,13 @@ const ModifyPassword: React.FC = () => {
   };
 
   return (
-    <Form {...layout} form={form} onFinish={submit}>
+    <Form form={form} onFinish={submit}>
       <Form.Item
         label="原密码"
         name="pwd1"
         rules={[{ required: true, message: "请输入原密码" }]}
       >
-        <Input.Password placeholder="请输入原密码" />
+        <Input.Password placeholder="请输入原密码" allowClear size="large" />
       </Form.Item>
 
       <Form.Item
@@ -39,14 +38,13 @@ const ModifyPassword: React.FC = () => {
         name="newPassword"
         rules={[
           { required: true, message: "请输入新密码" },
-          // {
-          //   pattern:
-          //     /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{8,}$/,
-          //   message: "密码不少于8位，需同时包含字母和数字",
-          // },
+          {
+            pattern: /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{6,}$/,
+            message: "密码不少于6位，需同时包含字母和数字",
+          },
         ]}
       >
-        <Input.Password placeholder="请输入新密码" />
+        <Input.Password placeholder="请输入新密码" allowClear size="large" />
       </Form.Item>
       <Form.Item
         label="确认新密码"
@@ -68,10 +66,10 @@ const ModifyPassword: React.FC = () => {
           },
         ]}
       >
-        <Input.Password placeholder="确认密码" />
+        <Input.Password placeholder="确认密码" allowClear size="large" />
       </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button htmlType="submit" type="primary" block>
+      <Form.Item className="btn-area">
+        <Button htmlType="submit" type="primary" block size="large">
           修改
         </Button>
       </Form.Item>

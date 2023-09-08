@@ -156,6 +156,7 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
               type={btnType as any}
               icon={<UploadOutlined />}
               className={classNames("upload-btn", className)}
+              size="large"
             >
               点击上传
             </Button>

@@ -1,11 +1,11 @@
-import { Button, Col, Form, Input, Modal, Row, message } from "antd";
+import { Button, Card, Col, Form, Input, Modal, Row, message } from "antd";
 import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import { useCurrentCompany, useSelf } from "../../layouts/RouteContext";
 import { useBeforeUnload } from "../../lib/hooks";
 import { updateCurrentUser } from "../../services/user";
 import ModifyPassword from "../ModifyPassword";
-import styles from "./index.module.scss";
+import "./index.less";
 
 const { useForm } = Form;
 
@@ -68,17 +68,12 @@ const EditProfile: React.FC = () => {
   ];
 
   return (
-    <PageContainer routes={routes}>
-      <div
-        className={styles.wrapper}
-        style={{ height: 1500, overflowY: "auto" }}
-      >
+    <PageContainer routes={routes} className="profile-page">
+      <div className="profile-mod">
         <Row gutter={16}>
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <h1 className={styles.title}>信息管理</h1>
-            <div className={styles.formWrapper}>
+            <Card title="信息管理" className="profile-card" bordered={false}>
               <Form
-                {...layout}
                 form={form}
                 onFinish={onFinish}
                 onValuesChange={() => setModified(true)}
@@ -88,37 +83,53 @@ const EditProfile: React.FC = () => {
                   name="Name"
                   rules={[{ required: true, message: "个人编号不能为空" }]}
                 >
-                  <Input placeholder="请输入" autoComplete="name" disabled />
+                  <Input
+                    placeholder="请输入"
+                    autoComplete="name"
+                    disabled
+                    allowClear
+                    size="large"
+                  />
                 </Form.Item>
                 <Form.Item
                   label="姓名"
                   name="RealName"
                   rules={[{ required: true, message: "姓名不能为空" }]}
                 >
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入" allowClear size="large" />
                 </Form.Item>
                 <Form.Item
                   label="公司"
                   name="Con"
                   rules={[{ required: true, message: "公司不能为空" }]}
                 >
-                  <Input placeholder="请输入" disabled />
+                  <Input
+                    placeholder="请输入"
+                    disabled
+                    allowClear
+                    size="large"
+                  />
                 </Form.Item>
                 <Form.Item
                   label="电话"
                   name="Phone"
                   rules={[{ required: true, message: "电话不能为空" }]}
                 >
-                  <Input placeholder="请输入" disabled />
+                  <Input
+                    placeholder="请输入"
+                    disabled
+                    allowClear
+                    size="large"
+                  />
                 </Form.Item>
                 <Form.Item label="邮箱" name="Email">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入" allowClear size="large" />
                 </Form.Item>
                 <Form.Item label="地址" name="Address">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入" allowClear size="large" />
                 </Form.Item>
-                <Form.Item {...tailLayout}>
-                  <Button htmlType="submit" type="primary" block>
+                <Form.Item className="btn-area">
+                  <Button htmlType="submit" type="primary" block size="large">
                     修改
                   </Button>
                 </Form.Item>
@@ -133,11 +144,12 @@ const EditProfile: React.FC = () => {
                 <Input placeholder="请输入联系人电话" autoComplete="tel" />
               </Form.Item> */}
               </Form>
-            </div>
+            </Card>
           </Col>
           <Col xs={24} sm={24} md={12}>
-            <h1 className={styles.title}>密码管理</h1>
-            <ModifyPassword />
+            <Card title="密码管理" className="profile-card" bordered={false}>
+              <ModifyPassword />
+            </Card>
           </Col>
         </Row>
       </div>

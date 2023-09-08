@@ -134,28 +134,28 @@ const CompanyInfo: React.FC = () => {
                 name="Name"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" disabled />
+                <Input placeholder="请输入" disabled allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="法人代表"
                 name="Frdb"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="公司地址"
                 name="Address"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="注册资金"
                 name="Zczj"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
@@ -177,7 +177,7 @@ const CompanyInfo: React.FC = () => {
                 name="Gsxz"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="需求类别"
@@ -189,6 +189,8 @@ const CompanyInfo: React.FC = () => {
                   treeData={treeData}
                   placeholder="请选择"
                   listHeight={300}
+                  allowClear
+                  size="large"
                 />
               </Form.Item>
             </Col>
@@ -199,28 +201,28 @@ const CompanyInfo: React.FC = () => {
                 name="Nsrsbh"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" disabled />
+                <Input placeholder="请输入" disabled allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="开户行"
                 name="BankName"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="银行账号"
                 name="BankNo"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
               <Form.Item
                 label="电话"
                 name="FpTel"
                 rules={[{ required: true, message: "不能为空" }]}
               >
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入" allowClear size="large" />
               </Form.Item>
             </Col>
           </Row>

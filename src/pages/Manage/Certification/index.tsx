@@ -88,7 +88,7 @@ const Certification: React.FC = () => {
         <h2>新增其他资质</h2>
         <Form layout="inline" form={form} onValuesChange={onValuesChange}>
           <Form.Item label="资质名称" name="filename">
-            <Input placeholder="请填写资质名称" size="large" />
+            <Input placeholder="请填写资质名称" size="large" allowClear />
           </Form.Item>
           <Form.Item
             name="fileurl"
