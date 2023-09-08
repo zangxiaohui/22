@@ -4,6 +4,13 @@ import { useHistory } from "react-router-dom";
 import { useLoginSMSToken } from "../../components/SendSMSToken";
 import { useSubmission } from "../../lib/hooks";
 import { register } from "../../services/login";
+
+import mail from "../../assets/images/icons/envelope.svg";
+import home from "../../assets/images/icons/home.svg";
+import mobile from "../../assets/images/icons/mobile.svg";
+import lock from "../../assets/images/icons/pwd.svg";
+import user from "../../assets/images/icons/user.svg";
+
 import styles from "./index.module.scss";
 
 const commonPhoneRegex = /^(?:1\d{10}|0\d{2,3}-?\d{7,8})$/;
@@ -52,7 +59,7 @@ const Register: React.FC = () => {
   return (
     <Form layout="vertical" form={form} onFinish={onFinish}>
       <Row gutter={30}>
-        <Col span={15} className={styles.colLeft}>
+        <Col span={16} className={styles.colLeft}>
           <div className={styles.cardFormTitle}>个人信息</div>
           <div className={styles.cardFormBody}>
             <Row gutter={30}>
@@ -73,6 +80,13 @@ const Register: React.FC = () => {
                     placeholder="请填写手机号"
                     size="large"
                     onChange={(e) => setCellphone(e.target.value)}
+                    prefix={
+                      <img
+                        src={mobile}
+                        className="basic-form-prefix-icon"
+                        alt=""
+                      />
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -89,6 +103,13 @@ const Register: React.FC = () => {
                           allowClear
                           placeholder="请填写验证码"
                           size="large"
+                          prefix={
+                            <img
+                              src={lock}
+                              className="basic-form-prefix-icon"
+                              alt=""
+                            />
+                          }
                         />
                       </Form.Item>
                     </Col>
@@ -132,6 +153,13 @@ const Register: React.FC = () => {
                     placeholder="请填写登录密码"
                     size="large"
                     allowClear
+                    prefix={
+                      <img
+                        src={lock}
+                        className="basic-form-prefix-icon"
+                        alt=""
+                      />
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -160,6 +188,13 @@ const Register: React.FC = () => {
                     placeholder="请确认登录密码"
                     size="large"
                     allowClear
+                    prefix={
+                      <img
+                        src={lock}
+                        className="basic-form-prefix-icon"
+                        alt=""
+                      />
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -171,7 +206,18 @@ const Register: React.FC = () => {
                   label="姓名  *必填"
                   rules={[{ required: true, message: "姓名不能为空" }]}
                 >
-                  <Input placeholder="请填写您的姓名" size="large" allowClear />
+                  <Input
+                    placeholder="请填写您的姓名"
+                    size="large"
+                    allowClear
+                    prefix={
+                      <img
+                        src={user}
+                        className="basic-form-prefix-icon"
+                        alt=""
+                      />
+                    }
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -190,27 +236,48 @@ const Register: React.FC = () => {
                     placeholder="请填写您常用的邮箱"
                     size="large"
                     allowClear
+                    prefix={
+                      <img
+                        src={mail}
+                        className="basic-form-prefix-icon"
+                        alt=""
+                      />
+                    }
                   />
                 </Form.Item>
               </Col>
             </Row>
           </div>
         </Col>
-        <Col span={9}>
+        <Col span={8}>
           <div className={styles.cardFormTitle}>企业信息</div>
           <Form.Item
             name="company"
             label="公司名称  *必填"
             rules={[{ required: true, message: "公司名称不能为空" }]}
           >
-            <Input placeholder="请填写公司名称" size="large" allowClear />
+            <Input
+              placeholder="请填写公司名称"
+              size="large"
+              allowClear
+              prefix={
+                <img src={home} className="basic-form-prefix-icon" alt="" />
+              }
+            />
           </Form.Item>
           <Form.Item
             name="nsrsbh"
             label="纳税人识别号  *必填"
             rules={[{ required: true, message: "纳税人识别号不能为空" }]}
           >
-            <Input placeholder="请填写纳税人识别号" size="large" allowClear />
+            <Input
+              placeholder="请填写纳税人识别号"
+              size="large"
+              allowClear
+              prefix={
+                <img src={home} className="basic-form-prefix-icon" alt="" />
+              }
+            />
           </Form.Item>
           <Form.Item className={styles.btnArea}>
             <Button

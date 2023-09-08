@@ -24,7 +24,7 @@
     .hd {
       background: url("../../assets/images/logo-blue.svg") no-repeat 0 14px;
       padding-left: 276px;
-      margin-bottom: 20px;
+      margin-bottom: 4vh;
       .title {
         font-weight: 400;
         color: $primary-color;
@@ -42,8 +42,8 @@
       background-color: $primary-color;
       box-sizing: border-box;
       width: 1132px;
-      padding: 30px 100px;
-      border-radius: 8px;
+      padding: 10vh 80px;
+      border-radius: 32px;
       :global {
         .ant-card {
           background-color: transparent;
@@ -53,15 +53,7 @@
         color: #fff;
         font-size: 24px;
         font-weight: 500;
-        margin-bottom: 20px;
-      }
-      .cardFormBody {
-        .checkboxWrapper {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 10px;
-          margin-bottom: 20px;
-        }
+        margin-bottom: 4vh;
       }
     }
 
@@ -70,14 +62,18 @@
     }
 
     .ft {
-      margin-top: 60px;
-      a,
-      a:link,
-      a:visited,
-      a:hover,
-      a:active {
-        text-decoration: none;
-        color: inherit;
+      margin-top: 4vh;
+      color: rgb(42, 89, 143);
+      font-size: 16px;
+
+      :global {
+        .anticon {
+          margin-right: 5px;
+        }
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
     }
   }
@@ -105,37 +101,6 @@
 
 /* 屏幕小于1000px */
 @media screen and (max-width: 1000px) {
-  .loginHeader {
-    display: none;
-  }
-
-  .loginWrapper {
-    background-image: none;
-  }
-
-  .content {
-    min-width: 100% !important;
-  }
-
-  #loginForm {
-    position: absolute;
-    width: 100%;
-  }
-
-  .display {
-    margin: 0 !important;
-    background-color: #021622;
-  }
-
-  .cardForm {
-    width: 100% !important;
-    margin: 0 !important;
-    height: 100vh !important;
-    min-height: 100% !important;
-    padding-top: 80px !important;
-    background-color: rgba(2, 22, 34, 0.8) !important;
-    border-radius: 0 !important;
-  }
 }
 
 .modal {

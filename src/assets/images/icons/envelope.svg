@@ -1,0 +1,16 @@
+<svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip18_2868">
+			<rect id="Envelope" width="16.000000" height="16.000000" fill="white"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip18_2868)">
+		<path id="polyline" d="M14 3.5L8 9L2 3.5" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+		<path id="path" d="M14 3.5L14 12C14 12.0663 13.9873 12.1301 13.9619 12.1913C13.9366 12.2526 13.9004 12.3066 13.8535 12.3535C13.8067 12.4004 13.7526 12.4365 13.6913 12.4619C13.6301 12.4873 13.5663 12.5 13.5 12.5L2.5 12.5C2.4337 12.5 2.36992 12.4873 2.30865 12.4619C2.24741 12.4365 2.19333 12.4004 2.14645 12.3535C2.09956 12.3066 2.06343 12.2526 2.03806 12.1913C2.01268 12.1301 2 12.0663 2 12L2 3.5L14 3.5Z" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round"/>
+		<path id="line" d="M6.90942 8L2.15454 12.3588" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+		<path id="line" d="M13.8457 12.3588L9.09082 8" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+	</g>
+</svg>

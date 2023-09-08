@@ -1,6 +1,11 @@
 import { Space } from "antd";
 import React from "react";
 
+import {
+  LoginOutlined,
+  PhoneOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import RegisterForm from "./RegisterForm";
 import styles from "./index.module.scss";
@@ -19,9 +24,18 @@ const Register: React.FC = () => {
           </div>
           <div className={styles.ft}>
             <Space size={40}>
-              <Link to="/client/forgot-password">忘记密码？</Link>
-              <Link to="/client/login">已有账号，直接登录</Link>
-              <span>如有疑问请联系 4008-888-8888</span>
+              <Link to="/client/forgot-password">
+                <QuestionCircleOutlined />
+                忘记密码？
+              </Link>
+              <Link to="/client/login">
+                <LoginOutlined />
+                已有账号，直接登录
+              </Link>
+              <span>
+                <PhoneOutlined />
+                如有疑问请联系 4008-888-8888
+              </span>
             </Space>
           </div>
         </div>

@@ -1,0 +1,15 @@
+<svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip18_2926">
+			<rect id="HouseLine" width="16.000000" height="16.000000" fill="white"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip18_2926)">
+		<path id="path" d="M13.5 13.5L13.5 7.22119C13.5 7.07373 13.4454 6.95044 13.3362 6.8512L8.33624 2.13C8.29022 2.08813 8.23817 2.05591 8.18013 2.03345C8.12209 2.01099 8.06194 1.99976 7.99969 1.99976C7.93744 1.99976 7.87729 2.01099 7.81924 2.03345C7.7612 2.05591 7.70915 2.08813 7.66313 2.13L2.66313 6.8512C2.55421 6.95056 2.49985 7.07385 2.5 7.22119L2.5 13.5" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+		<path id="line" d="M1 13.5L15 13.5" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+		<path id="path" d="M9.5 13.5L9.5 10C9.5 9.93372 9.48732 9.86987 9.46194 9.80872C9.43657 9.74744 9.40044 9.69336 9.35355 9.64648C9.30667 9.59961 9.25259 9.56348 9.19135 9.53809C9.13008 9.5127 9.0663 9.5 9 9.5L7 9.5C6.9337 9.5 6.86992 9.5127 6.80865 9.53809C6.74741 9.56348 6.69333 9.59961 6.64645 9.64648C6.59956 9.69336 6.56343 9.74744 6.53806 9.80872C6.51268 9.86987 6.5 9.93372 6.5 10L6.5 13.5" stroke="#024099" stroke-width="0.500000" stroke-linejoin="round" stroke-linecap="round"/>
+	</g>
+</svg>
