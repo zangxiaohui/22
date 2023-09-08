@@ -29,10 +29,9 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <PageContainer routes={routes} loading={loading}>
+    <PageContainer routes={routes} loading={loading} className="info-page">
       <div
         className="content"
-        style={{ minHeight: 400 }}
         dangerouslySetInnerHTML={{ __html: data?.Con }}
       ></div>
     </PageContainer>

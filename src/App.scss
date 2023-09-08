@@ -48,4 +48,25 @@
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: #fff;
   }
+
+  .ant-page-header {
+    padding: 22px 50px;
+  }
+}
+
+.ant-pro-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .ant-pro-grid-content {
+    flex: 1;
+  }
+}
+
+.ant-layout-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
 }
