@@ -50,7 +50,9 @@ export async function fetch<T>(
     body = JSON.parse(text);
   }
 
-  console.log("body :>> ", body);
+  if (!body?.state && body?.msg === "logout") {
+    window.location.replace("/client/login");
+  }
 
   if (!response.ok) {
     throw new ResponseCodeError(
