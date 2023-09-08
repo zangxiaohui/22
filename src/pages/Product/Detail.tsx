@@ -42,7 +42,12 @@ const Product: React.FC = () => {
         <Col flex="537px" style={{ paddingTop: 50 }}>
           <div className="product-detail-col-left">
             <img alt="" src={data?.Image} className="product-img" />
-            <div dangerouslySetInnerHTML={{ __html: data?.Con }}></div>
+            <div className="pro-desc">
+              <div className="small-img">
+                <img alt="" src={data?.SubImage} className="small-img" />
+              </div>
+              <div className="sub-title">{data?.SubTitle}</div>
+            </div>
           </div>
         </Col>
         <Col flex="auto">
