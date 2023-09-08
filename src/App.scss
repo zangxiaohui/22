@@ -4,8 +4,10 @@
   position: relative;
 }
 
-.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected,
+.ant-menu-dark .ant-menu-item:hover {
   background-color: #fff !important;
+  border-radius: 44px 0px 0px 44px;
 }
 
 #root {
