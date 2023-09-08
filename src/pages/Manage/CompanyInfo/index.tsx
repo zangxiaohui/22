@@ -103,14 +103,14 @@ const CompanyInfo: React.FC = () => {
       <div className="company-info-hd">
         <Alert
           message={
-            companyStatus ? (
-              <div className="red">企业状态：待审核</div>
-            ) : (
+            Boolean(companyStatus) ? (
               <div className="green">企业状态：审核通过</div>
+            ) : (
+              <div className="red">企业状态：待审核</div>
             )
           }
           description={
-            isMain && (
+            Boolean(isMain) && (
               <div>
                 {currentUser?.RealName}， 您是
                 <span className="company-name">{currentCompany?.Name}</span>
@@ -121,7 +121,7 @@ const CompanyInfo: React.FC = () => {
               </div>
             )
           }
-          type={companyStatus ? "warning" : "info"}
+          type={Boolean(companyStatus) ? "info" : "warning"}
         />
       </div>
       <div className="company-info-bd">
