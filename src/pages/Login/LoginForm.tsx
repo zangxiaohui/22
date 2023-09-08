@@ -124,11 +124,11 @@ const Login: React.FC = () => {
         if (res.state) {
           const { openid, curtoken, ismain, companystate, userstate } =
             res?.data || {};
+
           localStorage.setItem("baichuan_openid", openid);
           localStorage.setItem("baichuan_curtoken", curtoken);
-          localStorage.setItem("baichuan_ismain", ismain);
-          localStorage.setItem("baichuan_companystate", companystate);
-          localStorage.setItem("baichuan_userstate", userstate);
+          localStorage.setItem("baichuan_info", JSON.stringify(res?.data));
+
           if (ismain && !companystate && !userstate) {
             history.push("/client/account/manage-company");
           } else {

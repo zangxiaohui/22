@@ -94,9 +94,9 @@ const CompanyInfo: React.FC = () => {
     return <PageLoading />;
   }
 
-  const isMain = localStorage.getItem("baichuan_ismain");
-  const companyStatus = localStorage.getItem("baichuan_companystate");
-  const userStatus = localStorage.getItem("baichuan_userstate");
+  const infoString = localStorage.getItem("baichuan_info");
+  const infoObj = infoString ? JSON.parse(infoString) : {};
+  const { ismain: isMain, companystate: companyStatus } = infoObj;
 
   return (
     <div className="company-info">
