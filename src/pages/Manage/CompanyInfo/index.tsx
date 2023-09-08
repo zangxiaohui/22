@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Col,
   Form,
@@ -73,8 +74,6 @@ const CompanyInfo: React.FC = () => {
   const onFinish = async (values: any) => {
     const { YyzzImage, XqCateIds, ...rest } = values;
 
-    console.log("YyzzImage :>> ", YyzzImage);
-
     const res = await updateCompany({
       ...rest,
       XqCateIds: XqCateIds?.join(","),
@@ -95,17 +94,35 @@ const CompanyInfo: React.FC = () => {
     return <PageLoading />;
   }
 
+  const isMain = localStorage.getItem("baichuan_ismain");
+  const companyStatus = localStorage.getItem("baichuan_companystate");
+  const userStatus = localStorage.getItem("baichuan_userstate");
+
   return (
     <div className="company-info">
       <div className="company-info-hd">
-        <div>
-          {currentUser?.RealName}您好，您是
-          <span className="company-name">{currentCompany?.Name}</span>
-          首位注册人
-        </div>
-        <div>
-          在完善企业信息后，您将成为企业管理员。所有通过该企业名称注册的会员需由您审核后才能正常使用
-        </div>
+        <Alert
+          message={
+            companyStatus ? (
+              <div className="red">企业状态：待审核</div>
+            ) : (
+              <div className="green">企业状态：审核通过</div>
+            )
+          }
+          description={
+            isMain && (
+              <div>
+                {currentUser?.RealName}， 您是
+                <span className="company-name">{currentCompany?.Name}</span>
+                主要联系人
+                <div>
+                  在完善企业信息后，您将成为企业管理员。所有通过该企业名称注册的会员需由您审核后才能正常使用
+                </div>
+              </div>
+            )
+          }
+          type={companyStatus ? "warning" : "info"}
+        />
       </div>
       <div className="company-info-bd">
         <Form {...layout} form={form} onFinish={onFinish}>

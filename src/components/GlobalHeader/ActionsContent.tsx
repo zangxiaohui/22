@@ -57,6 +57,11 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
 
   const clickLogout = async () => {
     await logout();
+    localStorage.removeItem("baichuan_ismain");
+    localStorage.removeItem("baichuan_companystate");
+    localStorage.removeItem("baichuan_userstate");
+    localStorage.removeItem("baichuan_openid");
+    localStorage.removeItem("baichuan_curtoken");
     history.push("/client/login");
   };
 

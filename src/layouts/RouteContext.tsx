@@ -25,9 +25,9 @@ export type RouteContextType = {
     Phone?: string;
     RealName?: string;
     serviceTel?: string;
-    ismain: boolean; // 是否是主要联系人
-    companystate: boolean; // 公司信息是否审核
-    userstate: boolean; // 当前登录账号是否审核
+    // ismain: boolean; // 是否是主要联系人
+    // companystate: boolean; // 公司信息是否审核
+    // userstate: boolean; // 当前登录账号是否审核
   };
   currentCompany?: {
     Name?: string;
