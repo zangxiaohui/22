@@ -49,6 +49,9 @@ export async function fetch<T>(
   if (text) {
     body = JSON.parse(text);
   }
+
+  console.log("body :>> ", body);
+
   if (!response.ok) {
     throw new ResponseCodeError(
       response.status,
