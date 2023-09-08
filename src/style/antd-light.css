@@ -17717,12 +17717,12 @@ textarea.ant-mentions {
 .ant-menu-vertical-left .ant-menu-submenu-title,
 .ant-menu-vertical-right .ant-menu-submenu-title,
 .ant-menu-inline .ant-menu-submenu-title {
-  height: 40px;
+  height: 50px;
   margin-top: 4px;
   margin-bottom: 4px;
   padding: 0 16px;
   overflow: hidden;
-  line-height: 40px;
+  line-height: 50px;
   text-overflow: ellipsis;
 }
 .ant-menu-vertical .ant-menu-submenu,
@@ -17745,8 +17745,8 @@ textarea.ant-mentions {
 .ant-menu-vertical-left > .ant-menu-submenu > .ant-menu-submenu-title,
 .ant-menu-vertical-right > .ant-menu-submenu > .ant-menu-submenu-title,
 .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
 }
 .ant-menu-vertical .ant-menu-item-group-list .ant-menu-submenu-title,
 .ant-menu-vertical .ant-menu-submenu-title {
@@ -17862,7 +17862,7 @@ textarea.ant-mentions {
   .anticon {
   margin: 0;
   font-size: 16px;
-  line-height: 40px;
+  line-height: 50px;
 }
 .ant-menu.ant-menu-inline-collapsed > .ant-menu-item .ant-menu-item-icon + span,
 .ant-menu.ant-menu-inline-collapsed
@@ -17959,8 +17959,8 @@ textarea.ant-mentions {
 }
 .ant-menu-sub.ant-menu-inline > .ant-menu-item,
 .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   list-style-position: inside;
   list-style-type: disc;
 }

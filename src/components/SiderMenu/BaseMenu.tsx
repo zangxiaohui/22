@@ -632,7 +632,8 @@ const BaseMenu: React.FC<BaseMenuProps & PrivateSiderMenuProps> = (props) => {
         {...openKeysProps}
         key="Menu"
         mode={mode}
-        inlineIndent={16}
+        // inlineIndent={16}
+        inlineIndent={30}
         defaultOpenKeys={defaultOpenKeysRef.current}
         // theme={dark ? 'dark' : 'light'}
         theme="dark"
