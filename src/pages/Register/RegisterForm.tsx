@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Modal, Result, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import mail from "../../assets/images/icons/envelope.svg";
 import home from "../../assets/images/icons/home.svg";
@@ -37,7 +37,7 @@ const Register: React.FC = () => {
       const { cellphone, password, code, passwordRepeat, ...rest } = values;
       const res = await register({
         phone: cellphone,
-        // SMSCode: code,
+        SMSCode: code,
         pwd: password,
         ...rest,
       });
@@ -55,14 +55,18 @@ const Register: React.FC = () => {
   };
 
   const onFinishCaptcha = async (values: any) => {
-    const res = await sendSMS({
+    await sendSMS({
       uid,
       ValidCode: values?.ValidCode,
     });
-    if (!!res) {
-      setModalVisible(false);
-    }
+    setModalVisible(false);
   };
+
+  useEffect(() => {
+    if (modalVisible) {
+      captchaForm.resetFields();
+    }
+  }, [modalVisible, captchaForm]);
 
   return (
     <>
@@ -369,9 +373,13 @@ const Register: React.FC = () => {
                 <Col span={8}>
                   <img
                     src={captchaSrc}
+                    style={{ cursor: "pointer" }}
                     alt="验证码"
                     onClick={() => {
                       refreshCaptcha();
+                      captchaForm.setFieldsValue({
+                        ValidCode: undefined,
+                      });
                     }}
                     className={styles.captchaImg}
                   />

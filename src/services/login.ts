@@ -18,7 +18,6 @@ export function sendSMSToken(cellphone: string): Promise<SMSTokenResponse> {
 }
 
 export function sendRegisterSMSCode(request: any): Promise<any> {
-  console.log("request :>> ", request);
   return fetch("/CusApi/ComData/getregsmscode", {
     method: "POST",
     body: qs.stringify({
