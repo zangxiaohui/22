@@ -61,11 +61,11 @@ const Register: React.FC = () => {
     <>
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Row gutter={30}>
-          <Col span={16} className={styles.colLeft}>
+          <Col xs={24} sm={24} md={24} lg={16} className={styles.colLeft}>
             <div className={styles.cardFormTitle}>个人信息</div>
             <div className={styles.cardFormBody}>
               <Row gutter={30}>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item
                     label="手机号  *必填"
                     name="cellphone"
@@ -92,7 +92,7 @@ const Register: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item label="手机验证  *必填" required>
                     <Row gutter={8}>
                       <Col span={13}>
@@ -147,7 +147,7 @@ const Register: React.FC = () => {
               </Row>
 
               <Row gutter={30}>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item
                     label="密码  *必填"
                     name="password"
@@ -174,7 +174,7 @@ const Register: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item
                     label="确认密码  *必填"
                     name="passwordRepeat"
@@ -213,7 +213,7 @@ const Register: React.FC = () => {
                 </Col>
               </Row>
               <Row gutter={30}>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item
                     name="realname"
                     label="姓名  *必填"
@@ -233,7 +233,7 @@ const Register: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12}>
                   <Form.Item
                     name="email"
                     label="邮箱  *必填"
@@ -262,7 +262,7 @@ const Register: React.FC = () => {
               </Row>
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} sm={24} md={24} lg={8}>
             <div className={styles.cardFormTitle}>企业信息</div>
             <Form.Item
               name="company"
