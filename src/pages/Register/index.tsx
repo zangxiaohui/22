@@ -7,10 +7,13 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useAsync } from "../../lib/hooks";
+import { getTelInfo } from "../../services/user";
 import RegisterForm from "./RegisterForm";
 import styles from "./index.module.scss";
 
 const Register: React.FC = () => {
+  const telData = useAsync(getTelInfo);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -32,10 +35,12 @@ const Register: React.FC = () => {
                 <LoginOutlined />
                 已有账号，直接登录
               </Link>
-              <span>
-                <PhoneOutlined />
-                如有疑问请联系 4008-888-8888
-              </span>
+              {telData?.data?.Con && (
+                <span>
+                  <PhoneOutlined />
+                  {telData?.data?.Con}
+                </span>
+              )}
             </Space>
           </div>
         </div>

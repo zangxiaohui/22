@@ -1,6 +1,9 @@
+import { PhoneOutlined } from "@ant-design/icons";
 import { Space } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAsync } from "../../lib/hooks";
+import { getTelInfo } from "../../services/user";
 import ResetPasswordStep1, { ResetPasswordStep1Result } from "./Step1";
 import ResetPasswordStep2 from "./Step2";
 import styles from "./index.module.scss";
@@ -11,6 +14,7 @@ enum Step {
 }
 
 const ResetPassword: React.FC = () => {
+  const telData = useAsync(getTelInfo);
   const [step, setStep] = useState(Step.STEP_1);
   const [step1Result, setStep1Result] = useState<ResetPasswordStep1Result>();
 
@@ -37,7 +41,12 @@ const ResetPassword: React.FC = () => {
           <div className={styles.ft}>
             <Space size={40}>
               <Link to="/client/login">返回登录</Link>
-              <span>如有疑问请联系 4008-888-8888</span>
+              {telData?.data?.Con && (
+                <span>
+                  <PhoneOutlined />
+                  {telData?.data?.Con}
+                </span>
+              )}
             </Space>
           </div>
         </div>

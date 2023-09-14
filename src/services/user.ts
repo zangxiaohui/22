@@ -16,10 +16,18 @@ export function getCurrentCompany(): Promise<any> {
 }
 
 /** 服务电话 */
-export function getTelInfo(): Promise<any> {
-  return fetch(`/CusApi/ComData/infofwdh`, {
+export async function getTelInfo(): Promise<any> {
+  const response = await window.fetch(`/CusApi/ComData/infofwdh`, {
     method: "POST",
   });
+
+  if (response.status !== 200) {
+    throw response;
+  }
+  const text = await response.text();
+  if (text) {
+    return JSON.parse(text);
+  }
 }
 
 export interface UserForm {

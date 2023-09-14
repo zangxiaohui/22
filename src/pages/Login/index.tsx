@@ -1,10 +1,14 @@
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import React from "react";
 import GlobalFooter from "../../components/GlobalFooter";
+import { useAsync } from "../../lib/hooks";
+import { getTelInfo } from "../../services/user";
 import LoginForm from "./LoginForm";
 import styles from "./index.module.scss";
 
 const Login: React.FC = () => {
+  const telData = useAsync(getTelInfo);
+
   return (
     <div className={styles.loginPage}>
       <div className={styles.container}>
