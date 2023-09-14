@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal } from "antd";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSubmission } from "../../lib/hooks";
 import { forgotResetPassword } from "../../services/login";
@@ -22,13 +22,12 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
       const res = await forgotResetPassword({
         phone: prevStepResult.cellphone,
         UserName: prevStepResult.userName,
-        SMSCode: prevStepResult.token,
+        SMSCode: prevStepResult.code,
         pwd: values.newPassword,
       });
       if (res?.state) {
         Modal.success({
-          title: `注册成功！`,
-          content: "请等待账号审核",
+          title: `重置密码成功！`,
           okText: "返回登录",
           onOk() {
             history.push("/client/login");
@@ -44,25 +43,15 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
     });
   };
 
-  const [allFieldsComplete, setAllFieldsComplete] = useState(false);
-  const updateFormComplete = useCallback(() => {
-    setAllFieldsComplete(Object.values(form.getFieldsValue()).every((x) => x));
-  }, [form]);
-
   return (
-    <Form
-      form={form}
-      layout="horizontal"
-      onFinish={submit}
-      onValuesChange={updateFormComplete}
-    >
+    <Form form={form} layout="horizontal" onFinish={submit}>
       <Form.Item
         name="newPassword"
         rules={[
           { required: true, message: "请输入新密码" },
           {
             pattern: /^(?=[a-zA-Z]*[0-9])(?=[0-9]*[a-zA-Z])[a-zA-Z0-9]{6,}$/,
-            message: "密码不少于8位，需同时包含字母和数字",
+            message: "密码不少于6位，需同时包含字母和数字",
           },
         ]}
       >
@@ -105,7 +94,7 @@ const ResetPasswordStep2: React.FC<ResetPasswordStep2Props> = (props) => {
         htmlType="submit"
         type="primary"
         block
-        // disabled={submitting || !allFieldsComplete}
+        disabled={submitting}
         loading={submitting}
         size="large"
       >

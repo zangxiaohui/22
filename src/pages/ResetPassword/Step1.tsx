@@ -13,7 +13,7 @@ export interface ResetPasswordStep1Props {
 
 export interface ResetPasswordStep1Result {
   cellphone: string;
-  token: string;
+  code: string;
   userName: string;
 }
 
@@ -25,26 +25,19 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useSMSToken();
 
+  const userName = Form.useWatch("userName", form);
+
   const [doSubmit, submitting] = useSubmission();
 
   const submit = async (values: any): Promise<void> => {
-    const userName: string = values.cellphone;
-    const cellphone: string = values.cellphone;
-    const code: string = values.code;
-    // const response = await doSubmit(() =>
-    //   getVerifyCellphoneToken(cellphone, code)
-    // );
-    // if (!response) return;
-    onStepFinish({
-      cellphone: cellphone,
-      // token: response.token,
-      token: "zxy",
-      userName,
-    });
+    onStepFinish(values);
   };
 
   const handleCaptcha = async (values: any) => {
-    await sendSMS(values);
+    await sendSMS({
+      ...values,
+      UserName: userName,
+    });
     setModalVisible(false);
   };
 
@@ -98,7 +91,7 @@ const ResetPasswordStep1: React.FC<ResetPasswordStep1Props> = (props) => {
                 onClick={() => {
                   setModalVisible(true);
                 }}
-                disabled={!canSendSMS}
+                disabled={!canSendSMS || !userName}
                 loading={smsSending}
                 size="large"
               >

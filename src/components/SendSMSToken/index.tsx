@@ -33,16 +33,15 @@ export function useSMSToken(): UseSMSTokenResult {
   };
 
   const sendSMS = async (values: any): Promise<void> => {
-    const { uid, ValidCode } = values;
-    if (!cellphone || !canSendSMS || !uid || !ValidCode) {
+    const { uid, ValidCode, UserName } = values;
+    if (!cellphone || !canSendSMS || !uid || !ValidCode || !UserName) {
       return;
     }
     setSmsSending(true);
     try {
       const res = await sendForgotSMSCode({
+        ...values,
         phone: cellphone,
-        uid,
-        ValidCode,
       });
       if (res?.state) {
         startCountdown(60);
