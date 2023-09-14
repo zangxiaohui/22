@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Modal, Result, Row } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import mail from "../../assets/images/icons/envelope.svg";
 import home from "../../assets/images/icons/home.svg";
@@ -7,9 +7,9 @@ import mobile from "../../assets/images/icons/mobile.svg";
 import lock from "../../assets/images/icons/pwd.svg";
 import user from "../../assets/images/icons/user.svg";
 import { useRegisterSMSToken } from "../../components/SendSMSToken";
-import { useCaptcha } from "../../components/SendSMSToken/useCaptcha";
 import { useSubmission } from "../../lib/hooks";
 import { register } from "../../services/login";
+import ValidCodeModal from "./ValidCodeModal";
 import styles from "./index.module.scss";
 
 const commonPhoneRegex = /^(?:1\d{10}|0\d{2,3}-?\d{7,8})$/;
@@ -21,14 +21,12 @@ interface CodeParams {
 
 const Register: React.FC = () => {
   const [form] = Form.useForm();
-  const [captchaForm] = Form.useForm();
   const history = useHistory();
   const [doSubmit, submitting] = useSubmission();
   const [visible, setVisible] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [registerResult, setRegisterResult] = useState<string>();
 
-  const { captchaSrc, uid, refreshCaptcha } = useCaptcha();
   const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
     useRegisterSMSToken();
 
@@ -54,19 +52,10 @@ const Register: React.FC = () => {
     });
   };
 
-  const onFinishCaptcha = async (values: any) => {
-    await sendSMS({
-      uid,
-      ValidCode: values?.ValidCode,
-    });
+  const handleCaptcha = async (values: any) => {
+    await sendSMS(values);
     setModalVisible(false);
   };
-
-  useEffect(() => {
-    if (modalVisible) {
-      captchaForm.resetFields();
-    }
-  }, [modalVisible, captchaForm]);
 
   return (
     <>
@@ -133,7 +122,6 @@ const Register: React.FC = () => {
                           // onClick={sendSMS}
                           onClick={() => {
                             setModalVisible(true);
-                            refreshCaptcha();
                           }}
                           disabled={!canSendSMS}
                           loading={smsSending}
@@ -345,68 +333,11 @@ const Register: React.FC = () => {
           ]}
         />
       </Modal>
-
-      <Modal
-        width={480}
-        footer={null}
-        title="安全验证"
-        open={modalVisible}
+      <ValidCodeModal
+        modalVisible={modalVisible}
         onCancel={() => setModalVisible(false)}
-      >
-        <div style={{ padding: "40px 20px" }}>
-          <Form form={captchaForm} onFinish={onFinishCaptcha}>
-            <Form.Item>
-              <Row gutter={20}>
-                <Col span={16}>
-                  <Form.Item
-                    name="ValidCode"
-                    noStyle
-                    rules={[{ required: true, message: "验证码不能为空" }]}
-                  >
-                    <Input
-                      allowClear
-                      placeholder="请填写右侧验证码"
-                      size="large"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <img
-                    src={captchaSrc}
-                    style={{ cursor: "pointer" }}
-                    alt="验证码"
-                    onClick={() => {
-                      refreshCaptcha();
-                      captchaForm.setFieldsValue({
-                        ValidCode: undefined,
-                      });
-                    }}
-                    className={styles.captchaImg}
-                  />
-                </Col>
-              </Row>
-            </Form.Item>
-            <div style={{ textAlign: "center", margin: "30px 0 0" }}>
-              <Button
-                htmlType="submit"
-                type="primary"
-                size="large"
-                style={{ width: "100px" }}
-              >
-                确 定
-              </Button>
-              <Button
-                type="default"
-                size="large"
-                style={{ marginLeft: "20px", width: "100px" }}
-                onClick={() => setModalVisible(false)}
-              >
-                取消
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </Modal>
+        onOK={handleCaptcha}
+      />
     </>
   );
 };

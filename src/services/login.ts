@@ -1,24 +1,17 @@
 import qs from "qs";
 import { fetch } from "../lib/fetch";
 
-export interface SMSTokenResponse {
-  limit: number;
-  // bizSuccess: boolean;
-  // bizErrorCode?: AFSErrorCode;
-}
-
-export function sendSMSToken(cellphone: string): Promise<SMSTokenResponse> {
-  // return fetch("/api/selfmgmt/sendtoken", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     cellphone,
-  //   }),
-  // });
-  return Promise.resolve({ limit: 60 });
-}
-
 export function sendRegisterSMSCode(request: any): Promise<any> {
   return fetch("/CusApi/ComData/getregsmscode", {
+    method: "POST",
+    body: qs.stringify({
+      ...request,
+    }),
+  });
+}
+
+export function sendForgotSMSCode(request: any): Promise<any> {
+  return fetch("/CusApi/ComData/getforgetsmscode", {
     method: "POST",
     body: qs.stringify({
       ...request,
@@ -156,19 +149,6 @@ export async function login(params: LoginParams): Promise<any> {
     return JSON.parse(text);
   }
 }
-
-// export async function postLogin1(params: PostLoginRequest): Promise<void> {
-//   const response = await window.fetch(`${BASE}/login`, {
-//     method: "POST",
-//     headers: {
-//       "Content-type": "application/json",
-//     },
-//     body: JSON.stringify(params),
-//   });
-//   if (response.status !== 200) {
-//     throw response;
-//   }
-// }
 
 export function getToken(): Promise<any> {
   return fetch(`/CusApi/ComData/gettoken`);

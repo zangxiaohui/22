@@ -1,7 +1,7 @@
 import { message } from "antd";
 import { useState } from "react";
 import { ResponseCodeError } from "../../lib/fetch";
-import { sendRegisterSMSCode } from "../../services/login";
+import { sendForgotSMSCode, sendRegisterSMSCode } from "../../services/login";
 
 export interface UseSMSTokenResult {
   canSendSMS: boolean;
@@ -32,30 +32,27 @@ export function useSMSToken(): UseSMSTokenResult {
     }, 1000);
   };
 
-  const sendSMS = async (values: any): Promise<Boolean> => {
+  const sendSMS = async (values: any): Promise<void> => {
     const { uid, ValidCode } = values;
     if (!cellphone || !canSendSMS || !uid || !ValidCode) {
-      return false;
+      return;
     }
     setSmsSending(true);
     try {
-      const res = await sendRegisterSMSCode({
+      const res = await sendForgotSMSCode({
         phone: cellphone,
         uid,
         ValidCode,
       });
       if (res?.state) {
-        // startCountdown(res.limit);
         startCountdown(60);
       } else {
         message.error(res?.msg);
       }
-      return res?.state;
     } catch (e) {
       message.error(
         ResponseCodeError.getMessage(e, "发送验证码失败，请稍后重试")
       );
-      return false;
     } finally {
       setSmsSending(false);
     }
