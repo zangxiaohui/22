@@ -1,14 +1,6 @@
 import qs from "qs";
 import { fetch } from "../lib/fetch";
 
-// export enum AFSErrorCode {
-//   SUCCESS_1 = "100",
-//   SUCCESS_2 = "200",
-//   NEED_NC = "400",
-//   BLOCK_1 = "800",
-//   BLOCK_2 = "900",
-// }
-
 export interface SMSTokenResponse {
   limit: number;
   // bizSuccess: boolean;
@@ -25,17 +17,14 @@ export function sendSMSToken(cellphone: string): Promise<SMSTokenResponse> {
   return Promise.resolve({ limit: 60 });
 }
 
-export function sendLoginSMSToken(
-  cellphone: string
-): Promise<SMSTokenResponse> {
-  // return fetch("/cs/login/sms", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     cellphone,
-  //   }),
-  // });
-
-  return Promise.resolve({ limit: 60 });
+export function sendRegisterSMSCode(request: any): Promise<any> {
+  console.log("request :>> ", request);
+  return fetch("/CusApi/ComData/getregsmscode", {
+    method: "POST",
+    body: qs.stringify({
+      ...request,
+    }),
+  });
 }
 
 export interface ActivateResetPasswordRequest {

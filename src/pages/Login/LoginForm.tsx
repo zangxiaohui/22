@@ -4,8 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import captcha from "../../assets/images/captcha.svg";
 import lock from "../../assets/images/pwd2.svg";
 import user from "../../assets/images/user2.svg";
-import { useLoginSMSToken } from "../../components/SendSMSToken";
-import { LoginParams, getToken, login } from "../../services/login";
+import { useCaptcha } from "../../components/SendSMSToken/useCaptcha";
+import { LoginParams, login } from "../../services/login";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -14,38 +14,19 @@ const rememberUserNamekey = "cas-login:rememberUserName";
 const userNameKey = "cas-login:username";
 
 export const serverPath = "http://baichuanpm.test.wxliebao.com:88";
-
-interface CodeParams {
-  cellphone: string;
-  code: string;
-}
+// export const serverPath = "";
 
 const Login: React.FC = () => {
   const [form] = useForm();
   const [userName, setUserName] = useState<string>("");
-  const [captchaSrc, setCaptchaSrc] = useState<string>("");
-  const [uid, setUid] = useState<string>("");
   const [remeber, setRemeber] = useState<boolean>(false);
-
   const [err, setErr] = useState<string>("");
   const history = useHistory();
-
-  const { canSendSMS, sendSMS, smsSending, smsCoolDown, setCellphone } =
-    useLoginSMSToken();
-
-  const refreshCaptcha = () => {
-    getToken().then((res) => {
-      const { token, uid } = res?.data;
-      setUid(uid);
-      setCaptchaSrc(
-        `${serverPath}/webdata/user/ValidCodeImageCus.aspx?uid=${uid}&token=${token}`
-      );
-    });
-  };
+  const { captchaSrc, uid, refreshCaptcha } = useCaptcha();
 
   useEffect(() => {
     refreshCaptcha();
-  }, []);
+  }, [refreshCaptcha]);
 
   useEffect(() => {
     const rememberUserName = localStorage.getItem(rememberUserNamekey);

@@ -1,11 +1,11 @@
 import { message } from "antd";
 import { useState } from "react";
 import { ResponseCodeError } from "../../lib/fetch";
-import { sendLoginSMSToken, sendSMSToken } from "../../services/login";
+import { sendRegisterSMSCode } from "../../services/login";
 
 export interface UseSMSTokenResult {
   canSendSMS: boolean;
-  sendSMS: () => void;
+  sendSMS: (values: any) => Promise<Boolean>;
   smsSending: boolean;
   smsCoolDown: number;
   setCellphone: (value: string) => void;
@@ -58,8 +58,8 @@ export function useSMSToken(): UseSMSTokenResult {
   };
 }
 
-export function useLoginSMSToken(): UseSMSTokenResult {
-  const [cellphone, setCellphone] = useState<string>("18051936783");
+export function useRegisterSMSToken(): UseSMSTokenResult {
+  const [cellphone, setCellphone] = useState<string>();
   const [smsCoolDown, setSmsCoolDown] = useState(0);
   const [smsSending, setSmsSending] = useState(false);
 
@@ -79,19 +79,30 @@ export function useLoginSMSToken(): UseSMSTokenResult {
     }, 1000);
   };
 
-  const sendSMS = async (): Promise<void> => {
-    if (!cellphone || !canSendSMS) {
-      return;
+  const sendSMS = async (values: any): Promise<Boolean> => {
+    const { uid, ValidCode } = values;
+    if (!cellphone || !canSendSMS || !uid || !ValidCode) {
+      return false;
     }
     setSmsSending(true);
     try {
-      const res = await sendLoginSMSToken(cellphone);
-      console.log("11111 :>> ", 11111);
-      startCountdown(res.limit);
+      const res = await sendRegisterSMSCode({
+        phone: cellphone,
+        uid,
+        ValidCode,
+      });
+      if (res?.state) {
+        // startCountdown(res.limit);
+        startCountdown(60);
+      } else {
+        message.error(res?.msg);
+      }
+      return res?.state;
     } catch (e) {
       message.error(
         ResponseCodeError.getMessage(e, "发送验证码失败，请稍后重试")
       );
+      return false;
     } finally {
       setSmsSending(false);
     }

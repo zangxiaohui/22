@@ -81,6 +81,19 @@
   .btnArea {
     margin-top: 54px;
   }
+
+  :global {
+    .btn-orange[disabled],
+    .btn-orange[disabled]:hover,
+    .btn-orange[disabled]:focus,
+    .btn-orange[disabled]:active {
+      color: #00000040;
+      border-color: #d9d9d9;
+      background: #f5f5f5;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .tag {
