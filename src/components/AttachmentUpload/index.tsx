@@ -27,7 +27,6 @@ const AttachmentUpload: React.FC<AttachmentUploadProps> = (props) => {
     onChange,
     maxSize,
     max,
-    aspect,
     accept,
     disabled,
     className,

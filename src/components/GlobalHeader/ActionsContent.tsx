@@ -1,7 +1,12 @@
-import { UserOutlined } from "@ant-design/icons";
-import { useDebounceFn } from "@ant-design/pro-utils";
-import { Avatar, ConfigProvider, Divider } from "antd";
-import React, { useContext, useMemo, useState } from "react";
+import {
+  DownOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { ConfigProvider, Divider, Dropdown, Space, Spin } from "antd";
+import type { MenuInfo } from "rc-menu/lib/interface";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import type { GlobalHeaderProps } from ".";
 import { useSelf } from "../../layouts/RouteContext";
@@ -16,6 +21,7 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
   avatarProps,
   actionsRender,
   headerContentRender,
+  isMobile,
   ...props
 }) => {
   const history = useHistory();
@@ -23,64 +29,80 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   const prefixCls = `${getPrefixCls()}-pro-global-header`;
 
-  const [rightSize, setRightSize] = useState<number | string>("auto");
-
-  const avatarDom = useMemo(() => {
-    if (!avatarProps) return null;
-    const { title, render, ...rest } = avatarProps;
-    const domList = [
-      rest?.src || rest?.srcSet || rest.icon || rest.children ? (
-        <Avatar {...rest} size={28} key="avatar" />
-      ) : null,
-      title ? (
-        <span
-          key="name"
-          style={{
-            marginInlineStart: 8,
-          }}
-        >
-          {title}
-        </span>
-      ) : undefined,
-    ];
-
-    if (render) {
-      return render(avatarProps, <div>{domList}</div>);
-    }
-    return <div>{domList}</div>;
-  }, [avatarProps]);
-
-  /** 减少一下渲染的次数 */
-  const setRightSizeDebounceFn = useDebounceFn(async (width: number) => {
-    setRightSize(width);
-  }, 160);
-
   const clickLogout = async () => {
     await logout();
-    localStorage.removeItem("baichuan_ismain");
-    localStorage.removeItem("baichuan_companystate");
-    localStorage.removeItem("baichuan_userstate");
+    localStorage.removeItem("baichuan_info");
     localStorage.removeItem("baichuan_openid");
     localStorage.removeItem("baichuan_curtoken");
     history.push("/client/login");
   };
 
-  const contentRender = rightContentRender;
-  return (
-    <div
-      className={`${prefixCls}-right-content`.trim()}
-      style={{
-        minWidth: rightSize,
-        height: "100%",
+  const onMenuClick = (event: MenuInfo) => {
+    const { key } = event;
+    if (key === "logout") {
+      clickLogout();
+      return;
+    } else if (key === "settings") {
+      history.push("/client/account/manage-company");
+    }
+  };
+
+  const menuItems = [
+    {
+      key: "settings",
+      icon: <SettingOutlined />,
+      label: "管理信息",
+    },
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: "退出登录",
+    },
+  ];
+
+  if (!currentUser?.RealName) {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Spin />
+      </div>
+    );
+  }
+
+  const HeaderDropdown = (
+    <Dropdown
+      menu={{
+        onClick: onMenuClick,
+        items: menuItems,
       }}
     >
-      <span className="avatar-icon">
-        <UserOutlined />
-      </span>
-      <span className="username">{currentUser?.RealName}</span>， 您好！您可以：
-      <Link to="/client/account/manage-company">管理信息</Link>
-      <Divider type="vertical" />
-      <a onClick={clickLogout}>退出登录</a>
+      <div>
+        <Space>
+          <span className="avatar-icon">
+            <UserOutlined />
+          </span>
+          <span className="username">{currentUser?.RealName}</span>
+          <DownOutlined />
+        </Space>
+      </div>
+    </Dropdown>
+  );
+
+  return (
+    <div className={`${prefixCls}-right-content`.trim()}>
+      {isMobile ? (
+        HeaderDropdown
+      ) : (
+        <>
+          <span className="avatar-icon">
+            <UserOutlined />
+          </span>
+          <span className="username">{currentUser?.RealName}</span>，
+          您好！您可以：
+          <Link to="/client/account/manage-company">管理信息</Link>
+          <Divider type="vertical" />
+          <a onClick={clickLogout}>退出登录</a>
+        </>
+      )}
     </div>
   );
 };

@@ -325,6 +325,7 @@ const BasicLayout: React.FC<any> = (props) => {
     "ant-design-pro",
     baseClassName,
     {
+      isMobile: isMobile,
       [`screen-${colSize}`]: colSize,
       [`${baseClassName}-top-menu`]: propsLayout === "top",
       [`${baseClassName}-fix-siderbar`]: fixSiderbar,

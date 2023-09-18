@@ -42,8 +42,9 @@ const DefaultHeader: React.FC<any> = (props) => {
     layout,
     headerRender,
     headerContentRender,
-    headerHeight,
+    headerHeight: propsHeaderHeight,
   } = props;
+  const headerHeight = isMobile ? 60 : propsHeaderHeight;
 
   const needFixedHeader = fixedHeader || layout === "mix";
 

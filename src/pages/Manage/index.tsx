@@ -68,6 +68,7 @@ const Company: React.FC = () => {
         onChange={onTabChange}
         type="card"
         items={items}
+        tabPosition="top"
         // tabBarExtraContent={
         //   <div className="h">有疑问请立即咨询 4008-888-8888</div>
         // }

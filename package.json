@@ -21,7 +21,7 @@
     "@types/react-router-dom": "^5.1.8",
     "@types/uuid": "^8.3.1",
     "ahooks": "^3.7.8",
-    "antd": "^4.24.13",
+    "antd": "^4.24.14",
     "classnames": "^2.3.1",
     "craco-less": "^2.0.0",
     "echarts": "^5.1.2",
