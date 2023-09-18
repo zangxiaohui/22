@@ -187,7 +187,7 @@ const BidDetail: React.FC = () => {
       <AntRow className="bid-row2">
         {data?.State === BidType.PROCESSING && (
           <Col flex="540px">
-            <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
+            <Form labelCol={{ sm: { span: 24 }, md: { span: 6 } }}>
               <Form.Item label="出&nbsp;&nbsp;价">
                 <InputNumber
                   min={0}
@@ -201,7 +201,12 @@ const BidDetail: React.FC = () => {
                   step={data?.Propm_StepPrice ?? 1}
                 />
               </Form.Item>
-              <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+              <Form.Item
+                wrapperCol={{
+                  sm: { span: 24, offset: 0 },
+                  md: { span: 18, offset: 6 },
+                }}
+              >
                 <Button
                   type="primary"
                   size="large"

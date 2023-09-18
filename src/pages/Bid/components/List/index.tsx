@@ -56,7 +56,15 @@ const BidList: React.FC<BidListProps> = (props) => {
     <PageContainer routes={routes} className="bid">
       <List
         loading={loading}
-        grid={{ gutter: 18, column: 2 }}
+        grid={{
+          gutter: 18,
+          xs: 1,
+          sm: 1,
+          md: 1,
+          lg: 2,
+          xl: 2,
+          xxl: 2,
+        }}
         dataSource={data}
         renderItem={(item) => (
           <List.Item>

@@ -1,24 +1,31 @@
 import { Modal, Statistic, Table } from "antd";
+import classNames from "classnames";
 import moment from "moment";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { usePaging } from "../../../../components";
+import { useIsMobile } from "../../../../layouts/RouteContext";
 import { getBidHistory } from "../../../../services/bid";
 import "./index.less";
 
-type EmailInviteModalProps = {
+type HistoryModalProps = {
   visible: boolean;
   onCancel: () => void;
   companyName?: string;
   myPrice?: number;
 };
 
-const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
+const HistoryModal: FC<HistoryModalProps> = (props) => {
   const { visible, onCancel, companyName, myPrice } = props;
   const { id } = useParams<{ id: string }>();
   const [historyLoading, setHistoryLoading] = useState<boolean>(false);
   const [historyData, setHistoryData] = useState<any[]>();
+
+  const isMobile = useIsMobile();
+  const className = classNames("modal-wrap", {
+    isMobile: isMobile,
+  });
 
   const pagingInfo = usePaging(100);
   const { pageOffset, pageSize, setTotalCount } = pagingInfo;
@@ -58,7 +65,7 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
 
   return (
     <Modal
-      wrapClassName="modal-wrap"
+      wrapClassName={className}
       destroyOnClose
       title={`${companyName ?? ""} 历史出价记录`}
       width={692}
@@ -85,4 +92,4 @@ const EmailInviteModal: FC<EmailInviteModalProps> = (props) => {
   );
 };
 
-export default EmailInviteModal;
+export default HistoryModal;

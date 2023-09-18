@@ -5,9 +5,6 @@
   padding-right: 0;
 
   .bid-action {
-    position: absolute;
-    right: 24px;
-    bottom: 24px;
     width: 206px;
     .ant-btn {
       margin-top: 12px;
@@ -17,7 +14,7 @@
 }
 
 .bid-card {
-  height: 220px;
+  height: 300px;
   .ant-card-head {
     border-bottom: 0;
     .ant-card-head-title {
@@ -28,5 +25,16 @@
 
   .ant-card-body {
     padding-top: 0;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .bid-card {
+    height: 220px;
+  }
+  .bid-action {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
   }
 }

@@ -49,4 +49,9 @@ export function useCurrentCompany() {
   return currentCompany;
 }
 
+export function useIsMobile() {
+  const { isMobile } = useContext(routeContext);
+  return isMobile;
+}
+
 export default routeContext;

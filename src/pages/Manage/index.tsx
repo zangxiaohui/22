@@ -63,16 +63,18 @@ const Company: React.FC = () => {
 
   return (
     <PageContainer routes={routes} className="company">
-      <Tabs
-        activeKey={tabActiveKey as any}
-        onChange={onTabChange}
-        type="card"
-        items={items}
-        tabPosition="top"
-        // tabBarExtraContent={
-        //   <div className="h">有疑问请立即咨询 4008-888-8888</div>
-        // }
-      />
+      <div style={{ width: "100%" }}>
+        <Tabs
+          activeKey={tabActiveKey as any}
+          onChange={onTabChange}
+          type="card"
+          items={items}
+          tabPosition="top"
+          // tabBarExtraContent={
+          //   <div className="h">有疑问请立即咨询 4008-888-8888</div>
+          // }
+        />
+      </div>
     </PageContainer>
   );
 };
