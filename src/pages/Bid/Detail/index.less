@@ -102,13 +102,12 @@
   }
 
   .bid-action {
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 206px;
+    display: flex;
+    align-items: center;
+    margin: 0 -5px;
     .ant-btn {
-      margin-top: 12px;
       border-radius: 20px;
+      margin: 10px 5px;
     }
   }
 }
@@ -249,12 +248,18 @@
   }
 }
 
-@media screen and (max-width: 1099px) {
+@media screen and (min-width: 1200px) {
   .bid-row1 {
     .bid-action {
-      position: relative;
-      right: auto;
-      top: auto;
+      position: absolute;
+      right: 40px;
+      top: 40px;
+      width: 206px;
+      display: block;
+      .ant-btn {
+        margin-top: 12px;
+        border-radius: 20px;
+      }
     }
   }
 }
@@ -265,12 +270,6 @@
     padding: 0%;
     h1 {
       font-size: 20px;
-    }
-
-    .bid-action {
-      position: relative;
-      right: auto;
-      top: auto;
     }
   }
 

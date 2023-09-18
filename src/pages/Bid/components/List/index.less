@@ -5,16 +5,18 @@
   padding-right: 0;
 
   .bid-action {
-    width: 206px;
+    display: flex;
+    align-items: center;
+    margin: 0 -5px;
     .ant-btn {
-      margin-top: 12px;
       border-radius: 20px;
+      margin: 10px 5px;
     }
   }
 }
 
 .bid-card {
-  height: 300px;
+  height: 270px;
   .ant-card-head {
     border-bottom: 0;
     .ant-card-head-title {
@@ -32,9 +34,15 @@
   .bid-card {
     height: 220px;
   }
-  .bid-action {
+  .bid .ant-pro-grid-content .bid-action {
+    display: block;
+    width: 206px;
     position: absolute;
     right: 24px;
     bottom: 24px;
+    .ant-btn {
+      border-radius: 20px;
+      margin: 0 5px 12px;
+    }
   }
 }
