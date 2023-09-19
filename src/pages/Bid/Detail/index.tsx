@@ -16,7 +16,11 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageContainer from "../../../components/PageContainer";
-import { useCurrentCompany, useSelf } from "../../../layouts/RouteContext";
+import {
+  useCurrentCompany,
+  useIsMobile,
+  useSelf,
+} from "../../../layouts/RouteContext";
 import {
   BidType,
   BidTypeColor,
@@ -47,6 +51,7 @@ const items = [{ label: "拍品详情", key: "item-1" }];
 
 const BidDetail: React.FC = () => {
   const currentUser = useSelf();
+  const isMobile = useIsMobile();
   const currentCompany = useCurrentCompany();
 
   const { id } = useParams<{ id: string }>();
@@ -125,6 +130,8 @@ const BidDetail: React.FC = () => {
       });
     }
   };
+
+  const telDom = <div className="h">{currentUser?.serviceTel}</div>;
 
   return (
     <PageContainer routes={routes} loading={loading || !data}>
@@ -255,10 +262,13 @@ const BidDetail: React.FC = () => {
           </div>
         </Col>
       </AntRow>
+      {isMobile && (
+        <div style={{ marginBottom: "10px", textAlign: "right" }}>{telDom}</div>
+      )}
       <Tabs
         type="card"
         items={items}
-        tabBarExtraContent={<div className="h">{currentUser?.serviceTel}</div>}
+        tabBarExtraContent={!isMobile && telDom}
       />
       <div
         style={{ padding: "10px 30px 30px" }}

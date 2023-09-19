@@ -4,7 +4,7 @@ import Omit from "omit.js";
 import useMergedState from "rc-util/lib/hooks/useMergedState";
 import type { CSSProperties } from "react";
 import React, { useContext, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import companyLogo from "../assets/images/logo-blue.svg";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -220,6 +220,7 @@ const BasicLayout: React.FC<any> = (props) => {
     loading,
     layout,
   } = props || {};
+  const history = useHistory();
 
   const currentUserData = useAsync(getSelf);
   const currentCompanyData = useAsync(getCurrentCompany);
@@ -298,7 +299,16 @@ const BasicLayout: React.FC<any> = (props) => {
       isMobile,
       collapsed,
       menuItemRender: (item: any, defaultDom: any) => {
-        return <Link to={item.path}>{defaultDom}</Link>;
+        return (
+          <div
+            onClick={() => {
+              history.push(item.path);
+              item?.onClick?.();
+            }}
+          >
+            {defaultDom}
+          </div>
+        );
       },
     },
     matchMenuKeys
