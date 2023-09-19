@@ -1,4 +1,3 @@
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
 import {
   InputNumber as AntInputNumber,
@@ -68,17 +67,6 @@ const BidDetail: React.FC = () => {
   const isProcessing = data?.State === BidType.PROCESSING;
 
   const deadline = moment(data?.Propm_EndTime);
-  const renderUpHandler = (
-    <div className="handler-up" onClick={() => {}}>
-      <UpOutlined className={`handler-up-inner`} />
-    </div>
-  );
-
-  const renderDownHandler = (
-    <div className="handler-down">
-      <DownOutlined className={`handler-down-inner`} />
-    </div>
-  );
 
   useEffect(() => {
     setLoading(true);
@@ -208,18 +196,52 @@ const BidDetail: React.FC = () => {
           <Col flex="540px">
             <Form labelCol={{ sm: { span: 24 }, md: { span: 6 } }}>
               <Form.Item label="出&nbsp;&nbsp;价">
-                <AntInputNumber
-                  useTouch
-                  min={0}
-                  value={bidPrice ?? 0}
-                  onChange={onChangeBidPrice}
-                  size="large"
-                  formatter={(value) =>
-                    `￥${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                  parser={(value) => value!.replace(/\$\s?|(,*)/g, "") as any}
-                  step={data?.Propm_StepPrice ?? 1}
-                />
+                <div>
+                  <AntInputNumber
+                    min={0}
+                    value={bidPrice ?? 0}
+                    onChange={onChangeBidPrice}
+                    size="large"
+                    formatter={(value) =>
+                      `￥${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                    parser={(value) => value!.replace(/\$\s?|(,*)/g, "") as any}
+                    step={data?.Propm_StepPrice ?? 1}
+                  />
+                  {isMobile && (
+                    <div
+                      className="ant-input-number-handler ant-input-number-handler-down"
+                      onClick={() => {
+                        if (!isNil(bidPrice)) {
+                          const value = bidPrice - (data?.Propm_StepPrice ?? 1);
+                          if (value >= 0) {
+                            onChangeBidPrice(
+                              bidPrice - (data?.Propm_StepPrice ?? 1)
+                            );
+                          } else {
+                            onChangeBidPrice(0);
+                          }
+                        }
+                      }}
+                    >
+                      {/* <DownOutlined className={`handler-down-inner`} /> */}
+                    </div>
+                  )}
+                  {isMobile && (
+                    <div
+                      className="ant-input-number-handler ant-input-number-handler-up"
+                      onClick={() => {
+                        if (!isNil(bidPrice)) {
+                          onChangeBidPrice(
+                            bidPrice + (data?.Propm_StepPrice ?? 1)
+                          );
+                        }
+                      }}
+                    >
+                      {/* <UpOutlined className={`handler-up-inner`} /> */}
+                    </div>
+                  )}
+                </div>
               </Form.Item>
               <Form.Item
                 wrapperCol={{
