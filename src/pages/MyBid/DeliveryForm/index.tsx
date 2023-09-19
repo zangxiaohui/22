@@ -10,9 +10,11 @@ import {
   message,
 } from "antd";
 import layout from "antd/lib/layout";
+import classNames from "classnames";
 import { isNil } from "lodash-es";
 import moment from "moment";
 import React from "react";
+import { useIsMobile } from "../../../layouts/RouteContext";
 import { postDelivery } from "../../../services/bid";
 import "./index.less";
 
@@ -25,6 +27,7 @@ type DeliveryFormProps = {
 const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
   const { modalVisible, onCancel, formData } = props;
   const [form] = Form.useForm();
+  const isMobile = useIsMobile();
 
   const onFinish = async () => {
     form.validateFields().then(async (values: any) => {
@@ -47,24 +50,31 @@ const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
     });
   };
 
+  const tipDom = (
+    <div className="sub-modal-title">
+      请填写以下信息，我们将尽快为您安排发货
+    </div>
+  );
+
   return (
     <Modal
-      wrapClassName="delivery-modal-wrap"
+      wrapClassName={classNames("delivery-modal-wrap", {
+        isMobile: isMobile,
+      })}
       width={900}
       destroyOnClose
       closable={false}
       title={
         <div className="modal-title">
           <div>申请提货 </div>
-          <div className="sub-modal-title">
-            请填写以下信息，我们将尽快为您安排发货
-          </div>
+          {!isMobile && tipDom}
         </div>
       }
       open={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
     >
+      {isMobile && tipDom}
       <div className="mod">
         <div className="mod-hd">
           产品名称：

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Paging, usePaging } from "../../../components";
 import PageContainer from "../../../components/PageContainer";
-import { useSelf } from "../../../layouts/RouteContext";
+import { useIsMobile, useSelf } from "../../../layouts/RouteContext";
 import { getDeliveryList } from "../../../services/bid";
 import { columns } from "./columns";
 import "./index.less";
@@ -32,6 +32,7 @@ const tabItems: any[] = [
 
 const DeliveryDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const isMobile = useIsMobile();
   const history = useHistory();
   const currentUser = useSelf();
   const pagingInfo = usePaging();
@@ -56,6 +57,8 @@ const DeliveryDetail: React.FC = () => {
       .finally(() => setLoading(false));
   }, [id, pageSize, pageOffset, setTotalCount]);
 
+  const telDom = <span className="h">{currentUser?.serviceTel}</span>;
+
   return (
     <PageContainer routes={routes} loading={loading}>
       <Tabs
@@ -65,10 +68,13 @@ const DeliveryDetail: React.FC = () => {
         tabBarExtraContent={
           <Space size={40}>
             <Button onClick={() => history.goBack()}>返回 我的招标列表</Button>
-            <span className="h">{currentUser?.serviceTel}</span>
+            {!isMobile && telDom}
           </Space>
         }
       />
+      {isMobile && (
+        <div style={{ marginBottom: "10px", textAlign: "right" }}>{telDom}</div>
+      )}
       <Table
         columns={columns}
         dataSource={data}
