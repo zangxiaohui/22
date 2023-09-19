@@ -417,6 +417,7 @@ class MenuUtil {
         onClick: () => onCollapse && onCollapse(true),
         children: undefined,
       };
+
       return level === 0 ? (
         <MenuItemTooltip
           collapsed={collapsed}

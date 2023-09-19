@@ -372,7 +372,6 @@ const SiderMenu: React.FC<any> = (props) => {
     </>
   );
 
-  console.log("collapsedWidth :>> ", collapsedWidth);
   return (
     <>
       {fixSiderbar && !isMobile && !hideMenuWhenCollapsedClassName && (
