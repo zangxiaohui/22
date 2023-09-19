@@ -1,11 +1,12 @@
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
 import {
+  InputNumber as AntInputNumber,
   Row as AntRow,
   Button,
   Col,
   Divider,
   Form,
-  InputNumber,
   Modal,
   Statistic,
   Tabs,
@@ -67,6 +68,17 @@ const BidDetail: React.FC = () => {
   const isProcessing = data?.State === BidType.PROCESSING;
 
   const deadline = moment(data?.Propm_EndTime);
+  const renderUpHandler = (
+    <div className="handler-up" onClick={() => {}}>
+      <UpOutlined className={`handler-up-inner`} />
+    </div>
+  );
+
+  const renderDownHandler = (
+    <div className="handler-down">
+      <DownOutlined className={`handler-down-inner`} />
+    </div>
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -196,7 +208,8 @@ const BidDetail: React.FC = () => {
           <Col flex="540px">
             <Form labelCol={{ sm: { span: 24 }, md: { span: 6 } }}>
               <Form.Item label="出&nbsp;&nbsp;价">
-                <InputNumber
+                <AntInputNumber
+                  useTouch
                   min={0}
                   value={bidPrice ?? 0}
                   onChange={onChangeBidPrice}
