@@ -195,7 +195,7 @@ const SiderMenu: React.FC<any> = (props) => {
   const baseClassName = `${prefixCls}-sider`;
 
   // 收起的宽度
-  const collapsedWidth = 64;
+  const collapsedWidth = 48;
 
   const siderClassName = classNames(`${baseClassName}`, {
     [`${baseClassName}-fixed`]: fixSiderbar,
@@ -372,6 +372,7 @@ const SiderMenu: React.FC<any> = (props) => {
     </>
   );
 
+  console.log("collapsedWidth :>> ", collapsedWidth);
   return (
     <>
       {fixSiderbar && !isMobile && !hideMenuWhenCollapsedClassName && (

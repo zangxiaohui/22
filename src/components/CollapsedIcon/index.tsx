@@ -1,5 +1,5 @@
-﻿import classNames from "classnames";
-import { ArrowSvgIcon } from "../SiderMenu/Arrow";
+﻿import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import classNames from "classnames";
 
 export const CollapsedIcon: React.FC<any> = (props) => {
   const { isMobile, collapsed, ...rest } = props;
@@ -13,7 +13,9 @@ export const CollapsedIcon: React.FC<any> = (props) => {
         [`${props.className}-is-mobile`]: isMobile,
       })}
     >
-      <ArrowSvgIcon />
+      <div className="collapsed-icon-wrap">
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </div>
     </div>
   );
 };

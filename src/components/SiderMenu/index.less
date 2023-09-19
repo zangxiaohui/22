@@ -173,9 +173,20 @@
   }
 
   &-collapsed-button {
-    border-top: @border-width-base @border-style-base rgba(0, 0, 0, 0.25);
+    // border-top: @border-width-base @border-style-base rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    .collapsed-icon-wrap {
+      height: 40px;
+      width: 48px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
     .anticon {
       font-size: 16px;
+      color: #fff;
     }
   }
 
@@ -237,6 +248,20 @@
 }
 .ant-menu {
   .ant-pro-base-menu-inline-item-icon {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    text-indent: -999px;
+    display: inline-block;
+    line-height: 0;
+    vertical-align: -0.2em;
+    margin-right: 9px;
+    transition: all 0.3s;
+  }
+
+  .ant-pro-base-menu-vertical-item-icon {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     width: 20px;
@@ -325,5 +350,25 @@
     .ico5 {
       background-image: url("../../assets/images/icons/5-blue.svg");
     }
+  }
+}
+
+.ant-layout-sider-collapsed {
+  .menu-wrap {
+    padding: 0;
+  }
+
+  .ant-menu-dark .ant-menu-item:hover,
+  .ant-menu-dark .ant-menu-item-active,
+  .ant-menu-dark .ant-menu-submenu-active,
+  .ant-menu-dark .ant-menu-submenu-open,
+  .ant-menu-dark .ant-menu-submenu-selected,
+  .ant-menu-dark .ant-menu-submenu-title:hover {
+    color: #fff;
+    background-color: transparent;
+  }
+
+  .ant-pro-base-menu-vertical-item-icon {
+    margin-right: 12px;
   }
 }
