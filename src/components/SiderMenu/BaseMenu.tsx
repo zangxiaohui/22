@@ -353,12 +353,12 @@ class MenuUtil {
         })}
       >
         <span
-          className={`${baseClassName}-item-icon ${item.iconClassName}`.trim()}
+          className={`${baseClassName}-item-icon ${item.iconClassName} custom-ico`.trim()}
           style={{
             display: defaultIcon === null && !icon ? "none" : "",
           }}
         >
-          {icon || <span className="anticon">{defaultIcon}</span>}
+          {/* {icon || <span className="anticon">{defaultIcon}</span>} */}
         </span>
         <span
           className={classNames(`${baseClassName}-item-text`, {
@@ -418,18 +418,21 @@ class MenuUtil {
         children: undefined,
       };
 
-      return level === 0 ? (
-        <MenuItemTooltip
-          collapsed={collapsed}
-          title={menuItemTitle}
-          disable={item.disabledTooltip}
-        >
-          {menuItemRender(renderItemProps, defaultItem, this.props)}
-        </MenuItemTooltip>
-      ) : (
-        menuItemRender(renderItemProps, defaultItem, this.props)
-      );
+      return menuItemRender(renderItemProps, defaultItem, this.props);
+
+      // return level === 0 ? (
+      //   <MenuItemTooltip
+      //     collapsed={collapsed}
+      //     title={menuItemTitle}
+      //     disable={item.disabledTooltip}
+      //   >
+      //     {menuItemRender(renderItemProps, defaultItem, this.props)}
+      //   </MenuItemTooltip>
+      // ) : (
+      //   menuItemRender(renderItemProps, defaultItem, this.props)
+      // );
     }
+
     return level === 0 ? (
       <MenuItemTooltip
         collapsed={collapsed}
