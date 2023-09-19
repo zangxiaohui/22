@@ -158,7 +158,7 @@ const CompanyInfo: React.FC = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
               <div
-                className="company-info-title"
+                className="company-info-title hidden"
                 style={{ visibility: "hidden" }}
               >
                 企业基本信息

@@ -74,8 +74,9 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
         onClick: onMenuClick,
         items: menuItems,
       }}
+      trigger={["click"]}
     >
-      <div>
+      <a onClick={(e) => e.preventDefault()}>
         <Space>
           <span className="avatar-icon">
             <UserOutlined />
@@ -83,12 +84,12 @@ export const ActionsContent: React.FC<GlobalHeaderProps> = ({
           <span className="username">{currentUser?.RealName}</span>
           <DownOutlined />
         </Space>
-      </div>
+      </a>
     </Dropdown>
   );
 
   return (
-    <div className={`${prefixCls}-right-content`.trim()}>
+    <div className={`${prefixCls}-right-content`}>
       {isMobile ? (
         HeaderDropdown
       ) : (

@@ -70,21 +70,23 @@ const Contact: React.FC = () => {
             </div> */}
           </Col>
           <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-            <Map
-              center={{
-                latitude: 31.86,
-                longitude: 120.35,
-              }}
-            >
-              <Marker
-                position={[31.86, 120.35]}
-                label={{
-                  content: "Hello, AMap-React!",
-                  direction: "top",
+            <div className="map-wrap">
+              <Map
+                center={{
+                  latitude: 31.86,
+                  longitude: 120.35,
                 }}
-                content="Hello, AMap-React!"
-              />
-            </Map>
+              >
+                <Marker
+                  position={[31.86, 120.35]}
+                  label={{
+                    content: "Hello, AMap-React!",
+                    direction: "top",
+                  }}
+                  content="Hello, AMap-React!"
+                />
+              </Map>
+            </div>
             {/*
             <Map
               center={{

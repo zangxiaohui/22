@@ -161,7 +161,6 @@ const GlobalHeader: React.FC<any> = (props) => {
           </div>
         </>
       )}
-      {/* <div style={{ flex: 1 }}>{children}</div> */}
       <div style={{ flex: 1 }}>{children}</div>
       <ActionsContent {...props} />
     </div>

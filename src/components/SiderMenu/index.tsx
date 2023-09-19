@@ -37,7 +37,7 @@ const SiderMenuWrapper: React.FC<SiderMenuProps & PrivateSiderMenuProps> = (
   }
 
   const drawerOpenProps = {
-    visible: !collapsed,
+    open: !collapsed,
     onVisibleChange: () => onCollapse?.(true),
   };
 

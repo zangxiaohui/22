@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import { Paging, usePaging } from "../../components/Paging";
-import { useSelf } from "../../layouts/RouteContext";
+import { useIsMobile, useSelf } from "../../layouts/RouteContext";
 import { BidType, getMyBidList } from "../../services/bid";
 import DeliveryForm from "./DeliveryForm";
 import { columns } from "./columns";
@@ -41,6 +41,7 @@ const routes = [
 
 const MyBid: React.FC<MyBidProps> = () => {
   const currentUser = useSelf();
+  const isMobile = useIsMobile();
   const [tabActiveKey, setTabActiveKey] = useState<BidType>(BidType.ALL);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
@@ -116,6 +117,8 @@ const MyBid: React.FC<MyBidProps> = () => {
     },
   ];
 
+  const telDom = <div className="h">{currentUser?.serviceTel}</div>;
+
   return (
     <PageContainer routes={routes} className="company">
       <Tabs
@@ -123,9 +126,10 @@ const MyBid: React.FC<MyBidProps> = () => {
         onChange={onTabChange}
         type="card"
         items={tabItems}
-        tabBarExtraContent={<div className="h">{currentUser?.serviceTel}</div>}
+        tabBarExtraContent={!isMobile && telDom}
       />
       <div>
+        {isMobile && <div style={{ marginBottom: "10px" }}>{telDom}</div>}
         <Table
           columns={mergedColumns}
           dataSource={data}
