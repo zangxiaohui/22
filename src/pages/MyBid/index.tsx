@@ -1,4 +1,4 @@
-import { Button, Table, Tabs } from "antd";
+import { Button, List, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { Paging, usePaging } from "../../components/Paging";
 import { useIsMobile, useSelf } from "../../layouts/RouteContext";
 import { BidType, getMyBidList } from "../../services/bid";
 import DeliveryForm from "./DeliveryForm";
-import { columns } from "./columns";
+import { columns, renderPrice, renderStatus, renderTitle } from "./columns";
 import "./index.less";
 
 interface MyBidProps {}
@@ -74,6 +74,44 @@ const MyBid: React.FC<MyBidProps> = () => {
     setTabActiveKey(key as any);
   };
 
+  const renderBidAction = (item: any = {}) =>
+    item.State === BidType.PROCESSING && (
+      <Link to={`/client/bid/detail/${item.Propm_Id}`}>
+        <Button
+          type="primary"
+          className="btn-red"
+          size={isMobile ? "large" : "middle"}
+        >
+          立即出价
+        </Button>
+      </Link>
+    );
+
+  const renderDeliveryAction = (item: any = {}) =>
+    item.State === BidType.SUCCESS && (
+      <>
+        <Button
+          type="primary"
+          size={isMobile ? "large" : "middle"}
+          onClick={() => {
+            setVisible(true);
+            setFormData({
+              productTitle: item.Propm_Title,
+              productCount: item.Propm_Count,
+              id: item.Propm_Id,
+            });
+          }}
+        >
+          申请提货
+        </Button>
+        <div className="delivery-link">
+          <Link to={`/client/account/my-bid/delivery/${item.Propm_Id}`}>
+            提货记录
+          </Link>
+        </div>
+      </>
+    );
+
   const mergedColumns: ColumnsType<any> = [
     ...columns,
     {
@@ -82,36 +120,8 @@ const MyBid: React.FC<MyBidProps> = () => {
       width: 200,
       render: (_, record) => (
         <div className="my-bid-action">
-          {record.State === BidType.PROCESSING && (
-            <Link to={`/client/bid/detail/${record.Propm_Id}`}>
-              <Button type="primary" className="btn-red">
-                立即出价
-              </Button>
-            </Link>
-          )}
-          {record.State === BidType.SUCCESS && (
-            <>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setVisible(true);
-                  setFormData({
-                    productTitle: record.Propm_Title,
-                    productCount: record.Propm_Count,
-                    id: record.Propm_Id,
-                  });
-                }}
-              >
-                申请提货
-              </Button>
-
-              <div className="delivery-link">
-                <Link to={`/client/account/my-bid/delivery/${record.Propm_Id}`}>
-                  提货记录
-                </Link>
-              </div>
-            </>
-          )}
+          {renderBidAction(record)}
+          {renderDeliveryAction(record)}
         </div>
       ),
     },
@@ -130,14 +140,42 @@ const MyBid: React.FC<MyBidProps> = () => {
       />
       <div>
         {isMobile && <div style={{ marginBottom: "10px" }}>{telDom}</div>}
-        <Table
-          columns={mergedColumns}
-          dataSource={data}
-          pagination={false}
-          rowKey={(record) => record.Propm_Id}
-          loading={loading}
-          scroll={{ x: "max-content" }}
-        />
+        {isMobile ? (
+          <List
+            className="my-bid-list"
+            loading={loading}
+            itemLayout="horizontal"
+            dataSource={data}
+            renderItem={(item) => (
+              <List.Item key={item.title}>
+                <List.Item.Meta
+                  title={
+                    <div className="my-bid-title">{renderTitle(item)}</div>
+                  }
+                  description={
+                    <div className="content">
+                      {renderStatus(item)}
+                      {renderPrice(item, true)}
+                      <div className="op-wrap">
+                        {renderBidAction(item)}
+                        {renderDeliveryAction(item)}
+                      </div>
+                    </div>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        ) : (
+          <Table
+            columns={mergedColumns}
+            dataSource={data}
+            pagination={false}
+            rowKey={(record) => record.Propm_Id}
+            loading={loading}
+          />
+        )}
+
         <Paging pagingInfo={pagingInfo} />
       </div>
       <DeliveryForm
