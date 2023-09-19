@@ -87,12 +87,17 @@ const Certification: React.FC = () => {
       <div className="certification-hd">
         <h2>新增其他资质</h2>
         <Form layout="inline" form={form} onValuesChange={onValuesChange}>
-          <Form.Item label="资质名称" name="filename">
+          <Form.Item
+            label="资质名称"
+            name="filename"
+            className="form-item-name"
+          >
             <Input placeholder="请填写资质名称" size="large" allowClear />
           </Form.Item>
           <Form.Item
             name="fileurl"
             rules={[{ required: true, message: "不能为空" }]}
+            className="form-item-upload"
           >
             <AttachmentUpload
               btnType="primary"

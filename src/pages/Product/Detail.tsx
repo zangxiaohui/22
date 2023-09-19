@@ -39,7 +39,7 @@ const Product: React.FC = () => {
       className="product-detail-page"
     >
       <Row>
-        <Col flex="537px" style={{ paddingTop: 50 }}>
+        <Col flex="537px" style={{ paddingTop: 50, marginBottom: 30 }}>
           <div className="product-detail-col-left">
             <img alt="" src={data?.Image} className="product-img" />
             <div className="pro-desc">
@@ -51,7 +51,10 @@ const Product: React.FC = () => {
           </div>
         </Col>
         <Col flex="auto">
-          <div className="product-detail-col-right">
+          <div
+            className="product-detail-col-right"
+            style={{ paddingBottom: 20 }}
+          >
             <div className="sub-title">{data?.CateName || "类别"}</div>
             <div className="title">{data?.Title}</div>
             <div

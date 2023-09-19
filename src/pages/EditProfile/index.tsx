@@ -71,7 +71,7 @@ const EditProfile: React.FC = () => {
     <PageContainer routes={routes} className="profile-page">
       <div className="profile-mod">
         <Row gutter={16}>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <Card title="信息管理" className="profile-card" bordered={false}>
               <Form
                 form={form}
@@ -146,7 +146,7 @@ const EditProfile: React.FC = () => {
               </Form>
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={12}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <Card title="密码管理" className="profile-card" bordered={false}>
               <ModifyPassword />
             </Card>

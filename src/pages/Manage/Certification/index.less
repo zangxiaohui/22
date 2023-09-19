@@ -2,12 +2,13 @@
   background: rgb(235, 239, 244);
   padding: 24px 40px;
   margin-bottom: 15px;
-  display: flex;
-  align-items: center;
   h2 {
-    margin-right: 6%;
     color: rgb(42, 89, 143);
     font-size: 18px;
+    width: 140px;
+    padding-right: 10px;
+    margin: 0;
+    line-height: 40px;
   }
 
   .ant-form-item-label {
@@ -27,5 +28,32 @@
   }
   .upload-tips {
     margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .certification-hd {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 1499px) {
+  .certification-hd {
+    padding: 20px;
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+  .ant-form-inline .ant-form-item {
+    margin-bottom: 24px !important;
+  }
+}
+
+@media only screen and (max-width: 1299px) {
+  .certification-hd {
+    padding: 20px;
+    h2 {
+      font-size: 16px;
+    }
   }
 }

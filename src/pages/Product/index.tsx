@@ -46,7 +46,10 @@ const Product: React.FC = () => {
       <div>
         <List
           className="product-list"
-          grid={{ gutter: 20, column: 4 }}
+          grid={{
+            gutter: 20,
+            xs: 1,
+          }}
           dataSource={data}
           renderItem={(item) => (
             <List.Item>
