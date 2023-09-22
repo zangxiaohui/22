@@ -198,14 +198,10 @@ const BidDetail: React.FC = () => {
               <Form.Item label="出&nbsp;&nbsp;价">
                 <div>
                   <AntInputNumber
-                    min={0}
+                    min={data?.Propm_StartPrice ?? 0}
                     value={bidPrice ?? 0}
                     onChange={onChangeBidPrice}
                     size="large"
-                    formatter={(value) =>
-                      `￥${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) => value!.replace(/\$\s?|(,*)/g, "") as any}
                     step={data?.Propm_StepPrice ?? 1}
                   />
                   {isMobile && (
@@ -253,7 +249,26 @@ const BidDetail: React.FC = () => {
                   type="primary"
                   size="large"
                   className="btn-red bidding-btn"
-                  onClick={() => setBidConfirmModalVisible(true)}
+                  onClick={() => {
+                    if (!isNil(bidPrice)) {
+                      if (bidPrice < data?.Propm_StartPrice) {
+                        Modal.warning({
+                          title: "您的出价不能小于起拍价",
+                        });
+                        return;
+                      } else if (
+                        (bidPrice - data?.Propm_StartPrice) %
+                          data?.Propm_StepPrice !==
+                        0
+                      ) {
+                        Modal.warning({
+                          title: "您的出价须按照加价幅度出价",
+                        });
+                        return;
+                      }
+                      setBidConfirmModalVisible(true);
+                    }
+                  }}
                 >
                   出价
                 </Button>
