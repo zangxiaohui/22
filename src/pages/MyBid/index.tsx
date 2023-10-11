@@ -98,6 +98,7 @@ const MyBid: React.FC<MyBidProps> = () => {
             setFormData({
               productTitle: item.Propm_Title,
               productCount: item.Propm_Count,
+              productCountUnit: item.Propm_Uint,
               id: item.Propm_Id,
             });
           }}

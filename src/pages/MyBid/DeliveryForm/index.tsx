@@ -82,6 +82,7 @@ const DeliveryForm: React.FC<DeliveryFormProps> = (props) => {
             {formData?.productTitle}
             {!isNil(formData?.productCount) && <Divider type="vertical" />}
             <span>{formData?.productCount}</span>
+            <span>{formData?.productCountUnit}</span>
           </div>
         </div>
         <div className="mod-bd">

@@ -75,6 +75,7 @@ const BidList: React.FC<BidListProps> = (props) => {
                     {item?.Propm_Title}
                     {!isNil(item?.Propm_Count) && <Divider type="vertical" />}
                     <span>{item?.Propm_Count}</span>
+                    <span>{item?.Propm_Uint}</span>
                   </div>
                 }
                 className="bid-card"
@@ -90,8 +91,14 @@ const BidList: React.FC<BidListProps> = (props) => {
                       label={
                         item?.State === BidType.FINISHED ? "成交价" : "当前价"
                       }
-                      prefix="¥"
-                      desc={item?.Propm_CurPrice}
+                      prefix={item?.Propm_CurPrice === 0 ? "" : "¥"}
+                      desc={
+                        item?.Propm_CurPrice === 0 ? (
+                          <span className="price-hidden">**</span>
+                        ) : (
+                          item?.Propm_CurPrice
+                        )
+                      }
                       className="font-size-lg colorful"
                     />
                   )}

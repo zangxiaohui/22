@@ -6,7 +6,7 @@ import "./index.less";
 interface DescriptionRowProps {
   status: BidType;
   label: string;
-  desc?: string | number;
+  desc?: any;
   prefix?: string;
   className?: string;
 }
@@ -19,7 +19,8 @@ const DescriptionRow: React.FC<DescriptionRowProps> = (props) => {
       <span className="label">{label}</span>
       <span className={`desc desc-${BidTypeColor[status]}`}>
         {prefix && <span className="prefix">{prefix}</span>}
-        <span className="cont"> {desc ?? "--"}</span>
+        <span className="cont"> {desc}</span>
+        {/* <span className="cont"> {desc ?? "--"}</span> */}
       </span>
     </div>
   );

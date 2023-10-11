@@ -133,6 +133,14 @@ const BidDetail: React.FC = () => {
 
   const telDom = <div className="h">{currentUser?.serviceTel}</div>;
 
+  let priceDom: any;
+  if (currentPrice === 0) {
+    priceDom = <span className="price-hidden">**</span>;
+  } else {
+    priceDom = currentPrice;
+  }
+
+  console.log("currentPrice :>> ", currentPrice);
   return (
     <PageContainer routes={routes} loading={loading || !data}>
       <div className="bid-row1">
@@ -141,6 +149,7 @@ const BidDetail: React.FC = () => {
             {data?.Propm_Title}
             {!isNil(data?.Propm_Count) && <Divider type="vertical" />}
             <span>{data?.Propm_Count}</span>
+            <span>{data?.Propm_Uint}</span>
           </div>
         </h1>
         <div className="statistic-wrap">
@@ -158,16 +167,26 @@ const BidDetail: React.FC = () => {
           /> */}
 
           {(data?.State === BidType.PROCESSING ||
-            data?.State === BidType.FINISHED ||
             data?.State === BidType.TERMINATED) && (
             <Row
               status={data?.State}
-              label={data?.State === BidType.FINISHED ? "成交价" : "当前价"}
-              prefix="¥"
-              desc={currentPrice || bidPrice}
+              label="当前价"
+              prefix={!isNil(currentPrice) && currentPrice > 0 ? "¥" : ""}
+              desc={priceDom}
               className="font-size-lg colorful"
             />
           )}
+
+          {data?.State === BidType.FINISHED && (
+            <Row
+              status={data?.State}
+              label="成交价"
+              prefix="¥"
+              desc={bidPrice}
+              className="font-size-lg colorful"
+            />
+          )}
+
           {data?.State === BidType.IN_PREPARATION && (
             <Row
               status={data?.State}
@@ -195,6 +214,51 @@ const BidDetail: React.FC = () => {
         {data?.State === BidType.PROCESSING && (
           <Col flex="540px">
             <Form labelCol={{ sm: { span: 24 }, md: { span: 6 } }}>
+              <Form.Item label="数量(吨)">
+                <div>
+                  <AntInputNumber
+                    min={data?.Propm_StartPrice ?? 0}
+                    value={bidPrice ?? 0}
+                    onChange={onChangeBidPrice}
+                    size="large"
+                    step={data?.Propm_StepPrice ?? 1}
+                  />
+                  {isMobile && (
+                    <div
+                      className="ant-input-number-handler ant-input-number-handler-down"
+                      onClick={() => {
+                        if (!isNil(bidPrice)) {
+                          const value = bidPrice - (data?.Propm_StepPrice ?? 1);
+                          if (value >= 0) {
+                            onChangeBidPrice(
+                              bidPrice - (data?.Propm_StepPrice ?? 1)
+                            );
+                          } else {
+                            onChangeBidPrice(0);
+                          }
+                        }
+                      }}
+                    >
+                      {/* <DownOutlined className={`handler-down-inner`} /> */}
+                    </div>
+                  )}
+                  {isMobile && (
+                    <div
+                      className="ant-input-number-handler ant-input-number-handler-up"
+                      onClick={() => {
+                        if (!isNil(bidPrice)) {
+                          onChangeBidPrice(
+                            bidPrice + (data?.Propm_StepPrice ?? 1)
+                          );
+                        }
+                      }}
+                    >
+                      {/* <UpOutlined className={`handler-up-inner`} /> */}
+                    </div>
+                  )}
+                </div>
+              </Form.Item>
+
               <Form.Item label="出&nbsp;&nbsp;价">
                 <div>
                   <AntInputNumber

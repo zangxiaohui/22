@@ -10,6 +10,7 @@ export const renderTitle = (record: any = {}) => {
       {record?.Propm_Title}
       {!isNil(record?.Propm_Count) && <Divider type="vertical" />}
       <span>{record?.Propm_Count}</span>
+      <span>{record?.Propm_Uint}</span>
     </div>
   );
 };
@@ -31,8 +32,8 @@ export const renderPrice = (record: any = {}, hasTitme?: boolean) => {
         <Statistic
           className="red"
           title="当前价"
-          value={Propm_CurPrice}
-          prefix="¥"
+          value={Propm_CurPrice === 0 ? "**" : Propm_CurPrice}
+          prefix={Propm_CurPrice === 0 ? "" : "¥"}
         />
       )}
       {State !== BidType.IN_PREPARATION && (
