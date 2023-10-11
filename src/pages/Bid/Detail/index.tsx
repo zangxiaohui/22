@@ -11,6 +11,7 @@ import {
   Tabs,
   message,
 } from "antd";
+import classNames from "classnames";
 import { isNil } from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -57,7 +58,10 @@ const BidDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
+  // 出价
   const [bidPrice, setBidPrice] = useState<number>();
+  // 竞拍数量
+  const [bidCount, setBidCount] = useState<number>();
   const [myPrice, setMyPrice] = useState<number>();
   const [currentPrice, setCurrentPrice] = useState<number>();
   const [historyVisible, setHistoryVisible] = useState<boolean>(false);
@@ -75,8 +79,9 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      const { Propm_CurPrice, Propm_StartPrice } = res?.data || {};
+      const { Propm_CurPrice, Propm_StartPrice, Propm_Count } = res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
+      setBidCount(Number(Propm_Count));
     });
   }, [id]);
 
@@ -102,6 +107,12 @@ const BidDetail: React.FC = () => {
   const onChangeBidPrice = (value: number | null) => {
     if (!isNil(value)) {
       setBidPrice(value);
+    }
+  };
+
+  const onChangeBidCount = (value: number | null) => {
+    if (!isNil(value)) {
+      setBidCount(value);
     }
   };
 
@@ -214,27 +225,32 @@ const BidDetail: React.FC = () => {
         {data?.State === BidType.PROCESSING && (
           <Col flex="540px">
             <Form labelCol={{ sm: { span: 24 }, md: { span: 6 } }}>
-              <Form.Item label="数量(吨)">
+              <Form.Item label={`数量(${data?.Propm_Uint})`}>
                 <div>
                   <AntInputNumber
-                    min={data?.Propm_StartPrice ?? 0}
-                    value={bidPrice ?? 0}
-                    onChange={onChangeBidPrice}
+                    min={1}
+                    max={Number(data?.Propm_Count ?? 1)}
+                    value={bidCount ?? 0}
+                    onChange={onChangeBidCount}
                     size="large"
-                    step={data?.Propm_StepPrice ?? 1}
+                    step={1}
+                    precision={0}
                   />
                   {isMobile && (
                     <div
-                      className="ant-input-number-handler ant-input-number-handler-down"
+                      className={classNames(
+                        "ant-input-number-handler ant-input-number-handler-down",
+                        {
+                          disabled: Number(bidCount) <= 1,
+                        }
+                      )}
                       onClick={() => {
-                        if (!isNil(bidPrice)) {
-                          const value = bidPrice - (data?.Propm_StepPrice ?? 1);
+                        if (!isNil(bidCount)) {
+                          const value = bidCount - 1;
                           if (value >= 0) {
-                            onChangeBidPrice(
-                              bidPrice - (data?.Propm_StepPrice ?? 1)
-                            );
+                            onChangeBidCount(value);
                           } else {
-                            onChangeBidPrice(0);
+                            onChangeBidCount(1);
                           }
                         }
                       }}
@@ -244,12 +260,16 @@ const BidDetail: React.FC = () => {
                   )}
                   {isMobile && (
                     <div
-                      className="ant-input-number-handler ant-input-number-handler-up"
+                      className={classNames(
+                        "ant-input-number-handler ant-input-number-handler-up",
+                        {
+                          disabled:
+                            Number(bidCount) >= Number(data?.Propm_Count),
+                        }
+                      )}
                       onClick={() => {
-                        if (!isNil(bidPrice)) {
-                          onChangeBidPrice(
-                            bidPrice + (data?.Propm_StepPrice ?? 1)
-                          );
+                        if (!isNil(bidCount)) {
+                          onChangeBidCount(bidCount + 1);
                         }
                       }}
                     >
@@ -270,7 +290,9 @@ const BidDetail: React.FC = () => {
                   />
                   {isMobile && (
                     <div
-                      className="ant-input-number-handler ant-input-number-handler-down"
+                      className={classNames(
+                        "ant-input-number-handler ant-input-number-handler-down"
+                      )}
                       onClick={() => {
                         if (!isNil(bidPrice)) {
                           const value = bidPrice - (data?.Propm_StepPrice ?? 1);
