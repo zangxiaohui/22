@@ -13,8 +13,8 @@ const { useForm } = Form;
 const rememberUserNamekey = "cas-login:rememberUserName";
 const userNameKey = "cas-login:username";
 
-export const serverPath = "http://baichuanpm.test.wxliebao.com:88";
-// export const serverPath = "";
+// export const serverPath = "http://baichuanpm.test.wxliebao.com:88";
+export const serverPath = "";
 
 const Login: React.FC = () => {
   const [form] = useForm();

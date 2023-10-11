@@ -117,7 +117,11 @@ export function getBidHistory(params: GetBidHistoryRequest): Promise<any> {
 }
 
 /** 竞价报价 */
-export function postBid(params: { Id: number; price: number }): Promise<any> {
+export function postBid(params: {
+  Id: number;
+  price: number;
+  num: number;
+}): Promise<any> {
   return fetch(`/CusApi/ComData/zbjjprobj`, {
     method: "POST",
     body: qs.stringify({

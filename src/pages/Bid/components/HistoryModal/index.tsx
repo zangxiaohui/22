@@ -53,6 +53,10 @@ const HistoryModal: FC<HistoryModalProps> = (props) => {
       render: (text: number) => <Statistic value={text} prefix="¥" />,
     },
     {
+      title: "数量",
+      dataIndex: "PropmBjLog_Num",
+    },
+    {
       title: "出价时间",
       dataIndex: "PropmBjLog_AddTime",
       render: (text: string) => moment(text).format("YYYY-MM-DD HH:mm:ss"),

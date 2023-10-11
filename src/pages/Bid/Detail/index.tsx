@@ -79,9 +79,11 @@ const BidDetail: React.FC = () => {
     }).then((res) => {
       setLoading(false);
       setData(res?.data);
-      const { Propm_CurPrice, Propm_StartPrice, Propm_Count } = res?.data || {};
+      const { Propm_CurPrice, Propm_StartPrice, Propm_Count, MyPrice } =
+        res?.data || {};
       setBidPrice(Propm_CurPrice || Propm_StartPrice);
       setBidCount(Number(Propm_Count));
+      setMyPrice(MyPrice);
     });
   }, [id]);
 
@@ -122,10 +124,11 @@ const BidDetail: React.FC = () => {
   };
 
   const handleBid = () => {
-    if (!isNil(bidPrice)) {
+    if (!isNil(bidPrice) && !isNil(bidCount)) {
       postBid({
         Id: Number(id),
         price: bidPrice,
+        num: bidCount,
       }).then((res) => {
         if (res.state) {
           message.success("出价成功");
@@ -429,6 +432,12 @@ const BidDetail: React.FC = () => {
           </div>
           <div className="mod-bd">
             <Statistic title="产品名" value={data?.Propm_Title} />
+            <Statistic
+              // title={`数量(${data?.Propm_Uint})`}
+              title="数&nbsp;&nbsp;&nbsp;&nbsp;量"
+              value={`${bidCount}(${data?.Propm_Uint})`}
+              className="red"
+            />
             <Statistic
               title="出&nbsp;&nbsp;&nbsp;&nbsp;价"
               value={bidPrice}
