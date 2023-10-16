@@ -16,9 +16,9 @@ const data: MenuDataItem[] = [
     path: "/client/bid",
     children: [
       {
-        name: "全部产品",
+        name: "正在招标中",
         key: "21",
-        path: "/client/bid/all",
+        path: "/client/bid/in_progress",
       },
       {
         name: "即将开始",
@@ -26,19 +26,19 @@ const data: MenuDataItem[] = [
         path: "/client/bid/in_preparation",
       },
       {
-        name: "正在招标中",
-        key: "23",
-        path: "/client/bid/in_progress",
-      },
-      {
         name: "己结束",
-        key: "24",
+        key: "23",
         path: "/client/bid/finished",
       },
       {
         name: "已中止",
-        key: "25",
+        key: "24",
         path: "/client/bid/terminated",
+      },
+      {
+        name: "全部产品",
+        key: "25",
+        path: "/client/bid/all",
       },
     ],
   },
@@ -62,14 +62,14 @@ const data: MenuDataItem[] = [
         path: "/client/account/my-bid",
       },
       {
-        name: "个人信息管理",
+        name: "企业信息管理",
         key: "42",
-        path: "/client/account/edit-profile",
+        path: "/client/account/manage-company",
       },
       {
-        name: "企业信息管理",
+        name: "个人信息管理",
         key: "43",
-        path: "/client/account/manage-company",
+        path: "/client/account/edit-profile",
       },
     ],
   },

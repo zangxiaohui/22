@@ -14,16 +14,16 @@ interface MyBidProps {}
 
 const tabItems: any[] = [
   {
-    label: "全部记录",
-    key: BidType.ALL,
-  },
-  {
     label: "正在进行中",
     key: BidType.PROCESSING,
   },
   {
-    label: "已拍下",
+    label: "已中标",
     key: BidType.SUCCESS,
+  },
+  {
+    label: "全部记录",
+    key: BidType.ALL,
   },
 ];
 
@@ -42,7 +42,7 @@ const routes = [
 const MyBid: React.FC<MyBidProps> = () => {
   const currentUser = useSelf();
   const isMobile = useIsMobile();
-  const [tabActiveKey, setTabActiveKey] = useState<BidType>(BidType.ALL);
+  const [tabActiveKey, setTabActiveKey] = useState<BidType>(BidType.PROCESSING);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any[]>();
 

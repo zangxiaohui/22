@@ -62,6 +62,7 @@ const BidDetail: React.FC = () => {
   const [bidPrice, setBidPrice] = useState<number>();
   // 竞拍数量
   const [bidCount, setBidCount] = useState<number>();
+  const [minBidCount, setMinBidCount] = useState<number>(35);
   const [myPrice, setMyPrice] = useState<number>();
   const [currentPrice, setCurrentPrice] = useState<number>();
   const [historyVisible, setHistoryVisible] = useState<boolean>(false);
@@ -154,7 +155,6 @@ const BidDetail: React.FC = () => {
     priceDom = currentPrice;
   }
 
-  console.log("currentPrice :>> ", currentPrice);
   return (
     <PageContainer routes={routes} loading={loading || !data}>
       <div className="bid-row1">
@@ -231,9 +231,9 @@ const BidDetail: React.FC = () => {
               <Form.Item label={`数量(${data?.Propm_Uint})`}>
                 <div>
                   <AntInputNumber
-                    min={1}
-                    max={Number(data?.Propm_Count ?? 1)}
-                    value={bidCount ?? 0}
+                    min={minBidCount}
+                    max={Number(data?.Propm_Count)}
+                    value={bidCount ?? minBidCount}
                     onChange={onChangeBidCount}
                     size="large"
                     step={1}
@@ -244,16 +244,16 @@ const BidDetail: React.FC = () => {
                       className={classNames(
                         "ant-input-number-handler ant-input-number-handler-down",
                         {
-                          disabled: Number(bidCount) <= 1,
+                          disabled: Number(bidCount) <= minBidCount,
                         }
                       )}
                       onClick={() => {
                         if (!isNil(bidCount)) {
                           const value = bidCount - 1;
-                          if (value >= 0) {
+                          if (value >= minBidCount) {
                             onChangeBidCount(value);
                           } else {
-                            onChangeBidCount(1);
+                            onChangeBidCount(minBidCount);
                           }
                         }
                       }}

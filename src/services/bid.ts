@@ -13,7 +13,7 @@ export enum BidType {
   FINISHED = 3,
   // 已终止
   TERMINATED = 4,
-  // 已拍下
+  // 已中标
   SUCCESS = 5,
 }
 
@@ -23,7 +23,7 @@ export const BidTypeLabel = {
   [BidType.PROCESSING]: "正在招标中",
   [BidType.FINISHED]: "已结束",
   [BidType.TERMINATED]: "已终止",
-  [BidType.SUCCESS]: "已拍下",
+  [BidType.SUCCESS]: "已中标",
 };
 
 export const BidTypeColor = {
@@ -62,7 +62,7 @@ export const BidTypeMap = {
     badgeStatus: "default",
   },
   [BidType.SUCCESS]: {
-    label: "已拍下",
+    label: "已中标",
     color: "blue",
     badgeStatus: "success",
   },
